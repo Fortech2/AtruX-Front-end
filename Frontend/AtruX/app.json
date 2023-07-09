@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "AtruX",
+    "slug": "AtruX",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "AtruX"
+}
