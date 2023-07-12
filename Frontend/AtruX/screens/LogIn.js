@@ -17,7 +17,10 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView
+  ScrollView,
+  Modal, // 
+  FlatList, // 
+  SafeAreaView
 } from "react-native";
 import {
   useFonts as useMontserrat,
@@ -34,7 +37,14 @@ import PersonIcon from '../components/personIcon';
 import Lock from '../components/LockLogInIcon';
 import EyeIcon from '../components/EyeComponent';
 import FullLogo from '../components/LogoComplet';
+import {useTranslation} from 'react-i18next'; // for the translation
+import i18next, {languageResources} from '../services/i18next'; // for the translation
+import languageList from '../locales/languageList.json' // for the translation
+import { changeLanguage } from "i18next"; // for the translation
+
 export default function LogIn() {
+  const {t, i18n} = useTranslation(); // for the translation
+  const [visible, setVisible] = useState(false); // 
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
         Montserrat_100Thin,
@@ -70,7 +80,7 @@ export default function LogIn() {
       window.location.href = "/";
     } catch (error) {
       if (error.response.status === 401) {
-        alert("Invalid credentials");
+        alert(<Text>{t('invalid_credentials')}</Text>); // not sure if it's correct!
       }
     }
   };
@@ -86,32 +96,54 @@ return (
    <DownCircle style={{top:'50%',  left:'35%'}}/>
  
  <SmallDownCircle style={{top:'-30%',  left:'8%'}}/>
- <View style = {{top:'-127%'}}>
-    <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#FFFF',left:'-10%'}}>Don’t have an account?</Text>
-    <TouchableOpacity style={{left:'30%', top:'-50%'}}>
-        <Text  style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3' }}>SIGN UP</Text> 
+ <View style = {{top:'-124%'}}>
+    <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#FFFF',left:'-10%'}}>{t('new_acc')}</Text>
+    <TouchableOpacity style={{left:'32%', top:'-50%'}}>  
+        <Text  style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3' }}>{t('SignUp.Title')}</Text> 
       </TouchableOpacity>
-    </View>
+  </View>
     
  
   <View style={styles.contour}>
         <WrittenLogo style={{left:'5%'}}/>
-        <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:24, color:'#474747', top:'-85%'}}>SIGN IN</Text>
+        <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:24, color:'#474747', top:'-85%'}}>{t('SignIn.Title')}</Text>
         <View style={styles.inputView}>
         <PersonIcon style={{left:'2%', top:'30%'}}/>
         <TextInput
           style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#474747', width:'74%', top:'-75%'}}
-          placeholder="Email or Username"
+          //placeholder="Email or Username"
+          placeholder={t('emailOrUsername')}
           placeholderTextColor="#6D6D6D"
           onChangeText={(email) => setEmail(email)}
         /> 
-      </View> 
+  </View> 
+
+  <SafeAreaView style = {{top:'-127%'}} >
+      <Modal visible={visible} onRequestClose={() => setVisible(false)}>
+        <View style={styles.language_list}>
+          <FlatList 
+            data={Object.keys(languageResources)}
+            renderItem={({item})=> (
+              <TouchableOpacity style={styles.languageBtn} onPress={() => changeLanguage(item)}>
+                <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#ffff'}}>
+                  {languageList[item].name}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </Modal>
+    <TouchableOpacity style={{left:'-50%', top:'-100%'}} onPress={() => setVisible(true)}>
+      <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:15, color:'#73B3D3'}}>{t('language')}</Text> 
+    </TouchableOpacity>
+
+    </SafeAreaView>
 
         <View style={styles.inputView}>
           <Lock style={{left:'2%', top:'30%'}}/>
         <TextInput
          style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#474747', width:'74%', top:'-75%'}}
-          placeholder="Password"
+          placeholder={t('password')}
           placeholderTextColor="#6D6D6D"
           secureTextEntry={passwordVisibility}
           onChangeText={(password) => setPassword(password)}
@@ -125,22 +157,21 @@ return (
       </View >
       <View style={{top:'-75%', left:'-25%'}}>
         <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#000000', top:'-50%', left:'12%'}}>Remember me</Text>
+        <Text style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#000000', top:'-50%', left:'12%'}}>{t('rememberUser')}</Text>
       </View>
-      <TouchableOpacity style={styles.loginBtn}>
-        <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:18, color:'#FFFF'}}>LOG IN</Text> 
+      <TouchableOpacity style={styles.loginBtn} 
+        onPress={() => {}}>
+        <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:18, color:'#FFFF'}}>{t('LogIn.Title')}</Text> 
       </TouchableOpacity>
       <TouchableOpacity style = {{top:'-72%'}}>
-        <Text  style={{fontFamily:'Montserrat_100Thin', fontSize:12, color:'#CA0000'}}>Forgot my password</Text> 
+        <Text  style={{fontFamily:'Montserrat_100Thin', fontSize:12, color:'#CA0000'}}>{t('forgot_password')}</Text> 
       </TouchableOpacity>
       <FullLogo style = {{top:'-72%', left:'65%'}}/>
     </View>
     
-  
-  
-  
   </View>
     </TouchableWithoutFeedback>
+
 )
 }
 const styles = StyleSheet.create({
@@ -196,4 +227,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#101F41",
     top:'-75%'
   },
+  languageBtn: {
+    padding: 10,
+    borderBottomColor: "#D9D9D9",
+    borderBottomWidth: 1,
+  },
+  language_list: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 10,
+    backgroundColor: "#101F41"
+  }
 });

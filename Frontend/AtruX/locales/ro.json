@@ -1,0 +1,12 @@
+{
+    "language": "RO",
+    "SignIn.Title": "CONECTEAZĂ-TE",
+    "SignUp.Title": "CREEAZĂ CONT",
+    "LogIn.Title": "AUTENTIFICARE",
+    "emailOrUsername": "Email sau Username",
+    "password": "Parolă",
+    "rememberUser": "Amintește-ți de mine",
+    "forgot_password": "Am uitat parola",
+    "new_acc": "Nu ai cont?",
+    "invalid_credentials": "Credențiale invalide"
+}
