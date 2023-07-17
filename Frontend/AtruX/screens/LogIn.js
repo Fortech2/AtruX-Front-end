@@ -110,13 +110,13 @@ export default function LogIn() {
 return (
   <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <View style={styles.container}>
-      <CircleB style={{top:'170%'}}/>
-      <SmallCircle style={{top:'98%', left:'48%'}}/>
-      <DownCircle style={{top:'50%',  left:'35%'}}/>
-      <SmallDownCircle style={{top:'-30%',  left:'8%'}}/>
+      <CircleB style={{top:'180%', left:'-2%'}}/>
+      <SmallCircle style={{top:'101%', left:'50%'}}/>
+      <DownCircle style={{top:'60%',  left:'35%'}}/>
+      <SmallDownCircle style={{top:'-24%',  left:'8%'}}/>
       
       
-     <SafeAreaView style={{top:'-208%', left:'-34%'}}>
+     <SafeAreaView style={{top:'-210%', left:'-40%'}}>
       <Modal
         visible={modalVisible}
         animationType="fade"
@@ -190,7 +190,7 @@ return (
         <FullLogo style = {{top:'-72%', left:'65%'}}/>
        
       </View>
-      <View style={{top:'-198%',left:'-10%'}}>
+      <View style={{top:'-194%',left:'-10%'}}>
       <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#FFFF'}}>{t('new_acc')}</Text>
       <TouchableOpacity style={{left:'40%', top:'-50%'}} onPress={() => { navigation.navigate('SignUp') }}>  
         <Text  style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3' }}>{t('SignUp.Title')}</Text> 
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
   },
   contour:{
-    top:"-203%",
+    top:"-197%",
     backgroundColor: "#D9D9D9",
     height: 547,
     width: 300,
@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.3)',
-    top:"12%",
-    width: '30%',
+    top:"7%",
+    width: '28%',
     borderRadius: 12,
     padding: 1,
     left: '5%'
