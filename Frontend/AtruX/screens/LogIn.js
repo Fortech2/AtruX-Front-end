@@ -20,8 +20,11 @@ import {
   ScrollView,
   Modal, // 
   FlatList, // 
-  SafeAreaView
+  SafeAreaView,
+  Picker,
+  TouchableHighlight
 } from "react-native";
+
 import {
   useFonts as useMontserrat,
   Montserrat_100Thin,
@@ -44,10 +47,25 @@ import { changeLanguage } from "i18next"; // for the translation
 import { useNavigation } from "@react-navigation/native"; //
 import ForgotPassword from './ForgotPassword' //
 import SignUp from "./SignUp";
-
+import { Dropdown } from 'react-native-material-dropdown-v2-fixed';
+import Arrow from '../components/arrow_language';
+import { useHistory } from 'react-router-dom';
 export default function LogIn() {
-  const {t, i18n} = useTranslation(); // for the translation
-  const [visible, setVisible] = useState(false); // 
+  const {t, i18n} = useTranslation(); 
+  const changeLanguage = (language) => {
+    console.log(`Selected language: ${language}`);
+    i18n.changeLanguage(language); 
+    setModalVisible(false);
+  };
+  const [modalVisible, setModalVisible] = useState(false);
+  
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
   const navigation = useNavigation(); // for the navigation
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
@@ -72,25 +90,18 @@ export default function LogIn() {
       setPasswordVisibility(!passwordVisibility);
     }
   };
-
-  const logInUser = async () => {
-    console.log(email, password);
-
-    try {
-      // const resp = await httpClient.post("//localhost:5000/login", {
-      //   email,
-      //   password,
-      // });
-      const resp = await httpClient.get("http://3.120.139.22/fsdfhj")
-      //console.log(resp);
-
-      window.location.href = "/";
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert(<Text>{t('invalid_credentials')}</Text>); // not sure if it's correct!
-      }
-    }
+  // const history = useHistory();
+  const handleLogin = () => {
+    // axios.post('/api/login', { username, password }, { withCredentials: true })
+    //   .then((response) => {
+    //     history.push('/home');
+    //   })
+    //   .catch((error) => {
+    //     console.error('Login error:', error);
+        
+    //   });
   };
+
   
   if (!montserratLoaded) {
     return null;
@@ -104,22 +115,34 @@ return (
       <DownCircle style={{top:'50%',  left:'35%'}}/>
       <SmallDownCircle style={{top:'-30%',  left:'8%'}}/>
       
-      <View style = {{top:'-124%'}}>
-        <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#FFFF', left:'-10%'}}>{t('new_acc')} {' '}
-          <TouchableOpacity 
-          // we need to align it with the text: "Don't have an account" !!!!
-            style = {{}}
-            onPress={() => { navigation.navigate('SignUp') }}>
-            <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3'}}>{t('SignUp.Title')}</Text> 
-          </TouchableOpacity>
-        </Text>
-      {/* 
-      <TouchableOpacity style={{left:'32%', top:'-50%'}}
-          onPress={() => {{navigation.navigate('SignUp')}}}>  
-          <Text  style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3' }}>{t('SignUp.Title')}</Text> 
-      </TouchableOpacity> */}
-      </View>
-    
+      
+     <SafeAreaView style={{top:'-208%', left:'-34%'}}>
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={handleCloseModal}
+      >
+        <View style={styles.modalContainer}>
+          <FlatList
+            data={Object.keys(languageResources)}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.languageBtn} onPress={() => changeLanguage(item)}>
+                <Text style={{ fontFamily: 'Montserrat_500Medium', fontSize: 16, color: '#ffff' }}>
+                {languageList[item].name}
+                </Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item}
+          />
+        </View>
+      </Modal>
+
+      <TouchableOpacity onPress={handleOpenModal} style={styles.openButton}>
+        <Text style={styles.openButtonText}>{t('language')}</Text>
+        
+      </TouchableOpacity>
+    </SafeAreaView>
       <View style={styles.contour}>
         <WrittenLogo style={{left:'5%'}}/>
         <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:24, color:'#474747', top:'-85%'}}>{t('SignIn.Title')}</Text>
@@ -133,26 +156,7 @@ return (
           /> 
         </View> 
 
-        <SafeAreaView style = {{top:'-127%'}} >
-          <Modal visible={visible} onRequestClose={() => setVisible(false)}>
-            <View style={styles.language_list}>
-              <FlatList 
-                data={Object.keys(languageResources)}
-                renderItem={({item})=> (
-                  <TouchableOpacity style={styles.languageBtn} onPress={() => changeLanguage(item)}>
-                    <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#ffff'}}>
-                      {languageList[item].name}
-                    </Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-          </Modal>
-          <TouchableOpacity style={{left:'-50%', top:'-100%'}} onPress={() => setVisible(true)}>
-            <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:15, color:'#73B3D3'}}>{t('language')}</Text> 
-          </TouchableOpacity>
-        </SafeAreaView>
-
+       
         <View style={styles.inputView}>
           <Lock style={{left:'2%', top:'30%'}}/>
           <TextInput
@@ -174,16 +178,23 @@ return (
         </View>
 
         <TouchableOpacity style={styles.loginBtn} 
-          onPress={() => { navigation.navigate('HomeScreen') }}>
+          onPress={() => {handleLogin}}>
           <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:18, color:'#FFFF'}}>{t('LogIn.Title')}</Text> 
         </TouchableOpacity>
         
-        <TouchableOpacity style = {{top:'-72%'}}
+        <TouchableOpacity style = {{top:'-72%', left:'0%'}}
           onPress={() => { navigation.navigate('ForgotPassword') }}>
-          <Text  style={{fontFamily:'Montserrat_100Thin', fontSize:12, color:'#CA0000'}}>{t('forgot_password')}</Text> 
+          <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:14, color:'#CA0000'}}>{t('forgot_password')}</Text> 
         </TouchableOpacity>
 
         <FullLogo style = {{top:'-72%', left:'65%'}}/>
+       
+      </View>
+      <View style={{top:'-198%',left:'-10%'}}>
+      <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#FFFF'}}>{t('new_acc')}</Text>
+      <TouchableOpacity style={{left:'40%', top:'-50%'}} onPress={() => { navigation.navigate('SignUp') }}>  
+        <Text  style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3' }}>{t('SignUp.Title')}</Text> 
+      </TouchableOpacity>
       </View>
     </View>
   </TouchableWithoutFeedback>
@@ -202,7 +213,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
   },
   contour:{
-    top:"-198%",
+    top:"-203%",
     backgroundColor: "#D9D9D9",
     height: 547,
     width: 300,
@@ -231,6 +242,31 @@ const styles = StyleSheet.create({
     height: 30,
     marginBottom: 30,
   },
+  modalContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    top:"12%",
+    width: '30%',
+    borderRadius: 12,
+    padding: 1,
+    left: '5%'
+  },
+  languageBtn: {
+    padding: 16,
+    fontFamily: 'Montserrat_600SemiBold'
+  },
+  openButton: {
+    padding: 16,
+    borderRadius: 8,
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  openButtonText: {
+    color: 'white',
+    fontFamily: 'Montserrat_600SemiBold',
+    fontSize: 16
+  },
   loginBtn: {
     width: "80%",
     borderRadius: 18,
@@ -241,15 +277,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#101F41",
     top:'-75%'
   },
-  languageBtn: {
-    padding: 10,
-    borderBottomColor: "#D9D9D9",
-    borderBottomWidth: 1,
-  },
   language_list: {
-    flex: 1,
     justifyContent: 'center',
     padding: 10,
-    backgroundColor: "#101F41"
+    backgroundColor: '#D9D9D9',
+
+    
   }
 });

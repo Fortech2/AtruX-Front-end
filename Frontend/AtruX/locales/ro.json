@@ -13,5 +13,8 @@
     "company_name": "Numele companiei",
     "driver": "Șofer",
     "dispatcher": "Dispecer",
-    "terms": "Accept Termenii de Utilizare și Politica de confidențialitate"
+    "terms": "Accept Termenii de Utilizare și Politica de confidențialitate",
+    "forgotpassword":"Recuperează-ți parola!",
+    "email_recovery":"E-mail-ul tău",
+    "recovery_button":"Trimite codul"
 }
