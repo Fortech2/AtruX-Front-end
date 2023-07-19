@@ -7,11 +7,13 @@
     "password": "Parolă",
     "confirm_password": "Confirmă Parola",
     "rememberUser": "Amintește-ți de mine",
-    "forgot_password": "Am uitat parola",
+    "forgot_password": "AM UITAT PAROLA",
     "new_acc": "Nu ai cont?",
     "invalid_credentials": "Credențiale invalide",
     "company_name": "Numele companiei",
     "driver": "Șofer",
     "dispatcher": "Dispecer",
-    "terms": "Accept Termenii de Utilizare și Politica de confidențialitate"
+    "terms": "Accept Termenii de Utilizare și Politica de confidențialitate",
+    "enter_email": "Introduceți adresa de email",
+    "send_code": "TRIMITE COD",
 }

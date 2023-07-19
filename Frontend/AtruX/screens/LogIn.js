@@ -180,7 +180,7 @@ return (
         
         <TouchableOpacity style = {{top:'-72%'}}
           onPress={() => { navigation.navigate('ForgotPassword') }}>
-          <Text  style={{fontFamily:'Montserrat_100Thin', fontSize:12, color:'#CA0000'}}>{t('forgot_password')}</Text> 
+          <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#CA0000'}}>{t('forgot_password')}</Text> 
         </TouchableOpacity>
 
         <FullLogo style = {{top:'-72%', left:'65%'}}/>

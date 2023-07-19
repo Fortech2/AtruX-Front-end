@@ -278,17 +278,4 @@ const styles = StyleSheet.create({
     width:'74%',
     top:'-75%'
   },
-  inputDropDown: {
-    borderRadius: 10,
-    padding: 1,
-    width: "90%",
-    height: 50,
-    marginBottom: 20,
-    top: '-83%',
-    borderWidth: 1,
-    borderColor: "#41658A1",
-    backgroundColor: "#41658A1",
-    alignItems: 'center',
-    alignContent: 'center'
-  } 
 });
