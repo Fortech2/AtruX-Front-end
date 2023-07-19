@@ -5,8 +5,16 @@
     "LogIn.Title": "AUTENTIFICARE",
     "emailOrUsername": "Email sau Username",
     "password": "Parolă",
+    "confirm_password": "Confirmă Parola",
     "rememberUser": "Amintește-ți de mine",
     "forgot_password": "Am uitat parola",
     "new_acc": "Nu ai cont?",
-    "invalid_credentials": "Credențiale invalide"
+    "invalid_credentials": "Credențiale invalide",
+    "company_name": "Numele companiei",
+    "driver": "Șofer",
+    "dispatcher": "Dispecer",
+    "terms": "Accept Termenii de Utilizare",
+    "forgotpassword":"Recuperează-ți parola!",
+    "email_recovery":"E-mail-ul tău",
+    "recovery_button":"Trimite codul"
 }

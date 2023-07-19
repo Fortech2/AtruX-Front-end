@@ -5,8 +5,16 @@
     "LogIn.Title": "LOG IN",
     "emailOrUsername": "Email or Username",
     "password": "Password",
+    "confirm_password": "Confirm Password",
     "rememberUser": "Remember me",
-    "forgot_password": "Forgot my password",
+    "forgot_password": "Forgot password",
     "new_acc": "Don’t have an account?",
     "invalid_credentials": "Invalid credentials",
+    "company_name": "Company name",
+    "driver": "Driver",
+    "dispatcher": "Dispatcher",
+    "terms": "I accept the Terms of Use",
+    "forgotpassword":"Forget my password",
+    "email_recovery":"Enter your e-mail",
+    "recovery_button":"Send code"
 }
