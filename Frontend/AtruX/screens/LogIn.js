@@ -128,12 +128,12 @@ export default function LogIn() {
               marginBottom: 624,
               marginLeft: 46,
               marginRight: 81.3,
-              top:'-7%',
+              top: "-7%",
             }}
           />
         </View>
-        
-        <SafeAreaView style={{ top: "4%", left: "-40%", zIndex:1 }}>
+
+        <SafeAreaView style={{ top: "4%", left: "-40%", zIndex: 1 }}>
           <Modal
             visible={modalVisible}
             animationType="fade"
@@ -168,134 +168,153 @@ export default function LogIn() {
             <Text style={styles.openButtonText}>{t("language")}</Text>
           </TouchableOpacity>
         </SafeAreaView>
-        <View style ={{marginTop:-527, marginBottom:126, top:'70%'}}>
-        <View style={styles.contour}>
-          <WrittenLogo style={{ left: "7%", top: "4.5%" }} />
-          <Text
-            style={{
-              fontFamily: "Montserrat_600SemiBold",
-              fontSize: 24,
-              color: "#474747",
-              top: "-80%",
-              textShadowColor: '#B3B3B3',
-              textShadowOffset: {width: 4, height: 3},
-              textShadowRadius: 4
-              
-            }}
-          >
-            {t("SignIn.Title")}
-          </Text>
-          <View style={styles.inputView}>
-            <PersonIcon style={{ left: "2%", top: "20%" }} />
-            <TextInput
+        <View style={{ marginTop: -527, marginBottom: 126, top: "70%" }}>
+          <View style={styles.contour}>
+            <WrittenLogo style={{ left: "7%", top: "4.5%" }} />
+            <Text
               style={{
-                fontFamily: "Montserrat_100Thin",
-                fontSize: 15,
+                fontFamily: "Montserrat_600SemiBold",
+                fontSize: 24,
                 color: "#474747",
-                width: "74%",
-                top: "-84%",
-                left: "5%",
+                top: "-80%",
+                textShadowColor: "#B3B3B3",
+                textShadowOffset: { width: 4, height: 3 },
+                textShadowRadius: 4,
               }}
-              placeholder={t("emailOrUsername")}
-              placeholderTextColor="#6D6D6D"
-              onChangeText={(email) => setEmail(email)}
-            />
-          </View>
-
-          <View style={styles.inputView2}>
-            <Lock style={{ left: "2%", top: "24%" }} />
-            <TextInput
-              style={{
-                fontFamily: "Montserrat_100Thin",
-                fontSize: 15,
-                color: "#474747",
-                width: "74%",
-                top: "-84%",
-                left: "5%",
-              }}
-              placeholder={t("password")}
-              placeholderTextColor="#6D6D6D"
-              secureTextEntry={passwordVisibility}
-              onChangeText={(password) => setPassword(password)}
-            />
-            <TouchableOpacity
-              style={{ top: "-142%", left: "40%" }}
-              onPress={handlePasswordVisibility}
             >
-              <Icon name="eye" size={20} />
+              {t("SignIn.Title")}
+            </Text>
+            <View style={styles.inputView}>
+              <PersonIcon style={{ left: "2%", top: "20%" }} />
+              <TextInput
+                style={{
+                  fontFamily: "Montserrat_100Thin",
+                  fontSize: 15,
+                  color: "#474747",
+                  width: "74%",
+                  top: "-84%",
+                  left: "5%",
+                }}
+                placeholder={t("emailOrUsername")}
+                placeholderTextColor="#6D6D6D"
+                onChangeText={(email) => setEmail(email)}
+              />
+            </View>
+
+            <View style={styles.inputView2}>
+              <Lock style={{ left: "2%", top: "24%" }} />
+              <TextInput
+                style={{
+                  fontFamily: "Montserrat_100Thin",
+                  fontSize: 15,
+                  color: "#474747",
+                  width: "74%",
+                  top: "-84%",
+                  left: "5%",
+                }}
+                placeholder={t("password")}
+                placeholderTextColor="#6D6D6D"
+                secureTextEntry={passwordVisibility}
+                onChangeText={(password) => setPassword(password)}
+              />
+              <TouchableOpacity
+                style={{ top: "-142%", left: "40%" }}
+                onPress={handlePasswordVisibility}
+              >
+                <Icon name="eye" size={20} />
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ top: "-70%", left: "-25%" }}>
+              <Checkbox
+                style={styles.checkbox}
+                value={isChecked}
+                onValueChange={setChecked}
+              />
+              <Text
+                style={{
+                  fontFamily: "Montserrat_500Medium",
+                  fontSize: 12,
+                  color: "#000000",
+                  top: "-50%",
+                  left: "12%",
+                }}
+              >
+                {t("rememberUser")}
+              </Text>
+            </View>
+
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+              <Text
+                style={{
+                  fontFamily: "Montserrat_500Medium",
+                  fontSize: 16,
+                  color: "#FFFF",
+                }}
+              >
+                {t("LogIn.Title")}
+              </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{ top: "-65%", left: "0%" }}
+              onPress={() => {
+                navigation.navigate("ForgotPassword");
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Montserrat_500Medium",
+                  fontSize: 14,
+                  color: "#CA0000",
+                }}
+              >
+                {t("forgot_password")}
+              </Text>
+            </TouchableOpacity>
+
+            <FullLogo style={{ top: "-62%", left: "65%" }} />
           </View>
-
-          <View style={{ top: "-70%", left: "-25%" }}>
-            <Checkbox
-              style={styles.checkbox}
-              value={isChecked}
-              onValueChange={setChecked}
-            />
-            <Text
-              style={{
-                fontFamily: "Montserrat_500Medium",
-                fontSize: 12,
-                color: "#000000",
-                top: "-50%",
-                left: "12%",
-              }}
-            >
-              {t("rememberUser")}
-            </Text>
-          </View>
-
-          <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-            <Text
-              style={{
-                fontFamily: "Montserrat_500Medium",
-                fontSize: 16,
-                color: "#FFFF",
-              }}
-            >
-              {t("LogIn.Title")}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={{ top: "-65%", left: "0%" }}
-            onPress={() => {
-              navigation.navigate("ForgotPassword");
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: "Montserrat_500Medium",
-                fontSize: 14,
-                color: "#CA0000",
-              }}
-            >
-              {t("forgot_password")}
-            </Text>
-          </TouchableOpacity>
-
-          <FullLogo style={{ top: "-62%", left: "65%" }} />
-        </View>
         </View>
         <View>
           <View style={styles.box3}>
-      <View style={styles.ellipseWrapper3}>
-        <View style={styles.ellipse3} />
-      </View>
-    </View>
-    <View style={styles.box4}>
-      <View style={styles.ellipseWrapper4}>
-        <View style={styles.ellipse4} />
-      </View>
-    </View>
+            <View style={styles.ellipseWrapper3}>
+              <View style={styles.ellipse3} />
+            </View>
+          </View>
+          <View style={styles.box4}>
+            <View style={styles.ellipseWrapper4}>
+              <View style={styles.ellipse4} />
+            </View>
+          </View>
         </View>
-        <View style={{top:'-8%',left:'-10%', zIndex:1}}>
-      <Text  style={{fontFamily:'Montserrat_500Medium', fontSize:12, color:'#FFFF'}}>{t('new_acc')}</Text>
-      <TouchableOpacity style={{left:'40%', top:'-50%'}} onPress={() => { navigation.navigate('SignUp') }}>  
-        <Text  style={{fontFamily:'Montserrat_600SemiBold', fontSize:12, color:'#73B3D3' }}>{t('SignUp.Title')}</Text>
-      </TouchableOpacity>
-      </View>
-
+        <View style={{ top: "-8%", left: "-10%", zIndex: 1 }}>
+          <Text
+            style={{
+              fontFamily: "Montserrat_500Medium",
+              fontSize: 12,
+              color: "#FFFF",
+            }}
+          >
+            {t("new_acc")}
+          </Text>
+          <TouchableOpacity
+            style={{ left: "40%", top: "-50%" }}
+            onPress={() => {
+              navigation.navigate("SignUp");
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Montserrat_600SemiBold",
+                fontSize: 12,
+                color: "#73B3D3",
+              }}
+            >
+              {t("SignUp.Title")}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -328,7 +347,6 @@ const styles = StyleSheet.create({
     elevation: 10, //only android
     position: "absolute",
     zIndex: 1,
-    
   },
   image: {
     marginBottom: 40,
@@ -395,7 +413,7 @@ const styles = StyleSheet.create({
 
     backgroundColor: "#101F41",
     top: "-66%",
-    elevation:10
+    elevation: 10,
   },
   language_list: {
     justifyContent: "center",
@@ -438,15 +456,15 @@ const styles = StyleSheet.create({
     width: 354,
   },
   box3: {
-    backgroundColor: 'transparent',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-   top: '220%',
-    marginLeft:158,
-    marginRight:-158,
-    left:'-2%'
+    backgroundColor: "transparent",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
+    top: "220%",
+    marginLeft: 158,
+    marginRight: -158,
+    left: "-2%",
   },
   ellipseWrapper3: {
     borderWidth: 0,
@@ -454,7 +472,7 @@ const styles = StyleSheet.create({
     width: 377,
   },
   ellipse3: {
-    backgroundColor: '#101f41',
+    backgroundColor: "#101f41",
     borderRadius: 188.5,
     height: 377,
     left: 0,
@@ -463,16 +481,16 @@ const styles = StyleSheet.create({
     width: 377,
   },
   box4: {
-    backgroundColor: 'transparent',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    width: '100%',
-    marginTop:720,
-    marginBottom:-42,
-    marginLeft:-50,
-    marginRight:154,
-    top:'5%',
-    left:'-2%'
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
+    marginTop: 720,
+    marginBottom: -42,
+    marginLeft: -50,
+    marginRight: 154,
+    top: "5%",
+    left: "-2%",
   },
   ellipseWrapper4: {
     borderWidth: 0,
@@ -480,7 +498,7 @@ const styles = StyleSheet.create({
     width: 156,
   },
   ellipse4: {
-    backgroundColor: '#101f41',
+    backgroundColor: "#101f41",
     borderRadius: 78,
     height: 156,
     top: 0,
