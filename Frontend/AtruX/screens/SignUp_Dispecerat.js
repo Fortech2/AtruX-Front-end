@@ -59,7 +59,7 @@ export default function SignUp() {
     setSelectedOption(option);
     setModalVisible(false);
 
-    if (option === 'DISPATCHER') {
+    if (option === 'DRIVER') {
       // Navigate to the "DispatcherScreen" when "Dispatcher" option is selected
       navigation.navigate('DispatcherScreen');
     }
@@ -79,6 +79,7 @@ export default function SignUp() {
               onPress={() => {
                 onOptionSelect('DRIVER');
                 onClose();
+                navigation.navigate('SignUp')
               }}
             >
               <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:16, color:'#ffff', top:'-30%'}}>DRIVER</Text>
@@ -88,7 +89,7 @@ export default function SignUp() {
               onPress={() => {
                 onOptionSelect('DISPATCHER');
                 onClose();
-                navigation.navigate('SignUp_D')
+             
               }}
             >
               <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:16, color:'#ffff', top:'50%'}}>DISPATCHER</Text>
@@ -201,7 +202,7 @@ export default function SignUp() {
         style={{alignItems:'center', top:'-2%', left:'-2%'}}
         onPress={() => setModalVisible(true)}
       >
-        <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:16, color:'#ffff'}}>{selectedOption || 'DRIVER'}</Text>
+        <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:16, color:'#ffff'}}>{selectedOption || 'DISPATCHER'}</Text>
         <Down_arrow style={{top:'-3.5%', left:'102%'}}/>
       </TouchableOpacity>
       <OptionModal
