@@ -44,12 +44,13 @@ import i18next, { languageResources } from "../services/i18next"; // for the tra
 import languageList from "../locales/languageList.json"; // for the translation
 import { changeLanguage } from "i18next"; // for the translation
 import { useNavigation } from "@react-navigation/native"; //
-import ForgotPassword from "./ForgotPassword"; //
+// import ForgotPassword from "./ForgotPassword"; //
 import SignUp from "./SignUp";
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import Arrow from "../components/arrow_language";
 import { useHistory } from "react-router-dom";
-export default function LogIn() {
+
+export default function ForgotPassword() {
   const { t, i18n } = useTranslation();
   const changeLanguage = (language) => {
     console.log(`Selected language: ${language}`);

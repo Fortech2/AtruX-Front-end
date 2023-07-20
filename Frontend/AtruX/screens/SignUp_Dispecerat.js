@@ -55,18 +55,17 @@ import {
   MenuTrigger,
 } from "react-native-popup-menu";
 import Down_arrow from "../components/downarrow_modal";
-export default function SignUp() {
+import NumberEmployeesIcon from "../components/NumberEmployeesIcon"
+import PhoneIcon from "../components/PhoneIcon"
+import axios from "axios";
+
+export default function SignUp_Dispecerat() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
-
-    if (option === "DRIVER") {
-      // Navigate to the "DispatcherScreen" when "Dispatcher" option is selected
-      navigation.navigate("DispatcherScreen");
-    }
   };
   const OptionModal = ({ isVisible, onClose, onOptionSelect }) => {
     return (
@@ -77,7 +76,7 @@ export default function SignUp() {
         onRequestClose={onClose}
       >
         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
+          <View style={styles.modalView}>    
             <TouchableOpacity
               style={styles.optionButton}
               onPress={() => {
@@ -94,13 +93,13 @@ export default function SignUp() {
                   top: "-30%",
                 }}
               >
-                DRIVER
+                {t('driver')}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.optionButton}
               onPress={() => {
-                onOptionSelect("DISPATCHER");
+                onOptionSelect(t("dispatcher"));
                 onClose();
               }}
             >
@@ -112,7 +111,7 @@ export default function SignUp() {
                   top: "50%",
                 }}
               >
-                DISPATCHER
+                {t('dispatcher')}
               </Text>
             </TouchableOpacity>
           </View>
@@ -123,7 +122,21 @@ export default function SignUp() {
 
   const navigation = useNavigation();
   const { t, i18n } = useTranslation(); // for the translation
-  const [open, setOpen] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+
+  const changeLanguage = (language) => {
+    console.log(`Selected language: ${language}`);
+    i18n.changeLanguage(language);
+    setModalVisible2(false);
+  };
+
+  const handleOpenModal = () => {
+    setModalVisible2(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible2(false);
+  };
 
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
@@ -136,6 +149,9 @@ export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [company_name, setCompany] = useState("");
+  const [number_employees, setNrEmployees] = useState(null)
+  // the phone number must be checked
+  const [phone_number, setPhoneNumber] = useState(null)
   const [rightIcon, setRightIcon] = useState("eye");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIconColor, setRightIconColor] = useState("#6D6D6D");
@@ -176,29 +192,44 @@ export default function SignUp() {
         <CircleB style={{ top: "170%" }} />
         <SmallCircle style={{ top: "98%", left: "48%" }} />
         <DownCircle style={{ top: "50%", left: "35%" }} />
-        <SmallDownCircle style={{ top: "-30%", left: "8%" }} />
+        <SmallDownCircle style={{ top: "-20%", left: "15%" }} />
 
-        {/* this is for the user to let him choose the language, but i'm not sure where it's supposed to be*/}
+        <SafeAreaView style={{ top: "-205%", left: "-40%", zIndex: 1 }}>
+          <Modal
+            visible={modalVisible2}
+            animationType="fade"
+            transparent={true}
+            onRequestClose={handleCloseModal}
+          >
+            <View style={styles.modalContainer}>
+              <FlatList
+                data={Object.keys(languageResources)}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.languageBtn}
+                    onPress={() => changeLanguage(item)}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Montserrat_500Medium",
+                        fontSize: 16,
+                        color: "#ffff",
+                      }}
+                    >
+                      {languageList[item].name}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item}
+              />
+            </View>
+          </Modal>
 
-        {/* <SafeAreaView style = {{top:'-127%'}} >
-              <Modal visible={visible} onRequestClose={() => setVisible(false)}>
-                <View style={styles.language_list}>
-                  <FlatList
-                    data={Object.keys(languageResources)}
-                    renderItem={({item})=> (
-                      <TouchableOpacity style={styles.languageBtn} onPress={() => changeLanguage(item)}>
-                        <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#ffff'}}>
-                          {languageList[item].name}
-                        </Text>
-                      </TouchableOpacity>
-                   )}
-                  />
-                </View>
-              </Modal>
-              <TouchableOpacity style={{left:'-50%', top:'-100%'}} onPress={() => setVisible(true)}>
-                <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:15, color:'#73B3D3'}}>{t('language')}</Text>
-              </TouchableOpacity>
-            </SafeAreaView> */}
+          <TouchableOpacity onPress={handleOpenModal} style={styles.openButton}>
+            <Text style={styles.openButtonText}>{t("language")}</Text>
+            
+          </TouchableOpacity>
+        </SafeAreaView>
 
         <View style={styles.contour}>
           <WrittenLogo style={{ left: "5%" }} />
@@ -207,12 +238,12 @@ export default function SignUp() {
               fontFamily: "Montserrat_600SemiBold",
               fontSize: 24,
               color: "#474747",
-              top: "-88%",
+              top: "-91%",
             }}
           >
             {t("SignUp.Title")}
           </Text>
-          <View style={{ top: "-84%" }}>
+          <View style={{ top: "-88%" }}>
             <TouchableOpacity
               style={{ alignItems: "center", top: "-2%", left: "-2%" }}
               onPress={() => setModalVisible(true)}
@@ -224,7 +255,7 @@ export default function SignUp() {
                   color: "#ffff",
                 }}
               >
-                {selectedOption || "DISPATCHER"}
+                {t("dispatcher")}
               </Text>
               <Down_arrow style={{ top: "-3.5%", left: "102%" }} />
             </TouchableOpacity>
@@ -235,7 +266,7 @@ export default function SignUp() {
             />
           </View>
           <View style={styles.inputView}>
-            <PersonIcon style={{ left: "2%", top: "30%" }} />
+            <PersonIcon style={{ left: "2%", top: "20%" }} />
             <TextInput
               style={styles.inputText}
               placeholder="Username"
@@ -255,7 +286,17 @@ export default function SignUp() {
           </View>
 
           <View style={styles.inputView}>
-            <Lock style={{ left: "2%", top: "30%" }} />
+            <PhoneIcon style={{ left: "2%", top: "20%" }} />
+            <TextInput
+              style={styles.inputText}
+              placeholder={t("phone_number")}
+              placeholderTextColor="#6D6D6D"
+              onChangeText={(phone_number) => setPhoneNumber(phone_number)}
+            />
+          </View>
+
+          <View style={styles.inputView}>
+            <Lock style={{ left: "2%", top: "20%" }} />
             <TextInput
               style={styles.inputText}
               placeholder={t("password")}
@@ -267,12 +308,12 @@ export default function SignUp() {
               style={{ top: "-125%", left: "40%" }}
               onPress={handlePasswordVisibility}
             >
-              <Icon name="eye" size={20} />
+              <Icon name="eye" size={20} style={{top: "-55%"}}/>
             </TouchableOpacity>
           </View>
 
           <View style={styles.inputView}>
-            <Lock style={{ left: "2%", top: "30%" }} />
+            <Lock style={{ left: "2%", top: "20%" }} />
             <TextInput
               style={styles.inputText}
               placeholder={t("confirm_password")}
@@ -284,12 +325,12 @@ export default function SignUp() {
               style={{ top: "-125%", left: "40%" }}
               onPress={handlePasswordVisibility}
             >
-              <Icon name="eye" size={20} />
+              <Icon name="eye" size={20} style={{top: "-55%"}}/>
             </TouchableOpacity>
           </View>
 
           <View style={styles.inputView}>
-            <CompanyIcon style={{ left: "2%", top: "30%" }} />
+            <CompanyIcon style={{ left: "2%", top: "20%" }} />
             <TextInput
               style={styles.inputText}
               placeholder={t("company_name")}
@@ -298,7 +339,17 @@ export default function SignUp() {
             />
           </View>
 
-          <View style={{ top: "-185%", left: "-2%" }}>
+          <View style={styles.inputView}>
+            <NumberEmployeesIcon style={{ left: "2%", top: "20%" }} />
+            <TextInput
+              style={styles.inputText}
+              placeholder={t("number_employees")}
+              placeholderTextColor="#6D6D6D"
+              onChangeText={(number_employees) => setNrEmployees(number_employees)}
+            />
+          </View>
+
+          <View style={{ top: "-190%", left: "-2%" }}>
             <Checkbox
               style={styles.checkbox}
               value={isChecked}
@@ -316,6 +367,22 @@ export default function SignUp() {
               {t("terms")}
             </Text>
           </View>
+
+          <TouchableOpacity style={styles.createAccBtn} >
+          {/* onPress={navigation.navigate('HomeScreenDispatcher')} */}
+            <Text
+              style={{
+              fontFamily: "Montserrat_500Medium",
+              fontSize: 14,
+              color: "#FFFF",
+              }}
+            >
+              {t("create_account")}
+            </Text>
+          </TouchableOpacity>
+
+          
+          <FullLogo style={{ top: "-198%", left: "70%" }} />
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -335,9 +402,9 @@ const styles = StyleSheet.create({
     left: "-12%",
   },
   contour: {
-    top: "-198%",
+    top: "-202%",
     backgroundColor: "#D9D9D9",
-    height: 565,
+    height: 620,
     width: 300,
     marginLeft: 5,
     alignItems: "center",
@@ -347,83 +414,69 @@ const styles = StyleSheet.create({
   image: {
     marginBottom: 40,
   },
-  selectedValueText: {
-    fontSize: 16,
-    paddingVertical: 10,
-  },
   centeredView: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(233, 235, 238, 1)",
     height: 90,
     width: 170,
-    top: "33%",
+    top: "26%",
     left: "30%",
     opacity: 0.5,
     borderRadius: 15,
   },
   modalContainer: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    top: "6%",
+    width: "28%",
+    borderRadius: 12,
+    padding: 1,
+    left: "3%",
+    backgroundColor: "rgba(0,0,0,0.3)",
   },
   inputView: {
     borderRadius: 12,
     width: 221,
     height: 38,
-    marginBottom: 20,
+    marginBottom: 15,
     alignItems: "center",
     padding: 1,
     borderColor: "#101f41",
     borderWidth: 1,
-    top: "-184%",
+    top: "-188%",
     alignContent: "center",
   },
-
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
-  },
-  loginBtn: {
-    width: "80%",
+  createAccBtn: {
+    width: "60%",
     borderRadius: 18,
-    height: 50,
+    height: 43,
     alignItems: "center",
     justifyContent: "center",
-
     backgroundColor: "#101F41",
-    top: "-75%",
+    top: "-193%",
   },
   languageBtn: {
     padding: 10,
     borderBottomColor: "#D9D9D9",
     borderBottomWidth: 1,
   },
-  language_list: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 10,
-    backgroundColor: "#101F41",
-  },
   inputText: {
     fontFamily: "Montserrat_100Thin",
     fontSize: 15,
     color: "#474747",
     width: "74%",
-    top: "-75%",
+    top: "-85%",
   },
-  inputDropDown: {
-    borderRadius: 10,
-    padding: 1,
-    width: "90%",
-    height: 50,
-    marginBottom: 20,
-    top: "-83%",
-    borderWidth: 1,
-    borderColor: "#41658A1",
-    backgroundColor: "#41658A1",
-    alignItems: "center",
-    alignContent: "center",
+  openButton: {
+    padding: 16,
+    borderRadius: 8,
+    alignSelf: "center",
+    marginTop: 10,
+  },
+  openButtonText: {
+    color: "white",
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 16,
   },
 });
