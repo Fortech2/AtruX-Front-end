@@ -6,7 +6,7 @@ import ForgotPassword from './screens/ForgotPassword';
 import SignUp from './screens/SignUp';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import SignUp_D from './screens/SignUp_Dispecerat';
+import SignUp_Dispecerat from './screens/SignUp_Dispecerat';
 // const App = () => {
 //   return (
 //     <Router>
@@ -73,8 +73,8 @@ const App = () => {
           
         />
          <Stack.Screen
-          name="SignUp_D"
-          component={SignUp_D}
+          name="SignUp_Dispecerat"
+          component={SignUp_Dispecerat}
           options={{
             headerShown: false
         }}

@@ -168,6 +168,7 @@ export default function LogIn() {
             <Text style={styles.openButtonText}>{t("language")}</Text>
           </TouchableOpacity>
         </SafeAreaView>
+        
         <View style={{ marginTop: -527, marginBottom: 126, top: "70%" }}>
           <View style={styles.contour}>
             <WrittenLogo style={{ left: "7%", top: "4.5%" }} />

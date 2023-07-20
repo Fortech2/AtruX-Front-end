@@ -11,10 +11,13 @@
     "new_acc": "Nu ai cont?",
     "invalid_credentials": "Credențiale invalide",
     "company_name": "Numele companiei",
-    "driver": "Șofer",
-    "dispatcher": "Dispecer",
+    "driver": "ȘOFER",
+    "dispatcher": "DISPECER",
     "terms": "Accept Termenii de Utilizare",
     "forgotpassword":"Recuperează-ți parola!",
     "email_recovery":"E-mail-ul tău",
-    "recovery_button":"Trimite codul"
+    "recovery_button":"Trimite codul",
+    "create_account": "CREEAZĂ CONT",
+    "number_employees": "Număr angajați",
+    "phone_number": "Număr de telefon",
 }
