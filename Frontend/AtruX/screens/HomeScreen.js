@@ -1,16 +1,20 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import React from 'react';
+import { Text, View } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
-export class HomeScreen extends Component {
-  render() {
-    return (
-      <View>
-        <Text> textInComponent </Text>
-      </View>
-    )
-  }
+export default function HomeScreen() {
+  const route = useRoute();
+  const { username } = route.params;
+  console.log("Username:", username); // Add this log
+
+  return (
+    <View>
+      <Text>Welcome!</Text>
+      {/* ... other components and content ... */}
+    </View>
+  );
 }
 
 
 
-export default HomeScreen
+

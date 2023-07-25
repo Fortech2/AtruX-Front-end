@@ -59,7 +59,7 @@ export default function LogIn() {
     setModalVisible(false);
   };
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [isModalVisible3, setIsModalVisible3] = useState(false);
   const handleOpenModal = () => {
     setModalVisible(true);
   };
@@ -91,24 +91,29 @@ export default function LogIn() {
       setPasswordVisibility(!passwordVisibility);
     }
   };
+  const [errorMessage, setErrorMessage] = useState("");
   // const history = useHistory();
   const handleLogin = () => {
     axios
-      .post(
-        "http://18.185.137.152/login",
-        { username: email, password },
-        { withCredentials: true }
-      )
+      .post("http://18.185.137.152/login", { email, password }, { withCredentials: true })
       .then((response) => {
-        // Handle successful login response, e.g., navigate to HomeScreen
-        navigation.navigate("HomeScreen");
+        console.log("Login successful:", response.data);
+        navigation.navigate("HomeScreen", { username: response.data.name });
       })
       .catch((error) => {
-        console.error("Login error:", error);
-        // Handle login error, e.g., display an error message to the user
+        console.error("Login error:", error.response);
+        if (error.response && error.response.status === 500) {
+          setErrorMessage("Sorry, your username or password is incorrect. Please try again.");
+        } else {
+          setErrorMessage("An error occurred. Please try again later!");
+        }
+        setIsModalVisible3(true);
       });
-  };
-
+  
+    }
+    const hideModal = () => {
+      setIsModalVisible3(false);
+    };
   if (!montserratLoaded) {
     return null;
   }
@@ -169,8 +174,9 @@ export default function LogIn() {
           </TouchableOpacity>
         </SafeAreaView>
         
-        <View style={{ marginTop: -527, marginBottom: 126, top: "70%" }}>
+        <View style={{ marginTop: '-135%', top: "70%" }}>
           <View style={styles.contour}>
+          
             <WrittenLogo style={{ left: "7%", top: "4.5%" }} />
             <Text
               style={{
@@ -184,22 +190,44 @@ export default function LogIn() {
               }}
             >
               {t("SignIn.Title")}
+              
             </Text>
+            
+            <Modal
+        visible={isModalVisible3}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={hideModal}
+      >
+        <View style={styles.modalContainerError}>
+          <View style={styles.boxError}>
+            <Text style={styles.errorText}>SIGN IN FAILED</Text>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <View style={styles.line} />
+            <TouchableOpacity style={styles.okButton} onPress={hideModal}>
+              <Text style={styles.okButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
             <View style={styles.inputView}>
               <PersonIcon style={{ left: "2%", top: "20%" }} />
               <TextInput
-                style={{
-                  fontFamily: "Montserrat_100Thin",
-                  fontSize: 15,
-                  color: "#474747",
-                  width: "74%",
-                  top: "-84%",
-                  left: "5%",
-                }}
-                placeholder={t("emailOrUsername")}
-                placeholderTextColor="#6D6D6D"
-                onChangeText={(email) => setEmail(email)}
-              />
+  style={{
+    fontFamily: "Montserrat_100Thin",
+    fontSize: 15,
+    color: "#474747",
+    width: "74%",
+    top: "-84%",
+    left: "5%",
+  }}
+  placeholder={t("emailOrUsername")}
+  placeholderTextColor="#6D6D6D"
+  onChangeText={(email) => {
+    console.log("Email:", email);
+    setEmail(email);
+  }}
+/>
             </View>
 
             <View style={styles.inputView2}>
@@ -244,7 +272,9 @@ export default function LogIn() {
                 {t("rememberUser")}
               </Text>
             </View>
-
+            {/* Display error message here */}
+            
+ 
             <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
               <Text
                 style={{
@@ -283,13 +313,15 @@ export default function LogIn() {
               <View style={styles.ellipse3} />
             </View>
           </View>
+          <View >
           <View style={styles.box4}>
             <View style={styles.ellipseWrapper4}>
               <View style={styles.ellipse4} />
             </View>
           </View>
+          </View>
         </View>
-        <View style={{ top: "-8%", left: "-10%", zIndex: 1 }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", zIndex: 1, marginTop:'-20%' }}>
           <Text
             style={{
               fontFamily: "Montserrat_500Medium",
@@ -300,7 +332,7 @@ export default function LogIn() {
             {t("new_acc")}
           </Text>
           <TouchableOpacity
-            style={{ left: "40%", top: "-50%" }}
+            style={{  }}
             onPress={() => {
               navigation.navigate("SignUp");
             }}
@@ -348,6 +380,7 @@ const styles = StyleSheet.create({
     elevation: 10, //only android
     position: "absolute",
     zIndex: 1,
+    opacity: 1,
   },
   image: {
     marginBottom: 40,
@@ -363,6 +396,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     top: "-68%",
     alignContent: "center",
+  },
+  errorText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: "Montserrat_500Medium",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  errorMessage:{
+    color: '#000000',
+    fontSize: 14,
+    fontFamily: "Montserrat_100Thin",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
   },
   inputView2: {
     borderRadius: 12,
@@ -462,10 +515,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     width: "100%",
-    top: "220%",
-    marginLeft: 158,
-    marginRight: -158,
-    left: "-2%",
+    top: "255%",
+    left: "8%",
   },
   ellipseWrapper3: {
     borderWidth: 0,
@@ -486,12 +537,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     width: "100%",
-    marginTop: 720,
-    marginBottom: -42,
-    marginLeft: -50,
-    marginRight: 154,
-    top: "5%",
-    left: "-2%",
+    marginTop: '220%',
+    marginLeft: '-22%',
   },
   ellipseWrapper4: {
     borderWidth: 0,
@@ -505,5 +552,49 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: 156,
+  },
+  boxError:{
+    backgroundColor: 'white',
+    width: "80%",
+    borderRadius: 14,
+    padding: 1,
+    height:'20%'
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject, // Overlay the whole container
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  },
+  modalContainerError:{
+    justifyContent: "center",
+    alignItems: "center",
+    position:'absolute',
+    alignSelf:'center',
+    top:'-5%',
+    width: "100%",
+    borderRadius: 12,
+    height:'100%'
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#CCCCCC",
+    marginVertical: 10,
+    top:'5%'
+  },
+  okButton: {
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  okButtonText: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 20,
+    color: "#101F41",
+    textAlign: "center",
+    justifyContent:'center',
+   top:'-60%',
+   left:'-3%'
   },
 });
