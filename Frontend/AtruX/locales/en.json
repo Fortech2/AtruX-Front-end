@@ -20,4 +20,7 @@
     "create_account": "CREATE ACCOUNT",
     "number_employees": "Number employees",
     "phone_number": "Phone number",
+    "hello_":"Hello, ",
+    "profile":"Profile",
+    "general_data":"General Data"
 }

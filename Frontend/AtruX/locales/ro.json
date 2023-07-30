@@ -20,4 +20,7 @@
     "create_account": "CREEAZĂ CONT",
     "number_employees": "Număr angajați",
     "phone_number": "Număr de telefon",
+    "hello_":"Salut,",
+    "profile":"Profil",
+    "general_data":"Date generale"
 }
