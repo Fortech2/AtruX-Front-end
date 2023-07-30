@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   return (
     <View>
       <Text>Home Screen</Text>
@@ -11,6 +11,3 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-
-
-

@@ -25,7 +25,7 @@ import {
   Picker,
   TouchableHighlight,
 } from "react-native";
-
+import { useRoute } from "@react-navigation/native";
 import {
   useFonts as useMontserrat,
   Montserrat_100Thin,
@@ -52,6 +52,7 @@ import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import Arrow from "../components/arrow_language";
 import { useHistory } from "react-router-dom";
 export default function LogIn() {
+  
   const { t, i18n } = useTranslation();
   const changeLanguage = (language) => {
     console.log(`Selected language: ${language}`);
@@ -67,6 +68,7 @@ export default function LogIn() {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
   const navigation = useNavigation(); // for the navigation
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
@@ -98,7 +100,7 @@ export default function LogIn() {
       .post("http://18.185.137.152/login", { email, password }, { withCredentials: true })
       .then((response) => {
         console.log("Login successful:", response.data);
-        navigation.navigate("HomeScreen", { username: response.data.name });
+        navigation.navigate('Home', { username: response.data.name });
       })
       .catch((error) => {
         console.error("Login error:", error.response);
@@ -111,8 +113,14 @@ export default function LogIn() {
       });
   
     }
+   
     const hideModal = () => {
       setIsModalVisible3(false);
+    };
+    const handleLoginb = () => {
+      // Perform any other login-related logic here if needed
+      // For now, we will simply navigate to the Home screen (App_Driver)
+      navigation.navigate('Tab_Navigation');
     };
   if (!montserratLoaded) {
     return null;
@@ -275,7 +283,7 @@ export default function LogIn() {
             {/* Display error message here */}
             
  
-            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLoginb}>
               <Text
                 style={{
                   fontFamily: "Montserrat_500Medium",
