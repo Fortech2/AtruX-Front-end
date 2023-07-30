@@ -1,19 +1,25 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../screens/HomeScreen';
-import DriverProfile from '../screens/Driver_Profile';
-import EditProfile from '../screens/EditDriverProfile';
-import Driver_Security from '../screens/Security_Driver';
-
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "../screens/HomeScreen";
+import { View, StyleSheet } from "react-native";
+import DriverProfile from "../screens/Driver_Profile";
+import EditProfile from "../screens/EditDriverProfile";
+import Driver_Security from "../screens/Security_Driver";
+import HomeIcon from "../components/HomeTabIcon";
+import SecurityIcon from "../components/SecurityTabIcon";
+import ProfileIcon from "../components/ProfileTabIcon";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeStackScreen() {
   return (
-    
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -21,8 +27,16 @@ function HomeStackScreen() {
 function ProfileStackScreens() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Profile" component={DriverProfile} options={{ headerShown: false }} />
-      <Stack.Screen name="ProfileEdit" component={EditProfile} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Profile"
+        component={DriverProfile}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProfileEdit"
+        component={EditProfile}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -30,7 +44,11 @@ function ProfileStackScreens() {
 function SecurityStackScreens() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Security" component={Driver_Security} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="Security"
+        component={Driver_Security}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
@@ -38,14 +56,77 @@ function SecurityStackScreens() {
 export default function TabNavigation() {
   return (
     <Tab.Navigator
-      screenOptions={{
-        tabBarShowLabel: false,
-        tabBarStyle: { height: 60 }
-      }}
+      initialRouteName="Homes"
+      tabBarOptions={{
+        showLabel: false,
+       // Apply the custom style to the tab bar container
+      }} 
+      tabBarStyle={{ backgroundColor: "#D9D9D9" }}
+
     >
-      <Tab.Screen name="Homes" component={HomeStackScreen} options={{ headerShown: false }} />
-      <Tab.Screen name="Profile" component={ProfileStackScreens} options={{ headerShown: false }} />
-      <Tab.Screen name="Security" component={SecurityStackScreens} options={{ headerShown: false }} />
+      <Tab.Screen
+        name="Security"
+        component={SecurityStackScreens}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <SecurityIcon
+              name="Home"
+              size={size}
+              color={color}
+              alignItems={"center"}
+              top={"10%"}
+              left={"32%"}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Homes"
+        component={HomeStackScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <HomeIcon
+              name="Home"
+              size={size}
+              color={color}
+              alignItems={"center"}
+              top={"10%"}
+              left={"32%"}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
+
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStackScreens}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <ProfileIcon
+              name="Profile"
+              size={size}
+              color={color}
+              alignItems={"center"}
+              top={"10%"}
+              left={"32%"}
+            />
+          ),
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 }
+const styles = StyleSheet.create({
+  tabBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 60,
+    backgroundColor: "#D9D9D9", // Adjust the background color as needed
+    borderTopWidth: 1,
+    borderTopColor: "#ccc", // Adjust the border color as needed
+    alignSelf: "center",
+  },
+});

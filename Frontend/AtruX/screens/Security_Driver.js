@@ -4,7 +4,7 @@ import { View, Text, Button } from 'react-native';
 const HomeScreen = ({ navigation }) => {
   return (
     <View>
-      <Text>Home Screen</Text>
+      <Text>Security Screen</Text>
       
     </View>
   );
