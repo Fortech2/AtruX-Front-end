@@ -1,6 +1,6 @@
 
 
-import React from 'react';
+import React,{useEffect, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,6 +22,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import ProfileEllipse from '../components/Ellipse_up';
 import Ellipse from '../components/Ellipse_2';
+import axios from 'axios';
 import Ellipse_2 from '../components/Ellipse_grey';
 import { useTranslation } from "react-i18next"; // for the translation
 import i18next, { languageResources } from "../services/i18next"; // for the translation
@@ -64,6 +65,23 @@ function DriverProfileScreen() {
     // For now, we will simply navigate to the Home screen (App_Driver)
     navigation.navigate('Homes');
   };
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get('http://18.185.137.152/user');
+      setUserData(response.data);
+      setLoading(false); // Set loading to false when the data is fetched successfully
+    } catch (error) {
+      console.error('Error:', error);
+      setLoading(false); // Set loading to false when there is an error
+      // Handle the error here and show an error message to the user
+    }
+  };
   return (
     <View style={{ flex: 1, backgroundColor:'#E9EBEE' }}>
 
@@ -87,15 +105,27 @@ function DriverProfileScreen() {
       <Text style={{fontFamily:'Montserrat_500Medium', fontSize:20, color:'#101F41', top:'8%', left:'-15%'}}>
         {t("general_data")}
       </Text>
-      <View style = {styles.data}>
-        <Email style={{top:'25%', left:'3%'}}/>
-      </View>
-      <View style = {styles.data}>
-        <SmallProfile style={{top:'23%', left:'3%'}}/>
-      </View>
-      <View style = {styles.data}>
-        <Phone style={{top:'23%', left:'3%'}}/>
-      </View>
+      {userData ? (
+        <>
+          <View style={styles.data}>
+            <Email style={{ top: '25%', left: '3%' }} />
+            <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'-80%', left:'3%'}}>{userData.email}</Text>
+          </View>
+          <View style={styles.data}>
+            <SmallProfile style={{ top: '23%', left: '3%' }} />
+            <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'-80%', left:'3%'}}>{userData.name}</Text>
+          </View>
+          {userData.role === 'dispatcher' && (
+            <View style={styles.data}>
+              <Phone style={{ top: '23%', left: '3%' }} />
+              <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'-80%', left:'3%'}}>{userData.phone_number}</Text>
+            </View>
+          )}
+          {/* Display additional fields specific to the dispatcher */}
+        </>
+      ) : (
+        <Text>Loading...</Text>
+      )}
       </View> 
     
         <TouchableOpacity style={styles.smallContour} onPress={handleEdit}>
