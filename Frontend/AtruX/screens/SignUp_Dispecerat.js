@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview"
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
+import axios from "axios";
 import {
   StyleSheet,
   Text,
@@ -57,15 +58,17 @@ import {
 import Down_arrow from "../components/downarrow_modal";
 import NumberEmployeesIcon from "../components/NumberEmployeesIcon"
 import PhoneIcon from "../components/PhoneIcon"
-import axios from "axios";
 
 export default function SignUp_Dispecerat() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-
+  const [isModalVisible3, setIsModalVisible3] = useState(false);
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
+  };
+  const hideModal = () => {
+    setIsModalVisible3(false);
   };
   const OptionModal = ({ isVisible, onClose, onOptionSelect }) => {
     return (
@@ -123,7 +126,7 @@ export default function SignUp_Dispecerat() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation(); // for the translation
   const [modalVisible2, setModalVisible2] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState('');
   const changeLanguage = (language) => {
     console.log(`Selected language: ${language}`);
     i18n.changeLanguage(language);
@@ -168,20 +171,33 @@ export default function SignUp_Dispecerat() {
       setPasswordVisibility(!passwordVisibility);
     }
   };
-
-  //     const signUpUser = async () => {
-  //     // checking if the data is valid
-  //         console.log(email, password);
-
-  //         try {
-  //             //const resp = await /// httpClient.post(".....")
-  //             //window.location.href = "/";
-  //         } catch (error){
-  //             if(error.response.status === ){
-  //                 alert(<Text>{t('invalid_credentials')}</Text>)
-  //             }
-  //         }
-  //    };
+  const signUpUser = async () => {
+    try {
+      const response = await axios.post("http://18.185.137.152/sign-up", {
+        role: 'dispatcher',
+        name: username,
+        email: email,
+        password: password,
+        phone_number: phone_number,
+        company: company_name,
+        number_of_drivers: number_employees,
+      });
+  
+      console.log("User registered successfully:", response.data);
+      navigation.navigate("Disp_TabNavigation");
+    }catch (error) {
+      console.error("Error during registration:", error);
+      // Handle the error and show different error messages for each type of error
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(t("email_ex"));
+      } else if (error.response && error.response.status === 404) {
+        setErrorMessage(t("check_nr"));
+      } else {
+        setErrorMessage(t("error_oc"));
+      }
+      setIsModalVisible3(true)
+    }
+  };
   if (!montserratLoaded) {
     return null;
   }
@@ -232,7 +248,25 @@ export default function SignUp_Dispecerat() {
         </SafeAreaView>
 
         <View style={styles.contour}>
+
           <WrittenLogo style={{ left: "5%" }} />
+          <Modal
+        visible={isModalVisible3}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={hideModal}
+      >
+        <View style={styles.modalContainerError}>
+          <View style={styles.boxError}>
+            <Text style={styles.errorText}>SIGN UP FAILED</Text>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <View style={styles.line} />
+            <TouchableOpacity style={styles.okButton} onPress={hideModal}>
+              <Text style={styles.okButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
           <Text
             style={{
               fontFamily: "Montserrat_600SemiBold",
@@ -368,7 +402,7 @@ export default function SignUp_Dispecerat() {
             </Text>
           </View>
 
-          <TouchableOpacity style={styles.createAccBtn} >
+          <TouchableOpacity style={styles.createAccBtn} onPress={signUpUser}>
           {/* onPress={navigation.navigate('HomeScreenDispatcher')} */}
             <Text
               style={{
@@ -478,5 +512,63 @@ const styles = StyleSheet.create({
     color: "white",
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 16,
+  },
+  modalContainerError:{
+    justifyContent: "center",
+    alignItems: "center",
+    position:'absolute',
+    alignSelf:'center',
+    top:'-5%',
+    width: "100%",
+    borderRadius: 12,
+    height:'100%'
+  },
+  boxError:{
+    backgroundColor: 'white',
+    width: "80%",
+    borderRadius: 14,
+    padding: 1,
+    height:'20%'
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#CCCCCC",
+    marginVertical: 10,
+    top:'5%'
+  },
+  errorText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: "Montserrat_500Medium",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  errorMessage:{
+    color: '#000000',
+    fontSize: 14,
+    fontFamily: "Montserrat_100Thin",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  okButton: {
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  okButtonText: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 20,
+    color: "#101F41",
+    textAlign: "center",
+    justifyContent:'center',
+   top:'-60%',
+   left:'-3%'
   },
 });

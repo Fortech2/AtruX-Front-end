@@ -22,5 +22,12 @@
     "phone_number": "Phone number",
     "hello_":"Hello, ",
     "profile":"Profile",
-    "general_data":"General Data"
+    "general_data":"General Data",
+    "user_role":"Unknown user role. Please contact support.",
+    "data_error":"An error occurred while fetching user data.",
+    "wrong_ps_em":"Sorry, your username or password is incorrect. Please try again.",
+    "error_oc":"An error occurred. Please try again later!",
+    "email_ex":"Email already exists. Please use a different email.",
+    "check_nr":"Please check the provided phone number.",
+    "dis_no":"Dispatcher not found"
 }
