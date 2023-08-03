@@ -99,15 +99,34 @@ export default function LogIn() {
     axios
       .post("http://18.185.137.152/login", { email, password }, { withCredentials: true })
       .then((response) => {
-        console.log("Login successful:", response.data);
-        navigation.navigate('Home', { username: response.data.name });
-      })
+        axios
+        .get("http://18.185.137.152/user", { withCredentials: true }) // Assuming you have the get_user_data endpoint
+        .then((userDataResponse) => {
+          console.log("User data:", userDataResponse.data);
+
+          // Now, based on the user role, navigate to the appropriate screen
+          const userRole = userDataResponse.data.role;
+          if (userRole === "driver") {
+            navigation.navigate("Tab_Navigation");
+          } else if (userRole === "dispatcher") {
+            navigation.navigate("Disp_TabNavigation"); // Replace with the appropriate screen name for dispatcher role
+          } else {
+            setErrorMessage(t("user_role"));
+            setIsModalVisible3(true);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user data:", error);
+          setErrorMessage(t("data_error"));
+          setIsModalVisible3(true);
+        });
+    })
       .catch((error) => {
         console.error("Login error:", error.response);
         if (error.response && error.response.status === 500) {
-          setErrorMessage("Sorry, your username or password is incorrect. Please try again.");
+          setErrorMessage(t("wrong_ps_em"));
         } else {
-          setErrorMessage("An error occurred. Please try again later!");
+          setErrorMessage(t("error_oc"));
         }
         setIsModalVisible3(true);
       });
@@ -282,7 +301,8 @@ export default function LogIn() {
             </View>
             {/* Display error message here */}
             
-            <TouchableOpacity style={styles.loginBtn} onPress={handleLoginb}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+
               <Text
                 style={{
                   fontFamily: "Montserrat_500Medium",

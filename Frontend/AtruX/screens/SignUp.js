@@ -7,6 +7,8 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview"
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
+import axios from 'axios';
+
 import {
   StyleSheet,
   Text,
@@ -59,13 +61,69 @@ import SignUp_Dispecerat from "../screens/SignUp_Dispecerat"
 import PhoneIcon from "../components/PhoneIcon"
 
 export default function SignUp() {
+  const [errorMessage, setErrorMessage] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
-
+  const [phoneNumber, setPhoneNumber] = useState('');
+const [companyName, setCompany] = useState('');
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
   };
+  const hideModal = () => {
+    setIsModalVisible3(false);
+  };
+  const [isModalVisible3, setIsModalVisible3] = useState(false);
+  const handleSignUp = async () => {
+    try {
+      const userData = {
+        role: 'driver',
+        name: username,
+        email,
+        password,
+        phone_number: phoneNumber,
+        company: companyName,
+      };
+  
+      const response = await axios.post('http://18.185.137.152/sign-up', userData);
+      console.log(response.data); // Log the response from the backend (optional)
+      if (response.status === 200) {
+        navigation.navigate('Tab_Navigation'); // Navigate to the HomeScreen
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response) {
+        // The request was made, and the server responded with a status code
+        console.error('Server response status:', error.response.status);
+        console.error('Server response data:', error.response.data);
+        console.error('Server response headers:', error.response.headers);
+  
+        // Check if the server response data contains the error message "Email already exists"
+        if (error.response.data === "Email already exists") {
+          setErrorMessage(t("email_ex"));
+        } else if (error.response.data === "Dispatcher not found") {
+          setErrorMessage(t("dis_no"));
+        } else {
+          // Handle other server response errors here if needed
+          setErrorMessage(t("error_oc"));
+        }
+      } else if (error.request) {
+        // The request was made, but no response was received
+        console.error('No response received:', error.request);
+        setErrorMessage(t("error_oc"));
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error:', error.message);
+        setErrorMessage(t("error_oc"));
+      }
+      setIsModalVisible3(true)
+    }
+  };
+  
+  
+  
+  
+  
   const OptionModal = ({ isVisible, onClose, onOptionSelect }) => {
     return (
       <Modal
@@ -148,8 +206,6 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [company_name, setCompany] = useState("");
-  const [phone_number, setPhoneNumber] = useState(null)
   const [rightIcon, setRightIcon] = useState("eye");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIconColor, setRightIconColor] = useState("#6D6D6D");
@@ -167,23 +223,11 @@ export default function SignUp() {
     }
   };
 
-  //     const signUpUser = async () => {
-  //     // checking if the data is valid
-  //         console.log(email, password);
 
-  //         try {
-  //             //const resp = await /// httpClient.post(".....")
-  //             //window.location.href = "/";
-  //         } catch (error){
-  //             if(error.response.status === ){
-  //                 alert(<Text>{t('invalid_credentials')}</Text>)
-  //             }
-  //         }
-  //    };
   if (!montserratLoaded) {
     return null;
   }
-
+  
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -229,6 +273,23 @@ export default function SignUp() {
         </SafeAreaView>
 
         <View style={styles.contour}>
+        <Modal
+        visible={isModalVisible3}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={hideModal}
+      >
+        <View style={styles.modalContainerError}>
+          <View style={styles.boxError}>
+            <Text style={styles.errorText}>SIGN IN FAILED</Text>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <View style={styles.line} />
+            <TouchableOpacity style={styles.okButton} onPress={hideModal}>
+              <Text style={styles.okButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
           <WrittenLogo style={{ left: "5%" }} />
           <Text
             style={{
@@ -332,7 +393,7 @@ export default function SignUp() {
               style={styles.inputText}
               placeholder={t("company_name")}
               placeholderTextColor="#6D6D6D"
-              onChangeText={(company_name) => setCompany(company_name)}
+              onChangeText={(company_name) => setCompany(companyName)}
             />
           </View>
 
@@ -355,7 +416,7 @@ export default function SignUp() {
             </Text>
           </View>
 
-          <TouchableOpacity style={styles.createAccBtn} >
+          <TouchableOpacity style={styles.createAccBtn} onPress={handleSignUp}>
           {/* onPress={navigation.navigate('HomeScreenDispatcher')} */}
             <Text
               style={{
@@ -476,5 +537,62 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat_600SemiBold",
     fontSize: 16,
   },
-
+  okButton: {
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  okButtonText: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 20,
+    color: "#101F41",
+    textAlign: "center",
+    justifyContent:'center',
+   top:'-60%',
+   left:'-3%'
+  },
+  modalContainerError:{
+    justifyContent: "center",
+    alignItems: "center",
+    position:'absolute',
+    alignSelf:'center',
+    top:'-5%',
+    width: "100%",
+    borderRadius: 12,
+    height:'100%'
+  },
+  boxError:{
+    backgroundColor: 'white',
+    width: "80%",
+    borderRadius: 14,
+    padding: 1,
+    height:'20%'
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#CCCCCC",
+    marginVertical: 10,
+    top:'5%'
+  },
+  errorText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: "Montserrat_500Medium",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  errorMessage:{
+    color: '#000000',
+    fontSize: 14,
+    fontFamily: "Montserrat_100Thin",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
 });
