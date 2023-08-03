@@ -22,5 +22,20 @@
     "phone_number": "Phone number",
     "hello_":"Hello, ",
     "profile":"Profile",
-    "general_data":"General Data"
+    "general_data":"General Data",
+    "security": "Security",
+    "system": "system",
+    "past_images": "See past images",
+    "system_status": "System status",
+    "camera_system": "Camera system:",
+    "on": "ON",
+    "off": "OFF",
+    "alarms_history": "Alarms history:",
+    "edit_profile": "Edit profile",
+    "new_email": "New Email",
+    "new_username": "New Username",
+    "new_phone_nr": "New Phone Number",
+    "change_info": "Change Your Information",
+    "save": "SAVE",
+    "cancel": "CANCEL"
 }

@@ -22,5 +22,20 @@
     "phone_number": "Număr de telefon",
     "hello_":"Salut,",
     "profile":"Profil",
-    "general_data":"Date generale"
+    "general_data":"Date generale",
+    "security": "Sistem",
+    "system": "securitate",
+    "past_images": "Vezi imagini salvate",
+    "system_status": "Status sistem",
+    "camera_system": "Sistem camera:",
+    "on": "ACTIVAT",
+    "off": "DEZACTIVAT",
+    "alarms_history": "Istoric alarme",
+    "edit_profile": "Editare profil",
+    "new_email": "Email Nou",
+    "new_username": "Nume Utilizator Nou",
+    "new_phone_nr": "Număr Telefon Nou",
+    "change_info": "Schimbă Informațiile",
+    "save": "SALVEAZĂ",
+    "cancel": "ANULEAZĂ"
 }

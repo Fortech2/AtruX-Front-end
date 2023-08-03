@@ -56,7 +56,7 @@ function DriverProfileScreen() {
   });
   const handleEdit = () => {
     // Perform any other login-related logic here if needed
-    // For now, we will simply navigate to the Home screen (App_Driver)
+    // For now, we will simply navigate to the Edit Driver Profile (App_Driver)
     navigation.navigate('ProfileEdit');
   };
   const handleBack = () => {
@@ -66,7 +66,6 @@ function DriverProfileScreen() {
   };
   return (
     <View style={{ flex: 1, backgroundColor:'#E9EBEE' }}>
-
       <View>
         <ProfileEllipse style={{position:'absolute'}}/>
         <Ellipse style={{position:'absolute', top:'40%', left:'64%'}}/>

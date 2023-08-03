@@ -4,8 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import { View, StyleSheet } from "react-native";
 import DriverProfile from "../screens/Driver_Profile";
-import EditProfile from "../screens/EditDriverProfile";
+import EditDriverProfile from "../screens/EditDriverProfile";
 import Driver_Security from "../screens/Security_Driver";
+import PastImages_Driver from "../screens/PastImages_Driver";
 import HomeIcon from "../components/HomeTabIcon";
 import SecurityIcon from "../components/SecurityTabIcon";
 import ProfileIcon from "../components/ProfileTabIcon";
@@ -34,7 +35,7 @@ function ProfileStackScreens() {
       />
       <Stack.Screen
         name="ProfileEdit"
-        component={EditProfile}
+        component={EditDriverProfile}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -47,6 +48,11 @@ function SecurityStackScreens() {
       <Stack.Screen
         name="Security"
         component={Driver_Security}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PastImages"
+        component={PastImages_Driver}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
