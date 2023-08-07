@@ -24,6 +24,7 @@ import ProfileEllipse from '../components/Ellipse_up';
 import Ellipse from '../components/Ellipse_2';
 import axios from 'axios';
 import Ellipse_2 from '../components/Ellipse_grey';
+
 import { useTranslation } from "react-i18next"; // for the translation
 import i18next, { languageResources } from "../services/i18next"; // for the translation
 import languageList from "../locales/languageList.json"; // for the translation
@@ -91,7 +92,7 @@ function DispProfileScreen() {
         <Ellipse_2 style={{ top: '60%' }} />
       </View>
 
-      {/* Scrollable content */}
+     
       <ScrollView contentContainerStyle={styles.scrollContent}>
       <Profil style={{left:'5%', top:'10%'}}/>
       <Text style={{fontFamily:'Montserrat_500Medium', fontSize:30, color:'white', top:'-90%', left:'18%'}}>
@@ -123,7 +124,7 @@ function DispProfileScreen() {
           {/* Display additional fields specific to the dispatcher */}
         </>
       ) : (
-        <Text>Loading...</Text>
+        <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'30%'}}>Loading...</Text>
       )}
       </View>
 
