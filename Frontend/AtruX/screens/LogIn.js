@@ -108,7 +108,9 @@ export default function LogIn() {
         // Handle login error, e.g., display an error message to the user
       });
   };
-
+  const handleNavigate = () => {
+    navigation.navigate('HomeScreen');
+  };
   if (!montserratLoaded) {
     return null;
   }
@@ -245,7 +247,7 @@ export default function LogIn() {
               </Text>
             </View>
 
-            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleNavigate}>
               <Text
                 style={{
                   fontFamily: "Montserrat_500Medium",
