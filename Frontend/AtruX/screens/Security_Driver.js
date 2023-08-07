@@ -73,6 +73,10 @@ export default function Driver_Security() {
     // here we need to take the last 3 alarms notifications and to put them in the 2nd container
   };
 
+  const handleNotif = () => {
+    navigation.navigate('Notifications');
+  }
+
   return (
     <View style={{flex: 1}}>
       <ScrollView style={styles.container}> 
@@ -100,7 +104,7 @@ export default function Driver_Security() {
         </TouchableOpacity>
       
       {/* the message does not appear when I press the button */}
-        <TouchableOpacity style={styles.notificationButton} onPress={alert("notification")}>
+        <TouchableOpacity style={styles.notificationButton} onPress={handleNotif}>
           <NotificationIcon style={{left: "10%", top: "3%"}}/>
         </TouchableOpacity>
       

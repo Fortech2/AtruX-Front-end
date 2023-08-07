@@ -139,7 +139,7 @@ export default function LogIn() {
   const handleLoginb = () => {
       // Perform any other login-related logic here if needed
       // For now, we will simply navigate to the Home screen (App_Driver)
-      navigation.navigate('Disp_TabNavigation');
+      navigation.navigate('Tab_Navigation');
     };
   if (!montserratLoaded) {
     return null;
@@ -160,7 +160,7 @@ export default function LogIn() {
               marginBottom: 624,
               marginLeft: 46,
               marginRight: 81.3,
-              top: "-7%",
+              top: "-5%",
             }}
           />
         </View>
@@ -204,7 +204,7 @@ export default function LogIn() {
         <View style={{ marginTop: '-135%', top: "70%" }}>
           <View style={styles.contour}>
           
-            <WrittenLogo style={{ left: "7%", top: "4.5%" }} />
+            <WrittenLogo style={{ left: "3.5%", top: "4.5%" }} />
             <Text
               style={{
                 fontFamily: "Montserrat_600SemiBold",
@@ -258,7 +258,7 @@ export default function LogIn() {
             </View>
 
             <View style={styles.inputView2}>
-              <Lock style={{ left: "2%", top: "24%" }} />
+              <Lock style={{ left: "2%", top: "20%" }} />
               <TextInput
                 style={{
                   fontFamily: "Montserrat_100Thin",
@@ -274,7 +274,7 @@ export default function LogIn() {
                 onChangeText={(password) => setPassword(password)}
               />
               <TouchableOpacity
-                style={{ top: "-142%", left: "40%" }}
+                style={{ top: "-164%", left: "40%" }}
                 onPress={handlePasswordVisibility}
               >
                 <Icon name="eye" size={20} />
@@ -301,7 +301,7 @@ export default function LogIn() {
             </View>
             {/* Display error message here */}
             
-            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLoginb}>
 
               <Text
                 style={{
@@ -315,7 +315,7 @@ export default function LogIn() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{ top: "-65%", left: "0%" }}
+              style={{ top: "-68%", left: "0%" }}
               onPress={() => {
                 navigation.navigate("ForgotPassword");
               }}
@@ -331,7 +331,7 @@ export default function LogIn() {
               </Text>
             </TouchableOpacity>
 
-            <FullLogo style={{ top: "-62%", left: "65%" }} />
+            <FullLogo style={{ top: "-65.5%", left: "65%" }} />
           </View>
         </View>
         <View>
@@ -348,7 +348,7 @@ export default function LogIn() {
           </View>
           </View>
         </View>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", zIndex: 1, marginTop:'-20%' }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", zIndex: 1, marginTop:'-40%' }}>
           <Text
             style={{
               fontFamily: "Montserrat_500Medium",
@@ -398,8 +398,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 3, height: 5 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height: 630,
-    width: 300,
+    height: 547,
+    width: 271,
     marginLeft: 5,
     alignItems: "center",
     alignSelf: "center",
@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
     backgroundColor: "#101F41",
-    top: "-66%",
+    top: "-70%",
     elevation: 10,
   },
   language_list: {
@@ -543,7 +543,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     top: "255%",
-    left: "8%",
+    left: "12%",
   },
   ellipseWrapper3: {
     borderWidth: 0,
@@ -576,8 +576,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#101f41",
     borderRadius: 78,
     height: 156,
-    top: 0,
-    left: 0,
+    top: '-43%',
+    left: '22%',
     width: 156,
   },
   boxError:{

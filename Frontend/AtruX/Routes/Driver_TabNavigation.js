@@ -10,6 +10,7 @@ import PastImages_Driver from "../screens/PastImages_Driver";
 import HomeIcon from "../components/HomeTabIcon";
 import SecurityIcon from "../components/SecurityTabIcon";
 import ProfileIcon from "../components/ProfileTabIcon";
+import Notification from "../screens/Notification";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -53,6 +54,11 @@ function SecurityStackScreens() {
       <Stack.Screen
         name="PastImages"
         component={PastImages_Driver}
+        options={{ headerShown: false }}
+      />
+            <Stack.Screen
+        name="Notifications"
+        component={Notification}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
