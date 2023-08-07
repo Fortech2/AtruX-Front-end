@@ -12,6 +12,7 @@ import ProfileIcon from "../components/ProfileTabIcon";
 import HomeD from '../screens/HomeScreenDisp';
 import ProfileD from '../screens/DispatcherProfile';
 import SecurityD from '../screens/SecurityDispecerat';
+import Edit_Profile_D from '../screens/EditProfile_Disp';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -35,11 +36,11 @@ function ProfileStackScreens() {
         component={ProfileD}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-        name="ProfileEdit"
-        component={EditProfile}
+      <Stack.Screen
+        name="ProfileEditD"
+        component={Edit_Profile_D}
         options={{ headerShown: false }}
-      /> */}
+      />
     </Stack.Navigator>
   );
 }
