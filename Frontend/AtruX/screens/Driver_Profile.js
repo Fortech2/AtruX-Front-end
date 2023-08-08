@@ -1,6 +1,4 @@
-
-
-import React,{useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -19,28 +17,28 @@ import {
   Picker,
   TouchableHighlight,
 } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import ProfileEllipse from '../components/Ellipse_up';
-import Ellipse from '../components/Ellipse_2';
-import axios from 'axios';
-import Ellipse_2 from '../components/Ellipse_grey';
+import { useNavigation } from "@react-navigation/native";
+import ProfileEllipse from "../components/Ellipse_up";
+import Ellipse from "../components/Ellipse_2";
+import axios from "axios";
+import Ellipse_2 from "../components/Ellipse_grey";
 import { useTranslation } from "react-i18next"; // for the translation
 import i18next, { languageResources } from "../services/i18next"; // for the translation
 import languageList from "../locales/languageList.json"; // for the translation
-import Profil from '../components/Profil_page';
-import ProfileCircle from '../components/Profile_Circle';
-import ProfileContour from '../components/Profile_contour';
+import Profil from "../components/Profil_page";
+import ProfileCircle from "../components/Profile_Circle";
+import ProfileContour from "../components/Profile_contour";
 import {
   useFonts as useMontserrat,
   Montserrat_100Thin,
   Montserrat_600SemiBold,
   Montserrat_500Medium,
 } from "@expo-google-fonts/montserrat";
-import Email from '../components/EmailIcon';
-import SmallProfile from '../components/SmallProfile';
-import Phone from '../components/Phone';
-import EditProfile from '../components/EditProfile';
-import Back from '../components/Back';
+import Email from "../components/EmailIcon";
+import SmallProfile from "../components/SmallProfile";
+import Phone from "../components/Phone";
+import EditProfile from "../components/EditProfile";
+import Back from "../components/Back";
 function DriverProfileScreen() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
@@ -58,12 +56,12 @@ function DriverProfileScreen() {
   const handleEdit = () => {
     // Perform any other login-related logic here if needed
     // For now, we will simply navigate to the Edit Driver Profile (App_Driver)
-    navigation.navigate('ProfileEdit');
+    navigation.navigate("ProfileEdit");
   };
   const handleBack = () => {
     // Perform any other login-related logic here if needed
     // For now, we will simply navigate to the Home screen (App_Driver)
-    navigation.navigate('Homes');
+    navigation.navigate("Homes");
   };
   const [userData, setUserData] = useState(null);
 
@@ -73,68 +71,111 @@ function DriverProfileScreen() {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get('http://18.185.137.152/user');
+      const response = await axios.get("http://18.185.137.152/user");
       setUserData(response.data);
       setLoading(false); // Set loading to false when the data is fetched successfully
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       setLoading(false); // Set loading to false when there is an error
       // Handle the error here and show an error message to the user
     }
   };
   return (
-    <View style={{ flex: 1, backgroundColor:'#E9EBEE' }}>
+    <View style={{ flex: 1, backgroundColor: "#E9EBEE" }}>
       <View>
-        <ProfileEllipse style={{position:'absolute'}}/>
-        <Ellipse style={{position:'absolute', top:'40%', left:'64%'}}/>
-        <Ellipse_2 style={{ top:'60%'}}/>
-    </View>
-    
-     <View style={{top:'-90%', left:'25%'}}>
-      <Profil style={{left:'-12%'}}/>
-      <Text style={{fontFamily:'Montserrat_500Medium', fontSize:30, color:'white', top:'-100%'}}>
-      {t("profile")}
-      </Text>
-     </View>
-     <View style={{justifyContent: 'center', top:'3%'}}>
-      <ProfileContour style={{top:'-74%', left:'41.5%', zIndex:1}}/>
-      <ProfileCircle style={{top:'-176%', left:'35%'}}/>
-     </View>
-     <View style={styles.contour}>
-      <Text style={{fontFamily:'Montserrat_500Medium', fontSize:20, color:'#101F41', top:'8%', left:'-15%'}}>
-        {t("general_data")}
-      </Text>
-      {userData ? (
-        <>
-          <View style={styles.data}>
-            <Email style={{ top: '25%', left: '3%' }} />
-            <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'-80%', left:'3%'}}>{userData.email}</Text>
-          </View>
-          <View style={styles.data}>
-            <SmallProfile style={{ top: '23%', left: '3%' }} />
-            <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'-80%', left:'3%'}}>{userData.name}</Text>
-          </View>
-          {userData.role === 'dispatcher' && (
+        <ProfileEllipse style={{ position: "absolute" }} />
+        <Ellipse style={{ position: "absolute", top: "40%", left: "64%" }} />
+        <Ellipse_2 style={{ top: "60%" }} />
+      </View>
+
+      <View style={{ top: "-90%", left: "25%" }}>
+        <Profil style={{ left: "-12%" }} />
+        <Text
+          style={{
+            fontFamily: "Montserrat_500Medium",
+            fontSize: 30,
+            color: "white",
+            top: "-100%",
+          }}
+        >
+          {t("profile")}
+        </Text>
+      </View>
+      <View style={{ justifyContent: "center", top: "3%" }}>
+        <ProfileContour style={{ top: "-74%", left: "41.5%", zIndex: 1 }} />
+        <ProfileCircle style={{ top: "-176%", left: "35%" }} />
+      </View>
+      <View style={styles.contour}>
+        <Text
+          style={{
+            fontFamily: "Montserrat_500Medium",
+            fontSize: 20,
+            color: "#101F41",
+            top: "8%",
+            left: "-15%",
+          }}
+        >
+          {t("general_data")}
+        </Text>
+        {userData ? (
+          <>
             <View style={styles.data}>
-              <Phone style={{ top: '23%', left: '3%' }} />
-              <Text style={{fontFamily:'Montserrat_100Thin', fontSize:15, color:'#101F41', top:'-80%', left:'3%'}}>{userData.phone_number}</Text>
+              <Email style={{ top: "25%", left: "3%" }} />
+              <Text
+                style={{
+                  fontFamily: "Montserrat_100Thin",
+                  fontSize: 15,
+                  color: "#101F41",
+                  top: "-80%",
+                  left: "3%",
+                }}
+              >
+                {userData.email}
+              </Text>
             </View>
-          )}
-          {/* Display additional fields specific to the dispatcher */}
-        </>
-      ) : (
-        <Text>Loading...</Text>
-      )}
-      </View> 
-    
-        <TouchableOpacity style={styles.smallContour} onPress={handleEdit}>
-        <EditProfile style={{top:'25%', left:'24%', zIndex:1}}/>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.back} onPress={handleBack}>
-          <Back/>
-        </TouchableOpacity>
-        
-      
+            <View style={styles.data}>
+              <SmallProfile style={{ top: "23%", left: "3%" }} />
+              <Text
+                style={{
+                  fontFamily: "Montserrat_100Thin",
+                  fontSize: 15,
+                  color: "#101F41",
+                  top: "-80%",
+                  left: "3%",
+                }}
+              >
+                {userData.name}
+              </Text>
+            </View>
+            {userData.role === "dispatcher" && (
+              <View style={styles.data}>
+                <Phone style={{ top: "23%", left: "3%" }} />
+                <Text
+                  style={{
+                    fontFamily: "Montserrat_100Thin",
+                    fontSize: 15,
+                    color: "#101F41",
+                    top: "-80%",
+                    left: "3%",
+                  }}
+                >
+                  {userData.phone_number}
+                </Text>
+              </View>
+            )}
+            {/* Display additional fields specific to the dispatcher */}
+          </>
+        ) : (
+          <Text>Loading...</Text>
+        )}
+      </View>
+
+      <TouchableOpacity style={styles.smallContour} onPress={handleEdit}>
+        <EditProfile style={{ top: "25%", left: "24%", zIndex: 1 }} />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.back} onPress={handleBack}>
+        <Back />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -156,9 +197,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 1,
     opacity: 1,
-    top:'45%',
+    top: "45%",
   },
-  data:{
+  data: {
     borderRadius: 12,
     width: 221,
     height: 38.7,
@@ -168,9 +209,9 @@ const styles = StyleSheet.create({
     borderColor: "#101f41",
     borderWidth: 1,
     alignContent: "center",
-    top:'15%'
+    top: "15%",
   },
-  smallContour:{
+  smallContour: {
     backgroundColor: "#d9d9d9",
     shadowColor: "#000",
     shadowOffset: { width: 3, height: 5 },
@@ -184,28 +225,22 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 1,
     opacity: 1,
-    top:'5%',
-    left:'80%',
-    alignItems:'center'
+    top: "5%",
+    left: "80%",
+    alignItems: "center",
   },
-  back:{
-   
-    
+  back: {
     height: 40,
     width: 40,
     marginLeft: 5,
     borderRadius: 10,
- 
+
     position: "absolute",
     zIndex: 1,
     opacity: 1,
-    top:'5%',
-    left:'4%',
-    alignItems:'center'
-  }
-})
+    top: "5%",
+    left: "4%",
+    alignItems: "center",
+  },
+});
 export default DriverProfileScreen;
-
-
-
-
