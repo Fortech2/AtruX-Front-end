@@ -44,5 +44,9 @@
     "error_oc":"An error occurred. Please try again later!",
     "email_ex":"Email already exists. Please use a different email.",
     "check_nr":"Please check the provided phone number.",
-    "dis_no":"Dispatcher not found"
+    "dis_no":"Dispatcher not found",
+    "nr_of_drivers":"Number of drivers:",
+    "drivers_info":"Drivers info:",
+    "new_company_name":"New company name",
+    "new_nr_dr":"Number of drivers"
 }

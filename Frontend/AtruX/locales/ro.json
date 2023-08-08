@@ -44,5 +44,9 @@
     "error_oc":"Ne pare rau, te rugam sa incerci mai tarziu!",
     "email_ex":"Acest email exista deja. Te rugam sa folosesti alt email.",
     "check_nr":"Te rugam sa verifici numarul de telefon introdus",
-    "dis_no":"Nu exista un dispecer valid. Va rugam sa incercati din nou"
+    "dis_no":"Nu exista un dispecer valid. Va rugam sa incercati din nou",
+    "nr_of_drivers": "Numarul de soferi:",
+    "drivers_info":"Informatii despre soferi:",
+    "new_company_name":"Denumire companie noua",
+    "new_nr_dr":"Numar nou de soferi"
 }
