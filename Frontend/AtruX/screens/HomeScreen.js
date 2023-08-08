@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   salutText: {
     color: '#FFFFFF',
     fontSize: 35,
-    fontFamily: 'Montserrat_600SemiBold',
+    fontFamily: 'Montserrat_500Medium',
     zIndex: 1
   },
   mesajInspirational:{
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   InspirationalText:{
     color: '#101F41',
     fontSize: 35,
-    fontFamily: 'Montserrat_600SemiBold',
+    fontFamily: 'Montserrat_500Medium',
     zIndex: 1
   },
   ButoaneDreptunghiulare: {
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   },
   textButoaneDreptunghiulare: {
     color: '#101F41',
-    fontSize: 22,
+    fontSize: 20,
     fontFamily: 'Montserrat_500Medium',
     left: 20,
     marginTop: 'center',
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
   textButoaneRotunde: {
     color: '#FFFFFF',
     fontSize: 9,
-    fontFamily: 'Montserrat_600SemiBold',
+    fontFamily: 'Montserrat_500Medium',
     top: '47%',
 },
 roundButtons2: {
