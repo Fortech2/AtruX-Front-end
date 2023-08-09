@@ -48,5 +48,11 @@
     "nr_of_drivers": "Numarul de soferi:",
     "drivers_info":"Informatii despre soferi:",
     "new_company_name":"Denumire companie noua",
-    "new_nr_dr":"Numar nou de soferi"
+    "new_nr_dr":"Numar nou de soferi",
+    "send_route": "Trimite ruta",
+    "see_updates": "Vezi notificari",
+    "list_of_drivers":"Lista de soferi",
+    "remeber":"Aminteste-ti sa",
+    "take":"ai grija de",
+    "drivers":"soferi"
 }

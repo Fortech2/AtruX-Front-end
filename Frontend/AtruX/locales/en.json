@@ -48,5 +48,11 @@
     "nr_of_drivers":"Number of drivers:",
     "drivers_info":"Drivers info:",
     "new_company_name":"New company name",
-    "new_nr_dr":"Number of drivers"
+    "new_nr_dr":"Number of drivers",
+    "send_route": "Send today's route",
+    "see_updates": "See updates",
+    "list_of_drivers":"List of drivers",
+    "remeber":"Remember to",
+    "take":"take care of",
+    "drivers":"your drivers"
 }
