@@ -13,6 +13,9 @@ import HomeD from '../screens/HomeScreenDisp';
 import ProfileD from '../screens/DispatcherProfile';
 import SecurityD from '../screens/SecurityDispecerat';
 import Edit_Profile_D from '../screens/EditProfile_Disp';
+import ListDrivers from '../screens/ListOfDrivers';
+import SendRoute from '../screens/SendRoute';
+import SeeUpdates from '../screens/SeeUpdates';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +25,21 @@ function HomeStackScreen() {
       <Stack.Screen
         name="Home"
         component={HomeD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ListOfDrivers"
+        component={ListDrivers}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SendRoute"
+        component={SendRoute}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SeeUpdates"
+        component={SeeUpdates}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
