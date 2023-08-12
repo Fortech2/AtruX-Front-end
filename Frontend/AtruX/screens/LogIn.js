@@ -139,7 +139,7 @@ export default function LogIn() {
   const handleLoginb = () => {
       // Perform any other login-related logic here if needed
       // For now, we will simply navigate to the Home screen (App_Driver)
-      navigation.navigate('Disp_TabNavigation');
+      navigation.navigate('Tab_Navigation');
     };
   if (!montserratLoaded) {
     return null;
@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.3)",
     top: "7%",
-    width: "28%",
+    width: "30%",
     borderRadius: 12,
     padding: 1,
     left: "5%",

@@ -54,5 +54,15 @@
     "list_of_drivers":"List of drivers",
     "remeber":"Remember to",
     "take":"take care of",
-    "drivers":"your drivers"
+    "drivers":"your drivers",
+    "past": "Past",
+    "images": "Images",
+    "captured_images": "Captured Images:",
+    "see_more": "See more",
+    "see_all_images": "See all the images",
+    "settings": "Settings",
+    "notifications": "Notifications:",
+    "account_settings": "Account settings:",
+    "log_out": "Log out",
+    "edit_account": "Edit account",
 }
