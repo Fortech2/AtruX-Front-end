@@ -23,11 +23,16 @@ function HomeStackScreen() {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-       {/* <Stack.Screen
+       <Stack.Screen
         name="Settings"
         component={SettingsDriver}
         options={{ headerShown: false }}
-      /> */}
+      />
+      <Stack.Screen
+        name="Notificationss"
+        component={Notification}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

@@ -59,7 +59,7 @@
     "menu":"Menu",
     "settings":"Settings",
     "keywords":"Keywords",
-    "notifications":"Notifications"
+    "notifications":"Notifications",
     
 
     "past": "Past",
@@ -70,6 +70,6 @@
    
     "account_settings": "Account settings:",
     "log_out": "Log out",
-    "edit_account": "Edit account",
+    "edit_account": "Edit account"
 
 }
