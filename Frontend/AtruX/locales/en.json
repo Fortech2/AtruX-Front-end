@@ -55,9 +55,21 @@
     "remeber":"Remember to",
     "take":"take care of",
     "drivers":"your drivers",
+
     "menu":"Menu",
     "settings":"Settings",
     "keywords":"Keywords",
     "notifications":"Notifications"
     
+
+    "past": "Past",
+    "images": "Images",
+    "captured_images": "Captured Images:",
+    "see_more": "See more",
+    "see_all_images": "See all the images",
+   
+    "account_settings": "Account settings:",
+    "log_out": "Log out",
+    "edit_account": "Edit account",
+
 }

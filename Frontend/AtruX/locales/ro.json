@@ -55,8 +55,20 @@
     "remeber":"Aminteste-ti sa",
     "take":"ai grija de",
     "drivers":"soferi",
+
     "menu":"Meniu",
     "settings":"Setari",
     "keywords":"Cuvinte cheie",
     "notifications":"Notificari"
+
+    "past": "Imagini",
+    "images": "Salvate",
+    "captured_images": "Imagini capturate:",
+    "see_more": "Vezi detalii",
+    "see_all_images": "Vezi toate imaginile",
+ 
+    "account_settings": "Setări cont",
+    "log_out": "Deconectează-te",
+    "edit_account": "Editare profil",
+
 }
