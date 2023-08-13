@@ -16,6 +16,8 @@ import Edit_Profile_D from '../screens/EditProfile_Disp';
 import ListDrivers from '../screens/ListOfDrivers';
 import SendRoute from '../screens/SendRoute';
 import SeeUpdates from '../screens/SeeUpdates';
+import SettingsDispatcher from '../screens/SettingsDisp';
+import NotificationD from '../screens/NotificationsDisp';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -40,6 +42,16 @@ function HomeStackScreen() {
       <Stack.Screen
         name="SeeUpdates"
         component={SeeUpdates}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Setings"
+        component={SettingsDispatcher}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Notification"
+        component={NotificationD}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

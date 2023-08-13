@@ -54,5 +54,10 @@
     "list_of_drivers":"List of drivers",
     "remeber":"Remember to",
     "take":"take care of",
-    "drivers":"your drivers"
+    "drivers":"your drivers",
+    "menu":"Menu",
+    "settings":"Settings",
+    "keywords":"Keywords",
+    "notifications":"Notifications"
+    
 }

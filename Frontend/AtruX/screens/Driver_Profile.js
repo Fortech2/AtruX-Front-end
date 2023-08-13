@@ -69,15 +69,13 @@ function DriverProfileScreen() {
     fetchUserData();
   }, []);
 
-  const fetchUserData = async () => {
+  const fetchDriversByDispatcher = async (dispatcherId) => {
     try {
-      const response = await axios.get("http://18.185.137.152/user");
-      setUserData(response.data);
-      setLoading(false); // Set loading to false when the data is fetched successfully
+      const response = await axios.get(`https://your-backend-api.com/drivers/${dispatcherId}`);
+      const drivers = response.data;
+      // Update your component's state with the fetched drivers
     } catch (error) {
-      console.error("Error:", error);
-      setLoading(false); // Set loading to false when there is an error
-      // Handle the error here and show an error message to the user
+      console.error('Error fetching drivers:', error);
     }
   };
   return (
