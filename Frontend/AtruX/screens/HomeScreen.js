@@ -1,7 +1,6 @@
-import React from 'react';
-import { useNavigation } from "@react-navigation/native";
+import React, {useState} from 'react';
 import { useRoute } from '@react-navigation/native';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import {
   useFonts as useMontserrat,
   Montserrat_100Thin,
