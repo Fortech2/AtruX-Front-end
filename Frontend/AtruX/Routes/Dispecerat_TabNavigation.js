@@ -15,6 +15,7 @@ import SecurityD from '../screens/SecurityDispecerat';
 import Edit_Profile_D from '../screens/EditProfile_Disp';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+import NotificationsDispatcher from "../screens/NotificationsDispatcher";
 
 function HomeStackScreen() {
   return (
@@ -22,6 +23,11 @@ function HomeStackScreen() {
       <Stack.Screen
         name="Home"
         component={HomeD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsDispatcher}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useNavigation } from "@react-navigation/native";
+import { useRoute } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   useFonts as useMontserrat,
@@ -44,7 +46,7 @@ const HomeScreen = () => {
 
   const securitySystem = () => {
     // Function for "Security system" button
-    console.log("Accessing the security system...");
+    console.log("Accessing the settings...");
   };
 
   const emergencyCall = () => {
@@ -56,7 +58,14 @@ const HomeScreen = () => {
     // Function for "Your assistant" button
     console.log("Accessing your assistant...");
   };
+  const navigation = useNavigation(); // for the navigation
+  const handleNotif = () => {
 
+    // now we will navigate to the HomeScreen
+    // but we need to navigate to the the EditDriverProfile
+
+    navigation.navigate('Notifications');
+  };
   return (
     
     <View style={styles.container}>
@@ -82,7 +91,7 @@ const HomeScreen = () => {
       <TouchableOpacity  style={styles.roundButtons2} onPress={roundSystem}></TouchableOpacity>
 
       {/* Butoanele pentru functii */}
-      <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={callDispatcher}>
+      <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={handleNotif}> 
         <Text style={styles.textButoaneDreptunghiulare}>Call the dispatcher</Text>
         <TelefonMic style = {{top: '-30%', zIndex: 1, left: '86%'}}/>
       {/* </View>   */}
@@ -92,7 +101,7 @@ const HomeScreen = () => {
         <Harta style = {{top: '-28%', zIndex: 1, left: '84.5%'}}/>
       </TouchableOpacity>
       <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={securitySystem}>
-        <Text style={styles.textButoaneDreptunghiulare}>Security system</Text>
+        <Text style={styles.textButoaneDreptunghiulare}>Settings</Text>
         <Politist style = {{top: '-32%', zIndex: 1, left: '85.5%'}}/>
       </TouchableOpacity>
 
@@ -113,7 +122,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
       </View>
-      <ShapeHomescreen style = {{top: '49%'}}/>
+      <ShapeHomescreen style = {{top: '48%'}}/>
       <ShapeHomeScreen2 style = {{top: '-5%', left: '0%'}}/>
       <ShapeHomeScreen3 style = {{top: '-83.5%', left: '35%',}}/>
       <Linii style = {{top: '-179%', left: '40%', zIndex: 1,}}/>
@@ -137,7 +146,7 @@ const styles = StyleSheet.create({
   salutText: {
     color: '#FFFFFF',
     fontSize: 35,
-    fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_600SemiBold',
     zIndex: 1
   },
   mesajInspirational:{
@@ -148,7 +157,7 @@ const styles = StyleSheet.create({
   InspirationalText:{
     color: '#101F41',
     fontSize: 35,
-    fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_600SemiBold',
     zIndex: 1
   },
   ButoaneDreptunghiulare: {
@@ -184,6 +193,7 @@ const styles = StyleSheet.create({
     marginTop: '0%',
     top: '163.5%',
     zIndex: 1,
+    elevation: 15,
   },
 
   ButoaneAlbe2: {
@@ -197,6 +207,7 @@ const styles = StyleSheet.create({
     marginTop: '0%',
     top: '163.5%',
     zIndex: 1,
+    elevation: 15,
   },
 
   emergencyButton: {
@@ -208,7 +219,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     left: '132.5%',
     top: '161.3%',
-    zIndex: 1
+    zIndex: 1,
+    elevation: 15,
   },
   AssistantButton: {
     width: 85,
@@ -220,7 +232,8 @@ const styles = StyleSheet.create({
     right: '232%',
     zIndex: 1,
     marginTop: '0%',
-    top: '161.3%'
+    top: '161.3%',
+    elevation: 15,
   },  
 
   roundButtonsContainer: {
@@ -231,17 +244,20 @@ const styles = StyleSheet.create({
   },
   textButoaneDreptunghiulare: {
     color: '#101F41',
-    fontSize: 20,
+    fontSize: 22,
     fontFamily: 'Montserrat_500Medium',
     left: 20,
     marginTop: 'center',
     left: '4%',
-    top: 15
+    top: 15,
+    textShadowColor: "#B3B3B3",
+                textShadowOffset: { width: 4, height: 3 },
+                textShadowRadius: 4,
   },
   textButoaneRotunde: {
     color: '#FFFFFF',
     fontSize: 9,
-    fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_600SemiBold',
     top: '47%',
 },
 roundButtons2: {
