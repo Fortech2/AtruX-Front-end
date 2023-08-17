@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Pressable, ScrollView } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import {
   useFonts as useMontserrat,
   Montserrat_100Thin,
@@ -74,7 +75,7 @@ const HomeScreen = () => {
 
   const securitySystem = () => {
     // Function for "Security system" button
-    console.log("Accessing the security system...");
+    console.log("Accessing the settings...");
   };
 
   const emergencyCall = () => {
@@ -86,7 +87,13 @@ const HomeScreen = () => {
     // Function for "Your assistant" button
     console.log("Accessing your assistant...");
   };
+  const handleNotif = () => {
 
+    // now we will navigate to the HomeScreen
+    // but we need to navigate to the the EditDriverProfile
+
+    navigation.navigate('Notifications');
+  };
   return (
     <View style={styles.container}>
       <View style = {styles.background}>
@@ -94,7 +101,7 @@ const HomeScreen = () => {
         <ShapeHomeScreen2 style = {{top: '-60%', left: '0%'}}/>
         <ShapeHomeScreen3 style = {{top: '-140%', left: '68%',}}/>
       </View>
-      
+
       <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
         <Linii style = {{zIndex: 1}}/>
       </TouchableOpacity>
@@ -235,7 +242,7 @@ const styles = StyleSheet.create({
   salutText: {
     color: '#FFFFFF',
     fontSize: 35,
-    fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_600SemiBold',
     zIndex: 1
   },
   mesajInspirational:{
@@ -246,7 +253,7 @@ const styles = StyleSheet.create({
   InspirationalText:{
     color: '#101F41',
     fontSize: 35,
-    fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_600SemiBold',
     zIndex: 1
   },
   ButoaneDreptunghiulare: {
@@ -282,6 +289,7 @@ const styles = StyleSheet.create({
     marginTop: '0%',
     top: '85%',
     zIndex: 1,
+    elevation: 15,
   },
 
   ButoaneAlbe2: {
@@ -295,6 +303,7 @@ const styles = StyleSheet.create({
     marginTop: '0%',
     top: '85%',
     zIndex: 1,
+    elevation: 15,
   },
 
   emergencyButton: {
@@ -307,6 +316,7 @@ const styles = StyleSheet.create({
     left: '132.5%',
     top: '83%',
     zIndex: 1
+    elevation: 15,
   },
   AssistantButton: {
     width: 85,
@@ -319,6 +329,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
     marginTop: '0%',
     top: '83%'
+    elevation: 15,
   },  
 
   roundButtonsContainer: {
@@ -329,17 +340,20 @@ const styles = StyleSheet.create({
   },
   textButoaneDreptunghiulare: {
     color: '#101F41',
-    fontSize: 20,
+    fontSize: 22,
     fontFamily: 'Montserrat_500Medium',
     left: 20,
     marginTop: 'center',
     left: '4%',
-    top: 15
+    top: 15,
+    textShadowColor: "#B3B3B3",
+    textShadowOffset: { width: 4, height: 3 },
+    textShadowRadius: 4,
   },
   textButoaneRotunde: {
     color: '#FFFFFF',
     fontSize: 9,
-    fontFamily: 'Montserrat_500Medium',
+    fontFamily: 'Montserrat_600SemiBold',
     top: '47%',
 },
 roundButtons2: {
