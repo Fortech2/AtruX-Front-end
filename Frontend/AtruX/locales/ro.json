@@ -48,5 +48,27 @@
     "nr_of_drivers": "Numarul de soferi:",
     "drivers_info":"Informatii despre soferi:",
     "new_company_name":"Denumire companie noua",
-    "new_nr_dr":"Numar nou de soferi"
+    "new_nr_dr":"Numar nou de soferi",
+    "send_route": "Trimite ruta",
+    "see_updates": "Vezi notificari",
+    "list_of_drivers":"Lista de soferi",
+    "remeber":"Aminteste-ti sa",
+    "take":"ai grija de",
+    "drivers":"soferi",
+
+    "menu":"Meniu",
+    "settings":"Setari",
+    "keywords":"Cuvinte cheie",
+    "notifications":"Notificari",
+
+    "past": "Imagini",
+    "images": "Salvate",
+    "captured_images": "Imagini capturate:",
+    "see_more": "Vezi detalii",
+    "see_all_images": "Vezi toate imaginile",
+ 
+    "account_settings": "Setări cont",
+    "log_out": "Deconectează-te",
+    "edit_account": "Editare profil",
+
 }

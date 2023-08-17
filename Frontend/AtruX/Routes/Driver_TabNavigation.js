@@ -11,6 +11,7 @@ import HomeIcon from "../components/HomeTabIcon";
 import SecurityIcon from "../components/SecurityTabIcon";
 import ProfileIcon from "../components/ProfileTabIcon";
 import Notification from "../screens/Notification";
+import SettingsDriver from "../screens/SettingsDriver";
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,16 @@ function HomeStackScreen() {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
+        name="Settings"
+        component={SettingsDriver}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Notificationss"
+        component={Notification}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -56,7 +67,7 @@ function SecurityStackScreens() {
         component={PastImages_Driver}
         options={{ headerShown: false }}
       />
-            <Stack.Screen
+      <Stack.Screen
         name="Notifications"
         component={Notification}
         options={{ headerShown: false }}

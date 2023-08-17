@@ -38,7 +38,6 @@ import CircleSecurity from "../components/CircleSecurity"
 import MenuIcon from "../components/MenuIcon"
 import NotificationIcon from "../components/NotificationIcon"
 import Back from "../components/Back"
-import SecurityIcon from "../components/SecurityIcon"
 import { useTranslation } from "react-i18next"; // for the translation
 import i18next, { languageResources } from "../services/i18next"; // for the translation
 import languageList from "../locales/languageList.json"; // for the translation
@@ -47,11 +46,14 @@ import { useNavigation } from "@react-navigation/native"; //
 import { useRoute } from '@react-navigation/native';
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import Arrow from "../components/arrow_language";
-import { useHistory } from "react-router-dom";
-import PastImages_Driver from "../screens/PastImages_Driver"
-// import { transparent } from 'react-native-paper/lib/typescript/src/styles/themes/v2/colors';
+import EllipseSettings from '../components/EllipseSettings'
+import CircleSettings from '../components/CircleSettings'
+import SettingsIcon from '../components/SettingsIcon'
+import LineSettings from '../components/LineSettings'
+import LogOutIcon from '../components/LogOutIcon'
+import EditAccountIcon from '../components/EditAccountIcon'
 
-export default function Driver_Security() {
+export default function Settings_Driver() {
 
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
@@ -65,17 +67,24 @@ export default function Driver_Security() {
     Montserrat_600SemiBold,
     Montserrat_500Medium,
   });
-  const handleSeePastImages = () => {
-    navigation.navigate('PastImages')
+
+  const handleBack = () => {
+    navigation.navigate('Homes')
   };
 
-  const handleAlarmsHistory = () => {
-    // here we need to take the last 3 alarms notifications and to put them in the 2nd container
+  const handleEditAccount = () => {
+
+    // now we will navigate to the HomeScreen
+    // but we need to navigate to the the EditDriverProfile
+    
+    navigation.navigate('Homes');
   };
 
-  const handleNotif = () => {
-    navigation.navigate('Notifications');
-  }
+  const handleLogOut = () => {
+    // the user will be directed to the LogIn Profile
+
+    // navigation.navigate('');
+  };
 
   return (
     <View style={{flex: 1}}>
@@ -89,8 +98,17 @@ export default function Driver_Security() {
           />
         </View>
 
-        <View style={styles.circleRightWrapper}>
-          <CircleSecurity
+        <View style={styles.ellipseRightWrapper}>
+          <EllipseSettings
+            style={{
+              position: "absolute",
+              top: "5%",
+            }}
+          />
+        </View>
+
+        <View style={styles.circleLeftWrapper}>
+          <CircleSettings
             style={{
               position: "absolute",
               top: "5%",
@@ -100,26 +118,77 @@ export default function Driver_Security() {
 
         <TouchableOpacity style={styles.menuButton}>
           <MenuIcon style={{left: "10%", top: "10%"}}/>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.notificationButton} onPress={handleNotif}>
-          <NotificationIcon style={{left: "10%", top: "3%"}}/>
-        </TouchableOpacity>
-      
+        </TouchableOpacity> 
 
         <View style={{top: "10%", left: "10%", position: "absolute"}}>
-          <SecurityIcon style={{left: "-15%", top: "-25%"}}/>
-          <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'white', top:'-150%', left: '20%'}}>
-              {t("security")}
-          </Text>
-          <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'white', top:'-155%', left: '25%'}}>
-              {t("system")}
+          <SettingsIcon style={{left: "-5%", top: "0%"}}/>
+          <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'white', top:'-105%', left: '30%'}}>
+              {t("settings")}
           </Text>
         </View>
 
         <View style={styles.contour1}>
-          <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'#101F41', top:'12%', left: '0%'}}>
-            {t('system_status')}
+          <Text style={{fontFamily:'Montserrat_500Medium', fontSize:30, color:'#101F41', top:'5%', left: '0%'}}>
+            {t("account_settings")}
+          </Text>
+
+          <LineSettings style={{ top: "6%", left: "5%" }}/>
+
+          <View style={styles.logOutView}>
+            <Text 
+              style={{
+                fontFamily: 'Montserrat_500Medium',
+                fontSize: 28,
+                color: "#101F41",
+                top: "5%",
+                left: "-20%",
+                textShadowColor: "rgba(0, 0, 0, 0.10)",
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 4,
+              }}
+            >
+              {t('log_out')}
+            </Text>
+            <TouchableOpacity style = {styles.logOutButton} onPress={handleLogOut}>
+              <LogOutIcon style={{ top: "2%" }}/>
+            </TouchableOpacity>
+          </View> 
+
+          <View style={styles.editAccountView}>
+            <Text 
+              style={{
+                fontFamily: 'Montserrat_500Medium',
+                fontSize: 28,
+                color: "#101F41",
+                top: "5%",
+                left: "-10%",
+                textShadowColor: "rgba(0, 0, 0, 0.10)",
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 4,
+              }}
+            >
+              {t('edit_account')}
+            </Text>
+            <TouchableOpacity style = {styles.editAccountButton} onPress={handleEditAccount}>
+              <EditAccountIcon style={{ top: "2%" }}/>
+            </TouchableOpacity>
+          </View> 
+        </View>
+
+        <View style={styles.contour2}>
+          <Text
+            style={{
+                fontFamily: 'Montserrat_500Medium',
+                fontSize: 28,
+                color: "#101F41",
+                top: "25%",
+                left: "-15%",
+                textShadowColor: "rgba(0, 0, 0, 0.10)",
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 4,
+            }}
+          >
+            {t("notifications")}
           </Text>
 
           <View style={styles.switchContainer}>
@@ -131,7 +200,7 @@ export default function Driver_Security() {
               value={isEnabled}
 
               // valueDimension={true}
-              style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
+              style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
               // onValueDimensionChange={(valueDimension) => {}}
             />
           </View>
@@ -147,81 +216,13 @@ export default function Driver_Security() {
               {t('on')}
             </Text> 
           </View>
-        </View>
-
-        <View style={styles.contour2}>
-          <Text
-            style={{
-              fontFamily:'Montserrat_600SemiBold',
-              fontSize:30,
-              color:'#FBFBFC',
-              top:'5%',
-              left: '0%',
-              textShadowColor: "rgba(0, 0, 0, 0.15)",
-              textShadowOffset: { width: 3, height: 1 },
-              textShadowRadius: 4,
-            }}
-          >
-            {t('camera_system')}
-          </Text>
-
-          <View style={styles.alarmsHistoryView}>
-            <Text 
-              style={{
-                fontFamily: 'Montserrat_500Medium',
-                fontSize: 22,
-                color: "#101F41",
-                top: "15%",
-                left: "-13%",
-                textShadowColor: "rgba(0, 0, 0, 0.10)",
-                textShadowOffset: { width: 1, height: 1 },
-                textShadowRadius: 4,
-              }}
-            >
-              {t('alarms_history')}
-            </Text>
-          </View> 
-          
-          <View style={styles.inputView}>
-            <Text style={styles.inputText}>
-              {/* 18:05 pm Sun - Human detected */}
-            </Text>
-          </View>
-
-          <View style={styles.inputView}>
-            <Text style={styles.inputText}>
-              {/* 16:05 pm Sat - Human detected */}
-            </Text>
-          </View>
-
-          <View style={styles.inputView}>
-            <Text style={styles.inputText}>
-              {/* 10:05 am Sat - Human detected */}
-            </Text>
-          </View>
 
         </View>
-
-        <TouchableOpacity 
-          style={styles.imagesBtn}
-          onPress={handleSeePastImages}
-          >
-          <Text
-            style={{
-            fontFamily: "Montserrat_500Medium",
-            fontSize: 16,
-            color: "#FFFF",
-          }}
-          >
-            {t("past_images")}
-          </Text>
-        </TouchableOpacity>
       
         <View style={{
               top: "2%",
               width: 280,
               height: 70,
-              // backgroundColor: "#45b871",
               marginTop: 10,
               marginBottom: 5,
               marginLeft: 0,
@@ -230,6 +231,9 @@ export default function Driver_Security() {
             }}  
         />
       
+        <TouchableOpacity style={styles.back} onPress={handleBack}>
+            <Back />
+        </TouchableOpacity>
 
       </ScrollView>
     </View>
@@ -247,7 +251,7 @@ const styles = StyleSheet.create({
       shadowOffset: { width: 3, height: 5 },
       shadowOpacity: 0.8,
       shadowRadius: 10,
-      height: 177,
+      height: 269,
       width: 320,
       marginLeft: 5,
       alignItems: "center",
@@ -257,41 +261,27 @@ const styles = StyleSheet.create({
       position: "absolute",
       zIndex: 1,
       opacity: 1,
-      top: "18%"
+      top: "25%"
     },
     contour2: {
-        backgroundColor: "#d9d9d9",
-        shadowColor: "#000",
-        shadowOffset: { width: 3, height: 5 },
-        shadowOpacity: 0.8,
-        shadowRadius: 10,
-        height: 340,
-        width: 320,
-        marginLeft: 5,
-        alignItems: "center",
-        alignSelf: "center",
-        borderRadius: 40,
-        elevation: 10, //only android
-        position: "absolute",
-        zIndex: 1,
-        opacity: 1,
-        top: "43%"
-      },
-    imagesBtn: {
-      width: "64%",
-      borderRadius: 18,
-      height: "5%",
+      backgroundColor: "#d9d9d9",
+      shadowColor: "#000",
+      shadowOffset: { width: 3, height: 5 },
+      shadowOpacity: 0.8,
+      shadowRadius: 10,
+      height: 73,
+      width: 320,
+      marginLeft: 5,
       alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "#101F41",
-      left: "20%",
-      top: "88%",
+      alignSelf: "center",
+      borderRadius: 40,
       elevation: 10, //only android
       position: "absolute",
-      
+      zIndex: 1,
+      opacity: 1,
+      top: "62%"
     },
     ellipseWrapper: {
-      // backgroundColor: "#45b871",
       width: 280,
       height: 210,
       marginTop: -120,
@@ -305,7 +295,6 @@ const styles = StyleSheet.create({
       width: "13%",
       height: "5%",
       padding: 1,
-      // backgroundColor: "#F38D68",
       borderWidth: 1,
       top: "4%",
       left: "82%",
@@ -316,107 +305,142 @@ const styles = StyleSheet.create({
       width: "13%",
       height: "6%",
       padding: 1,
-      // backgroundColor: "#8A89C0",
       borderWidth: 1,
       top: "9%",
       left: "82%",
       position: "absolute",
       borderColor: "#E9EBEE",
     },
-    circleRightWrapper: {
-      // backgroundColor: "#45b871",
-      width: 170,
-      height: 330,
+    ellipseRightWrapper: {
+      width: 377,
+      height: 290,
       marginTop: 10,
       marginBottom: 10,
-      marginLeft: 250,
+      marginLeft: 110,
       marginRight: 0,
-      top: "45%",
+      top: "70%",
       borderWidth: 0, // Border set to 0
-      position: "absolute"
+      position: "absolute",
+      transform: [{ rotate: '4.673deg' }]
+      
+    },
+    circleLeftWrapper: {
+      width: 150,
+      height: 300,
+      marginTop: 10,
+      marginBottom: 10,
+      marginLeft: 0,
+      marginRight: 0,
+      top: "35%",
+      borderWidth: 0, // Border set to 0
+      position: "absolute",
     },
     switchContainer: {
-      borderColor: "#E9EBEE",
-      // backgroundColor: "#9055A2",
-      width: "20%",
-      height: "25%",
-      marginBottom: 20,
-      marginLeft: 20,
+      borderColor: "#D9D9D9",
+      width: "18%",
+      height: "45%",
+      marginBottom: 0,
+      marginLeft: 0,
       padding: 1,
       marginRight: 10,
-      top: "45%",
-      left: "34%",
+      top: "25%",
+      left: "77%",
+      borderTopLeftRadius: 300,
+      borderTopRightRadius: 300,
       borderWidth: 0, // Border set to 0
       zIndex: 1,
       alignContent: "center",
       position: "absolute",
+      paddingHorizontal: 8,
       paddingVertical: -5,
-      paddingHorizontal: 5,
-      borderRadius: 25
+      borderRadius: 25,
     },
     switchContainerText1: {
       width: "15%",
-      height: "12%",
+      height: "20%",
       alignItems: "center",
       justifyContent: "center",
-      // backgroundColor: "#9055A2",
-      left: "32%",
-      top: "75%",
+      left: "70%",
+      top: "15%",
       position: "absolute",
     },
     switchText1: {
       fontFamily: 'Montserrat_500Medium',
-      fontSize: 17,
+      fontSize: 12,
       color: "#757C8D",
       textShadowColor: "rgba(0, 0, 0, 0.25)",
       textShadowRadius: 10
     },
     switchContainerText2: {
       width: "15%",
-      height: "12%",
+      height: "20%",
       alignItems: "center",
       justifyContent: "center",
-      // backgroundColor: "#9055A2",
-      left: "57%",
-      top: "75%",
+      left: "84%",
+      top: "15%",
       position: "absolute",
     },
     switchText2: {
       fontFamily: 'Montserrat_500Medium',
-      fontSize: 17,
+      fontSize: 12,
       color: "#101F41",
       textShadowColor: "rgba(0, 0, 0, 0.25)",
       textShadowRadius: 10
     },
-    alarmsHistoryView: {
+    logOutView: {
       borderRadius: 25,
       width: "82%",
-      height: "15%",
+      height: "18%",
       marginBottom: 20,
       alignItems: "center",
       padding: 1,
       borderColor: "#101F41",
       borderWidth: 1,
-      top: "8%",
+      top: "-80%",
       alignContent: "center",
     },
-    inputView: {
+    editAccountView: {
       borderRadius: 25,
-      width: "100%",
-      height: "15%",
-      marginBottom: 10,
+      width: "82%",
+      height: "18%",
+      marginBottom: 20,
       alignItems: "center",
       padding: 1,
-      // borderColor: "#101F41",
-      borderColor: '#d9d9d9',
+      borderColor: "#101F41",
       borderWidth: 1,
-      top: "4%",
+      top: "-80%",
       alignContent: "center",
     },
-    inputText: {
-      fontFamily: 'Montserrat_500Medium',
-      fontSize: 18,
-      color: "#101F41",
-      top: "20%"
-    }, 
+    back: {
+      height: 40,
+      width: 40,
+      marginLeft: 5,
+      borderRadius: 10,
+      position: "absolute",
+      zIndex: 1,
+      opacity: 1,
+      top: "5%",
+      left: "4%",
+      alignItems: "center",
+    },
+    logOutButton: {
+      width: "13%",
+      height: "80%",
+      padding: 1,
+      borderColor: "#D9D9D9",
+      borderWidth: 1,
+      top: "10%",
+      left: "84%",
+      position: "absolute",
+    },
+    editAccountButton: {
+      width: "13%",
+      height: "80%",
+      padding: 1,
+      borderWidth: 1,
+      top: "10%",
+      left: "82%",
+      position: "absolute",
+      borderColor: "#D9D9D9",
+    },
   });
