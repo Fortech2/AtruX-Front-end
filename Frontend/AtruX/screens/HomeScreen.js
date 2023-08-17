@@ -315,8 +315,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     left: '132.5%',
     top: '83%',
-    zIndex: 1
-    elevation: 15,
+    zIndex: 1,
+    elevation: 15
   },
   AssistantButton: {
     width: 85,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
     right: '218%',
     zIndex: 1,
     marginTop: '0%',
-    top: '83%'
+    top: '83%',
     elevation: 15,
   },  
 
