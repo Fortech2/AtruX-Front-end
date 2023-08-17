@@ -46,7 +46,7 @@ function HomeStackScreen() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Setings"
+        name="SettingsDisp"
         component={SettingsDispatcher}
         options={{ headerShown: false }}
       />
@@ -82,6 +82,16 @@ function SecurityStackScreens() {
       <Stack.Screen
         name="Security"
         component={SecurityD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SettingsS"
+        component={SettingsDispatcher}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -141,7 +141,7 @@ const handleCloseModal = () => {
                 style={styles.containerInputModal}
                 onPress={() => {
                   console.log("Navigating to Settings");
-                  navigation.navigate("Setings");
+                  navigation.navigate("SettingsDisp");
                   handleCloseModal();
                   // Add navigation logic here
                 }}
@@ -178,7 +178,7 @@ const handleCloseModal = () => {
             <Text style={styles.salutText}> Marius!</Text>
           </View>
           <View style={styles.mesajInspirational}>
-            <Text style={styles.InspirationalText}>{t("remeber")}</Text>
+            <Text style={styles.InspirationalText}>{t("remember")}</Text>
             <Text style={styles.InspirationalText}> {t("take")}</Text>
             <Text style={styles.InspirationalText}> {t("drivers")}!</Text>
           </View>

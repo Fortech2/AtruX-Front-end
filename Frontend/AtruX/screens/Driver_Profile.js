@@ -80,74 +80,49 @@ function DriverProfileScreen() {
   };
   return (
     <View style={{ flex: 1, backgroundColor: "#E9EBEE" }}>
-      <View>
+      <View style = {styles.background}>
         <ProfileEllipse style={{ position: "absolute" }} />
         <Ellipse style={{ position: "absolute", top: "40%", left: "64%" }} />
         <Ellipse_2 style={{ top: "60%" }} />
       </View>
 
-      <View style={{ top: "-90%", left: "25%" }}>
-        <Profil style={{ left: "-12%" }} />
-        <Text
-          style={{
-            fontFamily: "Montserrat_500Medium",
-            fontSize: 30,
-            color: "white",
-            top: "-100%",
-          }}
-        >
-          {t("profile")}
-        </Text>
-      </View>
-      <View style={{ justifyContent: "center", top: "3%" }}>
-        <ProfileContour style={{ top: "-74%", left: "41.5%", zIndex: 1 }} />
-        <ProfileCircle style={{ top: "-176%", left: "35%" }} />
-      </View>
-      <View style={styles.contour}>
-        <Text
-          style={{
-            fontFamily: "Montserrat_500Medium",
-            fontSize: 20,
-            color: "#101F41",
-            top: "8%",
-            left: "-15%",
-          }}
-        >
-          {t("general_data")}
-        </Text>
-        {userData ? (
-          <>
-            <View style={styles.data}>
-              <Email style={{ top: "25%", left: "3%" }} />
-              <Text
-                style={{
-                  fontFamily: "Montserrat_100Thin",
-                  fontSize: 15,
-                  color: "#101F41",
-                  top: "-80%",
-                  left: "3%",
-                }}
-              >
-                {userData.email}
-              </Text>
-            </View>
-            <View style={styles.data}>
-              <SmallProfile style={{ top: "23%", left: "3%" }} />
-              <Text
-                style={{
-                  fontFamily: "Montserrat_100Thin",
-                  fontSize: 15,
-                  color: "#101F41",
-                  top: "-80%",
-                  left: "3%",
-                }}
-              >
-                {userData.name}
-              </Text>
-            </View>
-            {userData.role === "dispatcher" && (
+      <ScrollView>
+        <View style = {{ height: 900 }}>
+          <View style={{ top: "10%", left: "25%" }}>
+            <Profil style={{ left: "-12%" }} />
+            <Text
+              style={{
+                fontFamily: "Montserrat_500Medium",
+                fontSize: 30,
+                color: "white",
+                top: "-100%",
+              }}
+            >
+              {t("profile")}
+            </Text>
+          </View>
+
+          <View style={{ justifyContent: "center", top: "3%" }}>
+            <ProfileContour style={{ top: "-8%", left: "40.5%", zIndex: 1 }} />
+            <ProfileCircle style={{ top: "-110%", left: "33%" }} />
+          </View>
+
+          <View style={styles.contour}>
+            <Text
+              style={{
+                fontFamily: "Montserrat_500Medium",
+                fontSize: 20,
+                color: "#101F41",
+                top: "8%",
+                left: "-15%",
+              }}
+            >
+              {t("general_data")}
+            </Text>
+            {userData ? (
+            <>
               <View style={styles.data}>
-                <Phone style={{ top: "23%", left: "3%" }} />
+                <Email style={{ top: "25%", left: "3%" }} />
                 <Text
                   style={{
                     fontFamily: "Montserrat_100Thin",
@@ -157,16 +132,48 @@ function DriverProfileScreen() {
                     left: "3%",
                   }}
                 >
-                  {userData.phone_number}
+                  {userData.email}
                 </Text>
               </View>
+
+              <View style={styles.data}>
+                <SmallProfile style={{ top: "23%", left: "3%" }} />
+                <Text
+                  style={{
+                    fontFamily: "Montserrat_100Thin",
+                    fontSize: 15,
+                    color: "#101F41",
+                    top: "-80%",
+                    left: "3%",
+                 }}
+                >
+                  {userData.name}
+                </Text>
+              </View>
+              {userData.role === "dispatcher" && (
+                <View style={styles.data}>
+                  <Phone style={{ top: "23%", left: "3%" }} />
+                  <Text
+                    style={{
+                      fontFamily: "Montserrat_100Thin",
+                      fontSize: 15,
+                      color: "#101F41",
+                      top: "-80%",
+                      left: "3%",
+                    }}
+                  >
+                    {userData.phone_number}
+                  </Text>
+                </View>
+              )}
+              {/* Display additional fields specific to the dispatcher */}
+            </>
+          ) : (
+            <Text>Loading...</Text>
             )}
-            {/* Display additional fields specific to the dispatcher */}
-          </>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-      </View>
+          </View>          
+        </View>
+      </ScrollView>
 
       <TouchableOpacity style={styles.smallContour} onPress={handleEdit}>
         <EditProfile style={{ top: "25%", left: "24%", zIndex: 1 }} />
@@ -195,7 +202,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 1,
     opacity: 1,
-    top: "45%",
+    top: "40%",
   },
   data: {
     borderRadius: 12,
@@ -239,6 +246,14 @@ const styles = StyleSheet.create({
     top: "5%",
     left: "4%",
     alignItems: "center",
+  },
+  background: {
+    position:'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
   },
 });
 export default DriverProfileScreen;

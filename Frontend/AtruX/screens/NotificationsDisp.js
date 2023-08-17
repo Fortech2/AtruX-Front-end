@@ -4,7 +4,7 @@ import { View, Text, Button } from 'react-native';
 const Notification = ({ navigation }) => {
   return (
     <View>
-      <Text style = {{top: '150%',}}>Updates</Text>
+      <Text style = {{top: '150%',}}>notifications dispatcher</Text>
     </View>
   );
 };

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Pressable, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Pressable } from 'react-native';
 import {
   useFonts as useMontserrat,
   Montserrat_100Thin,
@@ -27,6 +27,7 @@ import NotifIconMenu from '../components/NotifIconMenu'
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next"; // for the translation
 import { BlurView } from 'expo-blur'
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
@@ -52,15 +53,15 @@ const HomeScreen = () => {
     console.log("Calling the dispatcher...");
   }
 
-    const roundRoute = () => {
-      // Function for "See your route" button
-      console.log("Seeing your route...");
-    }
+  const roundRoute = () => {
+    // Function for "See your route" button
+    console.log("Seeing your route...");
+  }
 
-      const roundSystem = () => {
-        // Function for "Security system" button
-        console.log("Accessing the security system...");
-      }
+  const roundSystem = () => {
+    // Function for "Security system" button
+    console.log("Accessing the security system...");
+  }
 
   const callDispatcher = () => {
     // Function for "Call the dispatcher" button
@@ -94,69 +95,18 @@ const HomeScreen = () => {
     navigation.navigate('Notifications');
   };
   return (
-    
     <View style={styles.container}>
-      {/* textul cu marius */}
-      <View style = {{top: '60%'}}>
-
-      <View style={styles.welcomeContainer}>
-        <Text style={styles.salutText}>Welcome,</Text>
-        <Text style={styles.salutText}>  Marius!</Text>
+      <View style = {styles.background}>
+        <ShapeHomescreen/>
+        <ShapeHomeScreen2 style = {{top: '-60%', left: '0%'}}/>
+        <ShapeHomeScreen3 style = {{top: '-140%', left: '68%',}}/>
       </View>
 
-<View style = {styles.grey_rectangle}>
-
-<View style={styles.mesajInspirational}>
-    <Text style = {styles.InspirationalText}>Remember to</Text>
-    <Text style = {styles.InspirationalText}>  take care of</Text>
-    <Text style = {styles.InspirationalText}>      yourself</Text>
-  </View>
-
-        {/* Butoanele rotunde 3 */}
-        <TouchableOpacity  style={styles.roundButtons2} onPress={roundDispatcher}></TouchableOpacity>
-      <TouchableOpacity  style={styles.roundButtons2} onPress={roundRoute}></TouchableOpacity>
-      <TouchableOpacity  style={styles.roundButtons2} onPress={roundSystem}></TouchableOpacity>
-
-      {/* Butoanele pentru functii */}
-      <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={handleNotif}> 
-        <Text style={styles.textButoaneDreptunghiulare}>Call the dispatcher</Text>
-        <TelefonMic style = {{top: '-30%', zIndex: 1, left: '86%'}}/>
-      {/* </View>   */}
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={seeRoute}>
-        <Text style={styles.textButoaneDreptunghiulare}>See your route</Text>
-        <Harta style = {{top: '-28%', zIndex: 1, left: '84.5%'}}/>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={securitySystem}>
-        <Text style={styles.textButoaneDreptunghiulare}>Settings</Text>
-        <Politist style = {{top: '-32%', zIndex: 1, left: '85.5%'}}/>
-      </TouchableOpacity>
-
-</View>
-      {/* Butoane Rotunde de Jos */}
-      <View style={styles.roundButtonsContainer}>
-      <TouchableOpacity  style={styles.ButoaneAlbe2} onPress={emergencyCall}></TouchableOpacity>
-        <TouchableOpacity style={styles.emergencyButton} onPress={emergencyCall}>
-          <Text style={styles.textButoaneRotunde}>Emergency</Text>
-          <Text style={styles.textButoaneRotunde}>call</Text>
-          <Telefon style = {{top: '-31.5%', zIndex: 1, left: '2%'}}/>
-        </TouchableOpacity>
-        <TouchableOpacity  style={styles.ButoaneAlbe} onPress={yourAssistant}></TouchableOpacity>
-        <TouchableOpacity style={styles.AssistantButton} onPress={yourAssistant}>
-          <Text style={styles.textButoaneRotunde}>Your</Text>
-          <Text style={styles.textButoaneRotunde}>assistant</Text>
-          <Assistant style = {{top: '-32%', zIndex: 1, left: '-2%',}}/>
-        </TouchableOpacity>
-      </View>
-      </View>
-      <ShapeHomescreen style = {{top: '48%'}}/>
-      <ShapeHomeScreen2 style = {{top: '-5%', left: '0%'}}/>
-      <ShapeHomeScreen3 style = {{top: '-83.5%', left: '35%',}}/>
-     
       <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
-            <Linii style = {{zIndex: 1}}/>
-          </TouchableOpacity>
-          <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
+        <Linii style = {{zIndex: 1}}/>
+      </TouchableOpacity>
+
+      <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
         <Modal
           visible={modalVisible}
           animationType="fade"
@@ -215,6 +165,63 @@ const HomeScreen = () => {
           </BlurView>
         </Modal>
       </SafeAreaView>
+
+      <ScrollView>
+        <View style = {{ height: 900 }}>
+            {/* textul cu marius */}
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.salutText}>{t('welcome')}</Text>
+            <Text style={styles.salutText}>  Marius!</Text>
+          </View>
+
+          <View style = {styles.grey_rectangle}>
+            <View style={styles.mesajInspirational}>
+              <Text style = {styles.InspirationalText}>{t('remember')}</Text>
+              <Text style = {styles.InspirationalText}>  {t('take')}</Text>
+              <Text style = {styles.InspirationalText}>      {t('yourself')}</Text>
+            </View>
+
+              {/* Butoanele rotunde 3 */}
+            <TouchableOpacity  style={styles.roundButtons2} onPress={roundDispatcher}></TouchableOpacity>
+            <TouchableOpacity  style={styles.roundButtons2} onPress={roundRoute}></TouchableOpacity>
+            <TouchableOpacity  style={styles.roundButtons2} onPress={roundSystem}></TouchableOpacity>
+
+              {/* Butoanele pentru functii */}
+            <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={callDispatcher}>
+              <Text style={styles.textButoaneDreptunghiulare}>{t('call_dispatcher')}</Text>
+              <TelefonMic style = {{top: '-30%', zIndex: 1, left: '86%'}}/>
+            {/* </View>   */}
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={seeRoute}>
+              <Text style={styles.textButoaneDreptunghiulare}>{t('see_route')}</Text>
+              <Harta style = {{top: '-28%', zIndex: 1, left: '84.5%'}}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.ButoaneDreptunghiulare} onPress={securitySystem}>
+              <Text style={styles.textButoaneDreptunghiulare}>{t('security')} {t('system')}</Text>
+              <Politist style = {{top: '-32%', zIndex: 1, left: '85.5%'}}/>
+            </TouchableOpacity>
+          </View>
+
+            {/* Butoane Rotunde de Jos */}
+          <View style={styles.roundButtonsContainer}>
+            <TouchableOpacity  style={styles.ButoaneAlbe2} onPress={emergencyCall}></TouchableOpacity>
+            <TouchableOpacity style={styles.emergencyButton} onPress={emergencyCall}>
+              <Text style={styles.textButoaneRotunde}>{t('emergency')}</Text>
+              <Text style={styles.textButoaneRotunde}>{t('call')}</Text>
+              <Telefon style = {{top: '-31.5%', zIndex: 1, left: '2%'}}/>
+            </TouchableOpacity>
+
+            <TouchableOpacity  style={styles.ButoaneAlbe} onPress={yourAssistant}></TouchableOpacity>
+            <TouchableOpacity style={styles.AssistantButton} onPress={yourAssistant}>
+              <Text style={styles.textButoaneRotunde}>{t('your')}</Text>
+              <Text style={styles.textButoaneRotunde}>{t('assistant')}</Text>
+              <Assistant style = {{top: '-32%', zIndex: 1, left: '-2%',}}/>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </View>  
   );
 };
@@ -223,13 +230,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E9EBEE',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 
   welcomeContainer: {
     position: 'absolute',
-    top: '87%',
+    top: '0%',
     left: '5%',
   },
   salutText: {
@@ -268,7 +275,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginHorizontal: 25,
-    top: '192%',
+    top: '35%',
     zIndex: 1,
   },
   ButoaneAlbe: {
@@ -278,9 +285,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    right: '140%',
+    right: '125%',
     marginTop: '0%',
-    top: '163.5%',
+    top: '85%',
     zIndex: 1,
     elevation: 15,
   },
@@ -294,7 +301,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     right: '-225%',
     marginTop: '0%',
-    top: '163.5%',
+    top: '85%',
     zIndex: 1,
     elevation: 15,
   },
@@ -307,8 +314,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     left: '132.5%',
-    top: '161.3%',
-    zIndex: 1,
+    top: '83%',
+    zIndex: 1
     elevation: 15,
   },
   AssistantButton: {
@@ -318,10 +325,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#101F41',
     justifyContent: 'center',
     alignItems: 'center',
-    right: '232%',
+    right: '218%',
     zIndex: 1,
     marginTop: '0%',
-    top: '161.3%',
+    top: '83%'
     elevation: 15,
   },  
 
@@ -340,8 +347,8 @@ const styles = StyleSheet.create({
     left: '4%',
     top: 15,
     textShadowColor: "#B3B3B3",
-                textShadowOffset: { width: 4, height: 3 },
-                textShadowRadius: 4,
+    textShadowOffset: { width: 4, height: 3 },
+    textShadowRadius: 4,
   },
   textButoaneRotunde: {
     color: '#FFFFFF',
@@ -365,7 +372,7 @@ menuButton: {
   padding: 16,
   borderRadius: 8,
   alignSelf: "center",
-  top:'-180%',
+  top:'5%',
   zIndex:1,
   left:'40%'
 },
@@ -496,6 +503,14 @@ inputText: {
   color: "#F8F8F8",
   top: "-90%",
   left: "5%"
+},
+background: {
+  position:'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: -1,
 },
 
 });

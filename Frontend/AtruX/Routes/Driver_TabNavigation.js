@@ -72,6 +72,11 @@ function SecurityStackScreens() {
         component={Notification}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="SettingsSecurity"
+        component={SettingsDriver}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }

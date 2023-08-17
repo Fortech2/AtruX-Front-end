@@ -52,9 +52,10 @@
     "send_route": "Send today's route",
     "see_updates": "See updates",
     "list_of_drivers":"List of drivers",
-    "remeber":"Remember to",
+    "remember":"Remember to",
     "take":"take care of",
     "drivers":"your drivers",
+    "yourself": "yourself",
 
     "menu":"Menu",
     "settings":"Settings",
@@ -70,6 +71,16 @@
    
     "account_settings": "Account settings:",
     "log_out": "Log out",
-    "edit_account": "Edit account"
+    "edit_account": "Edit account",
 
+    "welcome": "Welcome,",
+    "call_dispatcher": "Call the dispatcher",
+    "see_route": "See your route",
+    "your": "Your",
+    "assistant": "assistant",
+    "call": "call",
+    "emergency": "Emergency",
+    "recent_alarms": "Most recent alarms:",
+
+    "past_alarms": "See past alarms",
 }
