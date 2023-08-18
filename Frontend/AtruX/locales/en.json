@@ -70,6 +70,14 @@
    
     "account_settings": "Account settings:",
     "log_out": "Log out",
-    "edit_account": "Edit account"
+    "edit_account": "Edit account",
+    "send_routes":"Send Route",
+    "choose_driver":"Choose a driver",
+    "send_routesB":"SEND ROUTE",
+    "enter_here":"Enter here the stop",
+    "send_route_done":"That’s all",
+    "next_stop":"Next stop",
+    "previous_stop":"Previous stop",
+    "route_sent":"Route sent!"
 
 }

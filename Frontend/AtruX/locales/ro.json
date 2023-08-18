@@ -70,5 +70,13 @@
     "account_settings": "Setări cont",
     "log_out": "Deconectează-te",
     "edit_account": "Editare profil",
+    "send_routes":"Trimite ruta",
+    "choose_driver":"Alege un sofer",
+    "send_routesB":"TRIMITE RUTA",
+    "enter_here":"Scrie aici oprirea",
+    "send_route_done":"Asta este tot",
+    "next_stop":"Urmatoarea oprire",
+    "previous_stop":"Ultima oprire",
+    "route_sent":"Ruta trimisa!"
 
 }

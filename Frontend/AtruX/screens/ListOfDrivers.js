@@ -42,37 +42,48 @@ import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import NotifIconMenu from '../components/NotifIconMenu';
 import MoreButton from '../components/MoreButton';
+import CircleJ from '../components/circle';
 import { BlurView } from 'expo-blur'
-const Notification = ({ dispatcherId } ) => {
+const ListOfDrivers = () => {
   const [drivers, setDrivers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
+
   const handleOpenModal = () => {
     setModalVisible(true);
   };
-  const navigation = useNavigation();
+
   const handleCloseModal = () => {
     setModalVisible(false);
   };
-  useEffect(() => {
-    // Fetch drivers data from backend API
-    const fetchDrivers = async () => {
-      try {
-        const response = await axios.get(`http://18.185.137.152/drivers/${dispatcherId}`);
-        const driversData = response.data;
-        setDrivers(driversData);
-      } catch (error) {
-        console.error('Error fetching drivers:', error);
-      }
-    };
+  const [allDrivers, setAllDrivers] = useState([]);
+  const [dispatcherId, setDispatcherId] = useState(null);
 
-    fetchDrivers();
-  }, [dispatcherId]);
   useEffect(() => {
-    // Reset the modal visibility when the component is mounted
+    // Fetch the user data
+    axios.get('https://atrux.azurewebsites.net/user', { withCredentials: true })
+      .then(response => {
+        const userData = response.data;
+        if (userData.role === 'dispatcher') {
+          // Get the dispatcher's drivers
+          const driversForDispatcher = userData.drivers; // Assuming the drivers are now directly in the userData
+          
+          console.log('Drivers for Dispatcher:', driversForDispatcher); // Console log the drivers
+          
+          setDrivers(driversForDispatcher);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
+  useEffect(() => {
+    // Reset the modal visibility when the component is unmounted
     return () => {
       setModalVisible(false);
     };
   }, []);
+
   return (
     <View style={{backgroundColor:'#101F41',flex:1}}>
       
@@ -90,39 +101,38 @@ const Notification = ({ dispatcherId } ) => {
        <BlueMenu style={{top:'-202.4%', left:'12%'}}/>
        
       </View>
+    
       <View style={styles.contour}>
+        
           <ScrollView>
             <View style={{height:1000}}>
-            {drivers.map(driver => (
-            <View>
+          {drivers && (
+      <View>
+        {drivers.map(driverName => (
+          <View key={driverName} style={styles.data}>
+          
+            <Text
+              style={{
+                fontFamily: 'Montserrat_500Medium',
+                fontSize: 22,
+                color: '#101F41',
+                textAlign: 'left',
+                alignSelf: 'center',
+              }}
+            >
+              {driverName}
+            </Text>
+           
+           <TouchableOpacity style={{position:'absolute', left:'86%', alignItems:'center', width:'53%', height:'100%', top:'9%'}} onPress={console.log("yep")}>
+              <MoreButton/>
+           </TouchableOpacity>
             
-
-            <View key={driver.id} style={styles.data}>
-            
-                  <Text
-                    style={{
-                      fontFamily: "Montserrat_500Medium",
-                      fontSize: 22,
-                      color: '#101F41',
-                 
-                     textAlign:'left',
-                     alignSelf:'center',
-                     
-                    }}
-                  >
-                 {driver.name}
-                  </Text>
-                 
-             
-                </View>
-              
-                  <TouchableOpacity style={{left:'85%', top:'-5.7%'}}>
-                  <MoreButton />
-                </TouchableOpacity>
-             
-                </View>
-                ))}
-            </View>
+          </View>
+           
+        ))}
+      </View>
+    )}
+</View>
           </ScrollView>
 </View>
 <View>
@@ -235,13 +245,13 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     width: 284,
     height: 45,
-    marginBottom: 20,
+    
     alignItems: "center",
     padding: 1,
     borderColor: "#101f41",
     borderWidth: 1,
-    alignContent:'center'
-   
+    alignContent:'center',
+    marginTop:'5%'
 
   },
   menuButton: {
@@ -350,4 +360,4 @@ const styles = StyleSheet.create({
     left: "5%"
   },
 })
-export default Notification;
+export default ListOfDrivers;

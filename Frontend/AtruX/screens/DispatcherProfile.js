@@ -77,7 +77,7 @@ function DispProfileScreen() {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("http://18.185.137.152/user");
+      const response = await axios.get("https://atrux.azurewebsites.net/user");
       setUserData(response.data);
       if (response.data && response.data.dispatcherName) {
         setNumberOfDrivers(response.data.numberOfDrivers);
