@@ -97,10 +97,10 @@ export default function LogIn() {
   // const history = useHistory();
   const handleLogin = () => {
     axios
-      .post("http://18.185.137.152/login", { email, password }, { withCredentials: true })
+      .post("https://atrux.azurewebsites.net/login", { email, password }, { withCredentials: true })
       .then((response) => {
         axios
-        .get("http://18.185.137.152/user", { withCredentials: true }) // Assuming you have the get_user_data endpoint
+        .get("https://atrux.azurewebsites.net/user", { withCredentials: true }) // Assuming you have the get_user_data endpoint
         .then((userDataResponse) => {
           console.log("User data:", userDataResponse.data);
 
@@ -302,7 +302,7 @@ export default function LogIn() {
             </View>
             {/* Display error message here */}
             
-            <TouchableOpacity style={styles.loginBtn} onPress={handleLoginb}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
 
               <Text
                 style={{
