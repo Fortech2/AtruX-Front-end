@@ -78,7 +78,7 @@
     "send_route_done":"Asta este tot",
     "next_stop":"Urmatoarea oprire",
     "previous_stop":"Ultima oprire",
-    "route_sent":"Ruta trimisa!"
+    "route_sent":"Ruta trimisa!",
 
     "welcome": "Bun venit,",
     "call_dispatcher": "Apel către dispecer",
@@ -89,5 +89,5 @@
     "emergency": "Apel",
     "recent_alarms": "Alarme recente:",
 
-    "past_alarms": "Vezi alarme salvate",
+    "past_alarms": "Vezi alarme salvate"
 }

@@ -80,7 +80,7 @@
     "send_route_done":"That’s all",
     "next_stop":"Next stop",
     "previous_stop":"Previous stop",
-    "route_sent":"Route sent!"
+    "route_sent":"Route sent!",
 
 
     "welcome": "Welcome,",
@@ -92,5 +92,5 @@
     "emergency": "Emergency",
     "recent_alarms": "Most recent alarms:",
 
-    "past_alarms": "See past alarms",
+    "past_alarms": "See past alarms"
 }
