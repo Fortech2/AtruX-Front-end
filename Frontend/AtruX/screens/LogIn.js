@@ -139,7 +139,8 @@ export default function LogIn() {
   const handleLoginb = () => {
       // Perform any other login-related logic here if needed
       // For now, we will simply navigate to the Home screen (App_Driver)
-      navigation.navigate('Tab_Navigation');
+      // Tab_Navigation
+      navigation.navigate('Disp_TabNavigation');
     };
   if (!montserratLoaded) {
     return null;

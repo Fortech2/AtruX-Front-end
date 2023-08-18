@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar } from "expo-status-bar";
 import Svg, { G, Circle, Defs, Path } from "react-native-svg";
 import WrittenLogo from "../components/writtenLogo";
@@ -19,12 +19,13 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   ScrollView,
-  Modal, //
   FlatList, //
   SafeAreaView,
   Picker,
   TouchableHighlight,
-  Switch
+  Switch,
+  Pressable,
+  BackHandler
 } from "react-native";
 
 import {
@@ -52,6 +53,15 @@ import SettingsIcon from '../components/SettingsIcon'
 import LineSettings from '../components/LineSettings'
 import LogOutIcon from '../components/LogOutIcon'
 import EditAccountIcon from '../components/EditAccountIcon'
+import Modal from "react-native-modal";
+import Linii from '../components/Linii';
+import KeyWordsIcon from '../components/KeyWordsIcon';
+import ExitIcon from '../components/ExitIcon';
+import NotifIconMenu from '../components/NotifIconMenu'
+import EllipseMenuHS1 from '../components/EllipseMenuHS1';
+import EllipseMenu2 from '../components/EllipseMenu2';
+import VectorMenu from '../components/VectorMenu';
+import { BlurView } from 'expo-blur'
 
 export default function Settings_Driver() {
 
@@ -69,7 +79,8 @@ export default function Settings_Driver() {
   });
 
   const handleBack = () => {
-    navigation.navigate('Homes')
+    // navigation.navigate('Homes')
+    navigation.goBack()
   };
 
   const handleEditAccount = () => {
@@ -86,40 +97,26 @@ export default function Settings_Driver() {
     // navigation.navigate('');
   };
 
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+  };
+  
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
+
   return (
     <View style={{flex: 1}}>
-      <ScrollView style={styles.container}> 
-        <View style={styles.ellipseWrapper}>
-          <EllipseUpperLeftCorner
-            style={{
-              position: "absolute",
-              top: "5%",
-            }}
-          />
-        </View>
+      <View style = {styles.background}>
+        <EllipseUpperLeftCorner/>
+        <EllipseSettings style={{ top: "-30%", left: "40%" }}/>
+        <CircleSettings style={{ top: "-165%", left: "0%" }}/>
+      </View>    
 
-        <View style={styles.ellipseRightWrapper}>
-          <EllipseSettings
-            style={{
-              position: "absolute",
-              top: "5%",
-            }}
-          />
-        </View>
-
-        <View style={styles.circleLeftWrapper}>
-          <CircleSettings
-            style={{
-              position: "absolute",
-              top: "5%",
-            }}
-          />
-        </View>
-
-        <TouchableOpacity style={styles.menuButton}>
-          <MenuIcon style={{left: "10%", top: "10%"}}/>
-        </TouchableOpacity> 
-
+      <ScrollView> 
+       <View style = {{ height: 800 }}>
         <View style={{top: "10%", left: "10%", position: "absolute"}}>
           <SettingsIcon style={{left: "-5%", top: "0%"}}/>
           <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'white', top:'-105%', left: '30%'}}>
@@ -218,24 +215,79 @@ export default function Settings_Driver() {
           </View>
 
         </View>
-      
-        <View style={{
-              top: "2%",
-              width: 280,
-              height: 70,
-              marginTop: 10,
-              marginBottom: 5,
-              marginLeft: 0,
-              marginRight: 250,
-              borderWidth: 0, // Border set to 0
-            }}  
-        />
-      
-        <TouchableOpacity style={styles.back} onPress={handleBack}>
-            <Back />
-        </TouchableOpacity>
 
+        <TouchableOpacity style={styles.back} onPress={handleBack}>
+          <Back />
+        </TouchableOpacity>        
+       </View>
       </ScrollView>
+
+      <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
+        <Linii style = {{zIndex: 1}}/>
+      </TouchableOpacity>
+
+      <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
+        <Modal
+          visible={modalVisible}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={handleCloseModal}
+        >
+          <BlurView intensity={20} style={styles.blurContainer}>
+            <View style={styles.modalContainer}>
+              <View style={styles.ellipseWrapper1}>
+                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
+              </View>
+
+              <View style={styles.ellipseWrapper2}>
+                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
+              </View>
+
+              <View style={styles.vectorWrapper}>
+                <VectorMenu style={{ top: "2%", left: "5%" }} />
+              </View>
+
+              <Pressable style={styles.exitButton} onPress={handleCloseModal}>
+                <ExitIcon />
+              </Pressable>
+                
+              <Text style={styles.menuText}>{t("menu")}</Text>
+
+              <TouchableOpacity
+                style={styles.containerInputModal}
+                onPress={() => {
+                  console.log("Navigating to Settings");
+                  navigation.navigate("Settings");
+                  handleCloseModal();
+                  // Add navigation logic here
+                }}
+              >
+                <SettingsIcon style={{ top: "8%", left: "5%" }} />
+                <Text style={styles.inputTextMenu}>{t("settings")}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.containerInputModal}>
+                <KeyWordsIcon style={{ top: "8%", left: "5%" }} />
+                <Text style={styles.inputTextMenu}>{t("keywords")}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.containerInputModal}
+                onPress={() => {
+                  navigation.navigate("Notificationss");
+                  handleCloseModal();
+                  // Add navigation logic here
+                }}
+              >
+                <NotifIconMenu style={{ top: "20%", left: "5%" }} />
+                <Text style={styles.inputTextMenu}>{t("notifications")}</Text>
+              </TouchableOpacity>
+            </View>
+          </BlurView>
+        </Modal>
+      </SafeAreaView>  
+
+
     </View>
   )
 }
@@ -299,7 +351,7 @@ const styles = StyleSheet.create({
       top: "4%",
       left: "82%",
       position: "absolute",
-      borderColor: "#E9EBEE",
+      borderColor: "rgba(158, 150, 150, 0)", // makes the color transparent
     },
     notificationButton: {
       width: "13%",
@@ -322,7 +374,6 @@ const styles = StyleSheet.create({
       borderWidth: 0, // Border set to 0
       position: "absolute",
       transform: [{ rotate: '4.673deg' }]
-      
     },
     circleLeftWrapper: {
       width: 150,
@@ -442,5 +493,118 @@ const styles = StyleSheet.create({
       left: "82%",
       position: "absolute",
       borderColor: "#D9D9D9",
+    },
+    ellipseWrapper1: {
+      // backgroundColor: "#45b871",
+      borderLeftWidth: 15,
+      borderLeftColor: "#E9EBEE",
+      width: 150,
+      height: 300,
+      marginTop: 10,
+      marginBottom: 10,
+      marginLeft: 0,
+      marginRight: 0,
+      top: "10%",
+      left: "0%",
+      borderWidth: 0, // Border set to 0
+      position: "absolute",
+      borderBottomLeftRadius: 35
+    },
+    blurContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      position: "absolute",
+      height:'200%',
+      width:'200%',
+      left:'-10%',
+      top:'-50%'
+    },
+    containerInputModal: {
+      borderRadius: 25,
+      width: "82%",
+      height: "15%",
+      marginBottom: 20,
+      alignItems: "center",
+      padding: 1,
+      borderColor: "#101F41",
+      borderWidth: 1,
+      top: "0%",
+      alignContent: "center",
+      backgroundColor: "#101F41"
+    },
+    modalContainer: {
+      justifyContent: "center",
+      alignItems: "center",
+      alignSelf: "center",
+      backgroundColor: "rgba(0,0,0,0.3)",
+      top: "-2%",
+      left: "-20%",
+      borderRadius: 40,
+      padding: 1,
+      width: 311,
+      height: 347,
+      backgroundColor: "#999999",
+    },
+    ellipseWrapper2: {
+      // backgroundColor: "#45b871",
+      borderRightWidth: 40,
+      borderRightColor: "#B6B6B6",
+      width: 126,
+      height: 190,
+      marginTop: 10,
+      marginBottom: 10,
+      marginLeft: 0,
+      marginRight: 0,
+      top: "-3%",
+      left: "60%",
+      borderWidth: 0, // Border set to 0
+      position: "absolute",
+      borderTopRightRadius: 20
+    },
+    vectorWrapper: {
+      // backgroundColor: "#45b871",
+      width: 125,
+      height: 200,
+      marginTop: 10,
+      marginBottom: 10,
+      marginLeft: 0,
+      marginRight: 0,
+      top: "20%",
+      left: "58%",
+      borderWidth: 0, // Border set to 0
+      position: "absolute",
+    },
+    menuText: {
+      fontFamily: 'Montserrat_500Medium',
+      fontSize: 30,
+      color: "#101F41",
+      top: "-8%"
+    },
+    inputTextMenu: {
+      fontFamily: 'Montserrat_500Medium',
+      fontSize: 28,
+      color: "#F8F8F8",
+      top: "-90%",
+      left: "5%"
+    },
+    exitButton: {
+      width: "12%",
+      height: "10%",
+      padding: 1,
+      // backgroundColor: "#F38D68",
+      borderWidth: 1,
+      top: "4%",
+      left: "85%",
+      position: "absolute",
+      borderColor: "#B6B6B6",
+    },
+    background: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      zIndex: -1,     
     },
   });

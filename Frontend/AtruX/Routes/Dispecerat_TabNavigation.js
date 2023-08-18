@@ -22,6 +22,7 @@ import SettingsDispatcher from '../screens/SettingsDisp';
 import NotificationD from '../screens/NotificationsDisp';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+import NotificationsDispatcher from "../screens/NotificationsDispatcher";
 
 function HomeStackScreen() {
   return (
@@ -31,7 +32,7 @@ function HomeStackScreen() {
         component={HomeD}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+            <Stack.Screen
         name="ListOfDrivers"
         component={ListDrivers}
         options={{ headerShown: false }}
@@ -47,7 +48,7 @@ function HomeStackScreen() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Setings"
+        name="SettingsDisp"
         component={SettingsDispatcher}
         options={{ headerShown: false }}
       />
@@ -83,6 +84,16 @@ function SecurityStackScreens() {
       <Stack.Screen
         name="Security"
         component={SecurityD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationD}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SettingsS"
+        component={SettingsDispatcher}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

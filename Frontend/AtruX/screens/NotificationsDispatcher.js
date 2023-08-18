@@ -33,7 +33,7 @@ import NotificationIcon2 from '../components/NotificationIcon2';
 import Back from '../components/Back';
 
 
-const Notifications = () => {
+const NotificationsDispatcher = () => {
   return (
     <View style={styles.background}>
      <View>
@@ -55,10 +55,6 @@ const Notifications = () => {
       <View style={styles.butoaneAlbastre}>
         <View style={styles.dreptunghiAlbastru1} />
         <View style={styles.dreptunghiAlbastru2} />
-      </View>
-      <View style={styles.butoaneAlbastre}>
-        <Text style={styles.text1}>Security:</Text>
-        <Text style={styles.text2}>Updates from dispatcher:</Text>
       </View>
     </View>
     // {/* </ScrollView> */}
@@ -116,7 +112,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    zIndex: 1,
   },
   dreptunghiAlbastru1:{
     width: 294,
@@ -138,21 +133,6 @@ const styles = StyleSheet.create({
     zIndex: 1,
     justifyContent: 'center',
   },
-  text1: {
-    fontSize: 22,
-    fontFamily: 'Montserrat_600SemiBold',
-    color: '#FFFFFF',
-    top: '49%',
-    left: '220%',
-  },
-  text2: {
-    fontSize: 20,
-    fontFamily: 'Montserrat_600SemiBold',
-    color: '#FFFFFF',
-    top: '129%',
-    left: '-112%',
-    zIndex: 1,
-  },
 });
 
-export default Notifications;
+export default NotificationsDispatcher;
