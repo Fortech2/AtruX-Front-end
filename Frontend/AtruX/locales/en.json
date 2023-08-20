@@ -92,5 +92,10 @@
     "emergency": "Emergency",
     "recent_alarms": "Most recent alarms:",
 
-    "past_alarms": "See past alarms"
+    "past_alarms": "See past alarms",
+    "password_mismatch":"Passwords don't match!",
+    "terms_error":"Please accept the Terms of Use",
+    "empty_field":"Please fill in all fields before proceeding.",
+    "reset_password":"RESET PASSWORD",
+    "is_ok":"Email sent successfully!"
 }
