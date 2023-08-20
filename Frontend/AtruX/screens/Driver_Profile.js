@@ -65,19 +65,19 @@ function DriverProfileScreen() {
   };
   const [userData, setUserData] = useState(null);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const userData = response.data;
+      setUserData(userData); // Update the state with fetched user data
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+  
   useEffect(() => {
     fetchUserData();
   }, []);
-
-  const fetchDriversByDispatcher = async (dispatcherId) => {
-    try {
-      const response = await axios.get(`https://your-backend-api.com/drivers/${dispatcherId}`);
-      const drivers = response.data;
-      // Update your component's state with the fetched drivers
-    } catch (error) {
-      console.error('Error fetching drivers:', error);
-    }
-  };
   return (
     <View style={{ flex: 1, backgroundColor: "#E9EBEE" }}>
       <View style = {styles.background}>

@@ -89,5 +89,10 @@
     "emergency": "Apel",
     "recent_alarms": "Alarme recente:",
 
-    "past_alarms": "Vezi alarme salvate"
+    "past_alarms": "Vezi alarme salvate",
+    "password_mismatch":"Parola introdusa nu este aceeasi cu cea confirmata!",
+    "terms_error":"Te rugam sa accepti termenii de utilizare",
+    "empty_field":"Va rugam sa completati toate campurile.",
+    "reset_password":"RESETEAZA PAROLA",
+    "is_ok":"Email-ul a fost trimis cu succes!"
 }

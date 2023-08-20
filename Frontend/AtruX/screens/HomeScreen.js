@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, Pressable, ScrollView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import {
@@ -27,7 +27,7 @@ import NotifIconMenu from '../components/NotifIconMenu'
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next"; // for the translation
 import { BlurView } from 'expo-blur'
-
+import axios from "axios";
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
@@ -40,7 +40,17 @@ const HomeScreen = () => {
   });
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [userData, setUserData] = useState(null);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const userData = response.data;
+      setUserData(userData); // Update the state with fetched user data
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
   const handleOpenModal = () => {
     setModalVisible(true);
   };
@@ -94,12 +104,15 @@ const HomeScreen = () => {
 
     navigation.navigate('Notifications');
   };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
   return (
     <View style={styles.container}>
       <View style = {styles.background}>
         <ShapeHomescreen/>
-        <ShapeHomeScreen2 style = {{top: '-60%', left: '0%'}}/>
-        <ShapeHomeScreen3 style = {{top: '-140%', left: '68%',}}/>
+        <ShapeHomeScreen2 style = {{top: '-50%', left: '0%'}}/>
+        <ShapeHomeScreen3 style = {{top: '-140%', left: '78%',}}/>
       </View>
 
       <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
@@ -165,14 +178,18 @@ const HomeScreen = () => {
           </BlurView>
         </Modal>
       </SafeAreaView>
-
-      <ScrollView>
-        <View style = {{ height: 900 }}>
-            {/* textul cu marius */}
-          <View style={styles.welcomeContainer}>
+      <View style={styles.welcomeContainer}>
             <Text style={styles.salutText}>{t('welcome')}</Text>
-            <Text style={styles.salutText}>  Marius!</Text>
+            {userData ? (
+            <Text style={styles.salutText}>{userData.name}</Text>
+            ) : (
+              <Text>Loading...</Text>
+              )}
           </View>
+      <ScrollView style={{ top:'15%'}}>
+        <View style = {{ height: 900, top:'-10%', alignContent:'center', alignItems:'center'}}>
+            {/* textul cu marius */}
+         
 
           <View style = {styles.grey_rectangle}>
             <View style={styles.mesajInspirational}>
@@ -236,7 +253,7 @@ const styles = StyleSheet.create({
 
   welcomeContainer: {
     position: 'absolute',
-    top: '0%',
+    top: '6%',
     left: '5%',
   },
   salutText: {

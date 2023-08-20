@@ -159,7 +159,7 @@ export default function SignUp_Dispecerat() {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIconColor, setRightIconColor] = useState("#6D6D6D");
   const [isChecked, setChecked] = useState(false);
-
+  const [confirmPassword, setConfirmPassword] = useState('');
   const handlePasswordVisibility = () => {
     if (rightIcon === "eye") {
       setRightIcon("eye-slash");
@@ -173,7 +173,7 @@ export default function SignUp_Dispecerat() {
   };
   const signUpUser = async () => {
     try {
-      const response = await axios.post("http://18.185.137.152/sign-up", {
+      const response = await axios.post("https://atrux.azurewebsites.net/sign-up", {
         role: 'dispatcher',
         name: username,
         email: email,
@@ -182,7 +182,29 @@ export default function SignUp_Dispecerat() {
         company: company_name,
         number_of_drivers: number_employees,
       });
+      if (
+        !username ||
+        !email ||
+        !password ||
+        !phone_number ||
+        !company_name ||
+        ! number_employees
+      ) {
+        setErrorMessage(t("empty_field")); // Set an error message for password mismatch
+        setIsModalVisible3(true);
+        return;
+      }
+      if (password !== confirmPassword) {
+        setErrorMessage(t("password_mismatch")); // Set an error message for password mismatch
+        setIsModalVisible3(true);
+        return; // Stop the function execution
+      }
   
+      if (!isChecked) {
+        setErrorMessage(t("terms_error")); // Set an error message for password mismatch
+        setIsModalVisible3(true); // Show the checkbox error message
+        return;
+      }
       console.log("User registered successfully:", response.data);
       navigation.navigate("Disp_TabNavigation");
     }catch (error) {
@@ -349,12 +371,13 @@ export default function SignUp_Dispecerat() {
           <View style={styles.inputView}>
             <Lock style={{ left: "2%", top: "20%" }} />
             <TextInput
-              style={styles.inputText}
-              placeholder={t("confirm_password")}
-              placeholderTextColor="#6D6D6D"
-              secureTextEntry={passwordVisibility}
-              onChangeText={(password) => setPassword(password)}
-            />
+    style={styles.inputText}
+    placeholder={t("confirm_password")}
+    placeholderTextColor="#6D6D6D"
+    secureTextEntry={passwordVisibility}
+    value={confirmPassword} // Add this line
+    onChangeText={(newConfirmPassword) => setConfirmPassword(newConfirmPassword)} // Update the variable name
+  />
             <TouchableOpacity
               style={{ top: "-125%", left: "40%" }}
               onPress={handlePasswordVisibility}
@@ -384,7 +407,7 @@ export default function SignUp_Dispecerat() {
           </View>
 
           <View style={{ top: "-190%", left: "-2%" }}>
-            <Checkbox
+          <Checkbox
               style={styles.checkbox}
               value={isChecked}
               onValueChange={setChecked}

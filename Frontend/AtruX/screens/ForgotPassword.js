@@ -49,22 +49,21 @@ import SignUp from "./SignUp";
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import Arrow from "../components/arrow_language";
 import { useHistory } from "react-router-dom";
-
+import axios from 'axios';
 export default function ForgotPassword() {
   const { t, i18n } = useTranslation();
   const changeLanguage = (language) => {
     console.log(`Selected language: ${language}`);
     i18n.changeLanguage(language);
-    setModalVisible(false);
+    setIsModalVisible3(false);
   };
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [isModalVisible3, setIsModalVisible3] = useState(false);
   const handleOpenModal = () => {
-    setModalVisible(true);
+    setIsModalVisible3(true);
   };
-
-  const handleCloseModal = () => {
-    setModalVisible(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const hideModal = () => {
+    setIsModalVisible3(false);
   };
   const navigation = useNavigation(); // for the navigation
   const [montserratLoaded] = useMontserrat({
@@ -91,16 +90,29 @@ export default function ForgotPassword() {
     }
   };
   // const history = useHistory();
-  const handleLogin = () => {
-    // axios.post('/api/login', { username, password }, { withCredentials: true })
-    //   .then((response) => {
-    //     history.push('/home');
-    //   })
-    //   .catch((error) => {
-    //     console.error('Login error:', error);
-    //   });
+  const handlePasswordReset = async () => {
+    try {
+      if (!email) {
+        // Show an error message if the email field is empty
+        console.log("Please enter your email.");
+        return;
+      }
+  
+      // Call the backend to send the password reset email
+      const response = await axios.put('https://atrux.azurewebsites.net/password', {
+        email: email,
+      });
+      
+      // Log success message or handle response status as needed
+      console.log(response.data);
+      setErrorMessage(t("is_ok")); // Set an error message for password mismatch
+        setIsModalVisible3(true);
+        return;
+    } catch (error) {
+      // Handle error or show error message
+      console.error('Password reset error:', error);
+    }
   };
-
   if (!montserratLoaded) {
     return null;
   }
@@ -126,6 +138,23 @@ export default function ForgotPassword() {
           >
             {t("forgotpassword")}
           </Text>
+          <Modal
+        visible={isModalVisible3}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={hideModal}
+      >
+        <View style={styles.modalContainerError}>
+          <View style={styles.boxError}>
+            <Text style={styles.errorText}>{t("reset_password")}</Text>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <View style={styles.line} />
+            <TouchableOpacity style={styles.okButton} onPress={hideModal}>
+              <Text style={styles.okButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
           <View style={styles.inputView}>
             <PersonIcon style={{ left: "2%", top: "30%" }} />
             <TextInput
@@ -142,21 +171,19 @@ export default function ForgotPassword() {
             />
           </View>
           <TouchableOpacity
-            style={styles.loginBtn}
-            onPress={() => {
-              handleLogin;
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: "Montserrat_500Medium",
-                fontSize: 18,
-                color: "#FFFF",
-              }}
-            >
-              {t("recovery_button")}
-            </Text>
-          </TouchableOpacity>
+  style={styles.loginBtn}
+  onPress={handlePasswordReset}
+>
+  <Text
+    style={{
+      fontFamily: "Montserrat_500Medium",
+      fontSize: 18,
+      color: "#FFFF",
+    }}
+  >
+    {t("recovery_button")}
+  </Text>
+</TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>
@@ -205,16 +232,7 @@ const styles = StyleSheet.create({
     height: 30,
     marginBottom: 30,
   },
-  modalContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.3)",
-    top: "12%",
-    width: "30%",
-    borderRadius: 12,
-    padding: 1,
-    left: "5%",
-  },
+  
   languageBtn: {
     padding: 16,
     fontFamily: "Montserrat_600SemiBold",
@@ -244,5 +262,78 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
     backgroundColor: "#D9D9D9",
+  },
+  modalContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    top: "6%",
+    width: "30%",
+    borderRadius: 12,
+    padding: 1,
+    left: "3%",
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  modalContainerError:{
+    justifyContent: "center",
+    alignItems: "center",
+    position:'absolute',
+    alignSelf:'center',
+    top:'-5%',
+    width: "100%",
+    borderRadius: 12,
+    height:'100%'
+  },
+  boxError:{
+    backgroundColor: 'white',
+    width: "80%",
+    borderRadius: 14,
+    padding: 1,
+    height:'20%'
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#CCCCCC",
+    marginVertical: 10,
+    top:'5%'
+  },
+  errorText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: "Montserrat_500Medium",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  errorMessage:{
+    color: '#000000',
+    fontSize: 14,
+    fontFamily: "Montserrat_100Thin",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  openButtonText: {
+    color: "white",
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 16,
+  },
+  okButton: {
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  okButtonText: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 20,
+    color: "#101F41",
+    textAlign: "center",
+    justifyContent:'center',
+   top:'-60%',
+   left:'-3%'
   },
 });
