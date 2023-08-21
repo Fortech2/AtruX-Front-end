@@ -92,5 +92,7 @@
     "emergency": "Emergency",
     "recent_alarms": "Most recent alarms:",
 
-    "past_alarms": "See past alarms"
+    "past_alarms": "See past alarms",
+    "title_past_alarms": "Past alarms",
+    "updates": "Updates"
 }

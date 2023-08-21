@@ -89,5 +89,7 @@
     "emergency": "Apel",
     "recent_alarms": "Alarme recente:",
 
-    "past_alarms": "Vezi alarme salvate"
+    "past_alarms": "Vezi alarme salvate",
+    "title_past_alarms": "Alarme salvate",
+    "updates": "Noutăți"
 }

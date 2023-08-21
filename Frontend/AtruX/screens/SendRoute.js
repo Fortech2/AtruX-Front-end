@@ -48,6 +48,7 @@ import Back from "../components/Back";
 import BigCircle from "../components/BigEllipse";
 import { BlurView } from "expo-blur";
 import SendRouteIcon from "../components/SendRouteIc";
+
 const SendRoute = () => {
   const [drivers, setDrivers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -93,6 +94,11 @@ const SendRoute = () => {
     setRouteStop("");
     setRouteStops([]);
   };
+
+  const handleBack = () => {
+    navigation.navigate('Home');
+  };
+
   useEffect(() => {
     if (!modalVisible2) {
       // Modal is closed, reset the state
@@ -126,23 +132,23 @@ const SendRoute = () => {
       <View>
         <BlueCirc />
 
-        <TouchableOpacity style={{ top: "-98.5%", left: "4%" }}>
+        <TouchableOpacity style={styles.backBox} onPress={handleBack}>
           <Back style={{ top: "-0.3%" }} />
         </TouchableOpacity>
 
         <Text
           style={{
-            top: "-199.1%",
+            top: "-99%",
             color: "white",
             fontSize: 33,
-            left: "22%",
+            left: "25%",
             width: "44%",
             fontFamily: "Montserrat_500Medium",
           }}
         >
           {t("send_routes")}
         </Text>
-        <SendRouteIcons style={{ top: "-202.4%", left: "12%" }} />
+        <SendRouteIcons style={{ top: "-103%", left: "13.5%" }} />
       </View>
 
       <View style={styles.contour}>
@@ -400,7 +406,7 @@ const SendRoute = () => {
       </View>
       <View>
         <TouchableOpacity
-          style={{ left: "84%", top: "-387%" }}
+          style={styles.menuButton}
           onPress={() => {
             handleOpenModal();
             console.log("Modal opened:", modalVisible); // Add this line
@@ -438,7 +444,7 @@ const SendRoute = () => {
                   style={styles.containerInputModal}
                   onPress={() => {
                     console.log("Navigating to Settings");
-                    navigation.navigate("Setings");
+                    navigation.navigate("SettingsDisp");
                     handleCloseModal();
                     // Add navigation logic here
                   }}
@@ -469,7 +475,7 @@ const SendRoute = () => {
           </Modal>
         </SafeAreaView>
       </View>
-      <BigCircle style={{ top: "-450%" }} />
+      {/* <BigCircle style={{ top: "-270%" }} /> */}
     </View>
   );
 };
@@ -489,7 +495,7 @@ const styles = StyleSheet.create({
     elevation: 10, //only android
     zIndex: 1,
     opacity: 1,
-    top: "-295%",
+    top: "-195%",
   },
   box: {
     backgroundColor: "#101F41",
@@ -534,9 +540,14 @@ const styles = StyleSheet.create({
     marginTop: "5%",
   },
   menuButton: {
-    borderRadius: 8,
-    alignSelf: "center",
-    marginTop: 20,
+    width: "13%",
+    height: "20%",
+    padding: 1,
+    backgroundColor: "#F38D68",
+    borderWidth: 1,
+    top: "-930%",
+    left: "83%",
+    borderColor: "rgba(158, 150, 150, 0)", // makes the color transparent
   },
   modalContainer: {
     justifyContent: "center",
@@ -705,6 +716,18 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     top: "66%",
   
+  },
+  backBox: {
+    height: 25,
+    width: 30,
+    marginLeft: 5,
+    borderRadius: 10,
+    position: "absolute",
+    zIndex: 1,
+    opacity: 1,
+    top: "2%",
+    left: "4%",
+    alignItems: "center",
   },
 });
 export default SendRoute;
