@@ -43,6 +43,7 @@ import Bigcomp from "../components/bigcircledp";
 import Smallcomp from "../components/editpd";
 import Nrd from '../components/nrdr';
 import Company from '../components/companyde';
+import axios from 'axios';
 function EditDispProfile() {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
@@ -57,22 +58,49 @@ function EditDispProfile() {
     Montserrat_600SemiBold,
     Montserrat_500Medium,
   });
+  const [errorMessage, setErrorMessage] = useState("");
   const handleBack = () => {
     navigation.navigate("Profile");
   };
+  const handleOpenModal = () => {
+    setIsModalVisible3(true);
+  };
 
+  const hideModal = () => {
+    setIsModalVisible3(false);
+  };
   const [email, setNewEmail] = useState("");
   const [username, setNewUsername] = useState("");
   const [phone_nr, setNewPhoneNr] = useState(null);
-
-  const handleSave = () => {
-    // here we will set the new email, username and phone_nr
+const handleSave = async () => {
+ 
+  const requestData = {
+    email: email,
+    name: username,
+    phone_number: phone_nr,
   };
+  console.log('trying');
+  try {
+    const response = await axios.put('https://atrux.azurewebsites.net/profile', requestData);
+    if (response.status === 200) {
+      console.log('Data saved successfully');
+      setErrorMessage(t("data_changed"));
+      setIsModalVisible3(true);
+      // Data saved successfully, you can navigate to another page or show a success message
+    } else {
+      console.log('Unexpected response status:', response.status);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    // Handle error, you can show an error message to the user
+  }
+};
+
 
   const handleCancel = () => {
     // here the data of the user needs to remain the same
   };
-
+  const [isModalVisible3, setIsModalVisible3] = useState(false);
   return (
     <View style={{ backgroundColor: "#101F41", flex: 1 }}>
       <View style={styles.background}>
@@ -105,7 +133,7 @@ function EditDispProfile() {
             style={styles.inputView}
             placeholder={t("new_email")}
             placeholderTextColor="#6D6D6D"
-            // onChangeText={(email) => setNewEmail(email)}
+            onChangeText={(email) => setNewEmail(email)}
           />
         </View>
 
@@ -118,7 +146,7 @@ function EditDispProfile() {
             style={styles.inputView}
             placeholder={t("new_username")}
             placeholderTextColor="#6D6D6D"
-            // onChangeText={(username) => setNewUsername(username)}
+            onChangeText={(username) => setNewUsername(username)}
           />
         </View>
 
@@ -132,7 +160,7 @@ function EditDispProfile() {
             style={styles.inputView}
             placeholder={t("new_phone_nr")}
             placeholderTextColor="#6D6D6D"
-            // onChangeText={(phone_nr) => setNewPhoneNr(phone_nr)}
+            onChangeText={(phone_nr) => setNewPhoneNr(phone_nr)}
           />
         </View>
         
@@ -145,13 +173,29 @@ function EditDispProfile() {
 
         <TouchableOpacity
           style = {styles.saveView}
-          onPress={() => {handleSave}}
+          onPress={handleSave}
         >
           <Text style = {styles.textStyle}>
             {t('save')}
           </Text>
         </TouchableOpacity>
-
+        <Modal
+        visible={isModalVisible3}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={hideModal}
+      >
+        <View style={styles.modalContainerError}>
+          <View style={styles.boxError}>
+            <Text style={styles.errorText}>EDIT PROFILE</Text>
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+            <View style={styles.line} />
+            <TouchableOpacity style={styles.okButton} onPress={hideModal}>
+              <Text style={styles.okButtonText}>OK</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
         <TouchableOpacity
           style = {styles.cancelView}
@@ -331,6 +375,70 @@ const styles = StyleSheet.create({
     top: "0%",
     left: "0%",
     color: "#D9D9D9",
+  },
+  modalContainerError:{
+    justifyContent: "center",
+    alignItems: "center",
+    position:'absolute',
+    alignSelf:'center',
+    top:'-5%',
+    width: "100%",
+    borderRadius: 12,
+    height:'100%'
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#CCCCCC",
+    marginVertical: 10,
+    top:'5%'
+  },
+  okButton: {
+    padding: 10,
+    borderRadius: 8,
+    marginTop: 20,
+  },
+  okButtonText: {
+    fontFamily: "Montserrat_600SemiBold",
+    fontSize: 20,
+    color: "#101F41",
+    textAlign: "center",
+    justifyContent:'center',
+   top:'-60%',
+   left:'-3%'
+  },
+  boxError:{
+    backgroundColor: 'white',
+    width: "80%",
+    borderRadius: 14,
+    padding: 1,
+    height:'20%'
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject, // Overlay the whole container
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  },
+  errorMessage:{
+    color: '#000000',
+    fontSize: 14,
+    fontFamily: "Montserrat_100Thin",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
+  },
+  errorText: {
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: "Montserrat_500Medium",
+    top: '10%',
+    alignItems: 'center', // Center the text vertically
+    textAlign: 'center', // Center the text horizontally
+    flexWrap: 'wrap', // Allow text to wrap to the next line if needed
+    marginBottom:'4%'
   },
 });
 export default EditDispProfile;
