@@ -140,7 +140,7 @@ export default function LogIn() {
       // Perform any other login-related logic here if needed
       // For now, we will simply navigate to the Home screen (App_Driver)
       // Tab_Navigation
-      navigation.navigate('Disp_TabNavigation');
+      navigation.navigate('Tab_Navigation');
     };
   if (!montserratLoaded) {
     return null;
