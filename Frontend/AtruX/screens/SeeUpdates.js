@@ -155,6 +155,8 @@ const SeeUpdates = () => {
         <Harta style={{ top: "-99%", left: "13%" }} />
       </View>
 
+      
+
       <View style={styles.contour}>
         <ScrollView style={{ top: "0%" }}>
           <View style={{ height: 1000 }}>
@@ -182,6 +184,9 @@ const SeeUpdates = () => {
           </View>
         </ScrollView>
       </View>
+
+      <Ellipse1Updates style={{ top: "-230%", left: "0%" }}/>
+      <Ellipse2Updates style={{ top: "-360%", left: "55%" }} />
 
       <View>
         <TouchableOpacity
@@ -254,8 +259,7 @@ const SeeUpdates = () => {
           </Modal>
         </SafeAreaView>
       </View>
-      <Ellipse1Updates style={{ top: "-230%", left: "0%" }}/>
-      <Ellipse2Updates style={{ top: "-360%", left: "55%" }} />
+      
     </View>
   );
 };
@@ -507,7 +511,7 @@ const styles = StyleSheet.create({
     padding: 1,
     // backgroundColor: "#F38D68",
     borderWidth: 1,
-    top: "-930%",
+    top: "-1935%",
     left: "83%",
     borderColor: "rgba(158, 150, 150, 0)", // makes the color transparent
   },

@@ -138,7 +138,7 @@ const SendRoute = () => {
 
         <Text
           style={{
-            top: "-99%",
+            top: "-99.1%",
             color: "white",
             fontSize: 33,
             left: "25%",
@@ -148,7 +148,7 @@ const SendRoute = () => {
         >
           {t("send_routes")}
         </Text>
-        <SendRouteIcons style={{ top: "-103%", left: "13.5%" }} />
+        <SendRouteIcons style={{ top: "-102.4%", left: "12%" }} />
       </View>
 
       <View style={styles.contour}>
@@ -444,7 +444,7 @@ const SendRoute = () => {
                   style={styles.containerInputModal}
                   onPress={() => {
                     console.log("Navigating to Settings");
-                    navigation.navigate("SettingsDisp");
+                    navigation.navigate("Setings");
                     handleCloseModal();
                     // Add navigation logic here
                   }}
@@ -475,7 +475,7 @@ const SendRoute = () => {
           </Modal>
         </SafeAreaView>
       </View>
-      {/* <BigCircle style={{ top: "-270%" }} /> */}
+      <BigCircle style={{ top: "-270%" }} />
     </View>
   );
 };
@@ -538,16 +538,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignContent: "center",
     marginTop: "5%",
-  },
-  menuButton: {
-    width: "13%",
-    height: "20%",
-    padding: 1,
-    backgroundColor: "#F38D68",
-    borderWidth: 1,
-    top: "-930%",
-    left: "83%",
-    borderColor: "rgba(158, 150, 150, 0)", // makes the color transparent
   },
   modalContainer: {
     justifyContent: "center",
@@ -717,9 +707,9 @@ const styles = StyleSheet.create({
     top: "66%",
   
   },
-  backBox: {
-    height: 25,
-    width: 30,
+backBox: {
+    height: 35,
+    width: 35,
     marginLeft: 5,
     borderRadius: 10,
     position: "absolute",
@@ -728,6 +718,15 @@ const styles = StyleSheet.create({
     top: "2%",
     left: "4%",
     alignItems: "center",
+  },
+  menuButton: {
+    width: "12%",
+    height: "20%",
+    padding: 1,
+    borderWidth: 1,
+    top: "-1430%",
+    left: "83%",
+    borderColor: "rgba(158, 150, 150, 0)", // makes the color transparent
   },
 });
 export default SendRoute;
