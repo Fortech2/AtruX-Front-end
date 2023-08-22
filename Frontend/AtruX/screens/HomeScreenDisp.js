@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -47,6 +48,7 @@ import { t } from "i18next";
 import SendRoute from "../components/sendroute";
 import ListDrivers from "../components/ListDrivers";
 import Modal from "react-native-modal";
+import axios from "axios";
 const roundDispatcher = () => {
   // Function for "Call the dispatcher" button
   console.log("Calling the dispatcher...");
@@ -90,7 +92,21 @@ const HomeScreen = () => {
 const handleOpenModal = () => {
   setModalVisible(true);
 };
+const [userData, setUserData] = useState(null);
 
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const userData = response.data;
+      setUserData(userData); // Update the state with fetched user data
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 const handleCloseModal = () => {
   setModalVisible(false);
 };
@@ -171,12 +187,17 @@ const handleCloseModal = () => {
           </BlurView>
         </Modal>
       </SafeAreaView>
-      <ScrollView>
-        <View style={{ height: 900 }}>
-          <View style={styles.welcomeContainer}>
+      <View style={styles.welcomeContainer}>
             <Text style={styles.salutText}>{t("hello_")}</Text>
-            <Text style={styles.salutText}> Marius!</Text>
+            {userData ? (
+            <Text style={styles.salutText}>{userData.name}</Text>
+            ) : (
+              <Text>Loading...</Text>
+              )}
           </View>
+      <ScrollView style={{top:'25%'}}>
+        <View style={{ height: 900, top:'-20%', alignItems:'center', alignContent:'center' }}>
+          
           <View style={styles.mesajInspirational}>
             <Text style={styles.InspirationalText}>{t("remember")}</Text>
             <Text style={styles.InspirationalText}> {t("take")}</Text>

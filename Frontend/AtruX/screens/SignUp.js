@@ -65,7 +65,8 @@ export default function SignUp() {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState('');
-const [companyName, setCompany] = useState('');
+  const [companyName, setCompany] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
@@ -76,6 +77,23 @@ const [companyName, setCompany] = useState('');
   const [isModalVisible3, setIsModalVisible3] = useState(false);
   const handleSignUp = async () => {
     try {
+      if (
+        !username ||
+        !email ||
+        !password ||
+        !phoneNumber ||
+        !companyName
+      ) {
+        setErrorMessage(t("empty_field")); // Set an error message for password mismatch
+        setIsModalVisible3(true);
+        return;
+      }
+      if (password !== confirmPassword) {
+        setErrorMessage(t("password_mismatch")); // Set an error message for password mismatch
+        setIsModalVisible3(true);
+        return; // Stop the function execution
+      }
+  
       const userData = {
         role: 'driver',
         name: username,
@@ -85,42 +103,26 @@ const [companyName, setCompany] = useState('');
         company: companyName,
       };
   
-      const response = await axios.post('http://18.185.137.152/sign-up', userData);
-      console.log(response.data); // Log the response from the backend (optional)
+      // Log the data being sent in the request
+      console.log('Request data:', userData);
+      if (!isChecked) {
+        setErrorMessage(t("terms_error")); // Set an error message for password mismatch
+        setIsModalVisible3(true); // Show the checkbox error message
+        return;
+      }
+      const response = await axios.post('https://atrux.azurewebsites.net/sign-up', userData);
+  
+      // Log the response from the backend (optional)
+      console.log('Response data:', response.data);
+  
       if (response.status === 200) {
         navigation.navigate('Tab_Navigation'); // Navigate to the HomeScreen
       }
     } catch (error) {
       console.error(error);
-      if (error.response) {
-        // The request was made, and the server responded with a status code
-        console.error('Server response status:', error.response.status);
-        console.error('Server response data:', error.response.data);
-        console.error('Server response headers:', error.response.headers);
-  
-        // Check if the server response data contains the error message "Email already exists"
-        if (error.response.data === "Email already exists") {
-          setErrorMessage(t("email_ex"));
-        } else if (error.response.data === "Dispatcher not found") {
-          setErrorMessage(t("dis_no"));
-        } else {
-          // Handle other server response errors here if needed
-          setErrorMessage(t("error_oc"));
-        }
-      } else if (error.request) {
-        // The request was made, but no response was received
-        console.error('No response received:', error.request);
-        setErrorMessage(t("error_oc"));
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.error('Error:', error.message);
-        setErrorMessage(t("error_oc"));
-      }
-      setIsModalVisible3(true)
+      // Rest of the error handling code...
     }
   };
-  
-  
   
   
   
@@ -354,47 +356,52 @@ const [companyName, setCompany] = useState('');
           </View>
 
           <View style={styles.inputView}>
-            <Lock style={{ left: "2%", top: "20%" }} />
-            <TextInput
-              style={styles.inputText}
-              placeholder={t("password")}
-              placeholderTextColor="#6D6D6D"
-              secureTextEntry={passwordVisibility}
-              onChangeText={(password) => setPassword(password)}
-            />
-            <TouchableOpacity
-              style={{ top: "-125%", left: "40%" }}
-              onPress={handlePasswordVisibility}
-            >
-              <Icon name="eye" size={20} style={{top: "-55%"}}/>
-            </TouchableOpacity>
-          </View>
+  <Lock style={{ left: "2%", top: "20%" }} />
+  <TextInput
+    style={styles.inputText}
+    placeholder={t("password")}
+    placeholderTextColor="#6D6D6D"
+    secureTextEntry={passwordVisibility}
+    value={password} // Add this line
+    onChangeText={(newPassword) => setPassword(newPassword)} // Update the variable name
+  />
+  <TouchableOpacity
+    style={{ top: "-125%", left: "40%" }}
+    onPress={handlePasswordVisibility}
+  >
+    <Icon name="eye" size={20} style={{top: "-55%"}}/>
+  </TouchableOpacity>
+</View>
 
-          <View style={styles.inputView}>
-            <Lock style={{ left: "2%", top: "20%" }} />
-            <TextInput
-              style={styles.inputText}
-              placeholder={t("confirm_password")}
-              placeholderTextColor="#6D6D6D"
-              secureTextEntry={passwordVisibility}
-              onChangeText={(password) => setPassword(password)}
-            />
-            <TouchableOpacity
-              style={{ top: "-125%", left: "40%" }}
-              onPress={handlePasswordVisibility}
-            >
-              <Icon name="eye" size={20} style={{top: "-55%"}}/>
-            </TouchableOpacity>
-          </View>
+<View style={styles.inputView}>
+  <Lock style={{ left: "2%", top: "20%" }} />
+  <TextInput
+    style={styles.inputText}
+    placeholder={t("confirm_password")}
+    placeholderTextColor="#6D6D6D"
+    secureTextEntry={passwordVisibility}
+    value={confirmPassword} // Add this line
+    onChangeText={(newConfirmPassword) => setConfirmPassword(newConfirmPassword)} // Update the variable name
+  />
+  <TouchableOpacity
+    style={{ top: "-125%", left: "40%" }}
+    onPress={handlePasswordVisibility}
+  >
+    <Icon name="eye" size={20} style={{top: "-55%"}}/>
+  </TouchableOpacity>
+</View>
 
           <View style={styles.inputView}>
             <CompanyIcon style={{ left: "2%", top: "20%" }} />
             <TextInput
-              style={styles.inputText}
-              placeholder={t("company_name")}
-              placeholderTextColor="#6D6D6D"
-              onChangeText={(company_name) => setCompany(companyName)}
-            />
+  style={styles.inputText}
+  placeholder={t("company_name")}
+  placeholderTextColor="#6D6D6D"
+  onChangeText={(companyName) => {
+    console.log('Company Name:', companyName);
+    setCompany(companyName);
+  }}
+/>
           </View>
 
           <View style={{ top: "-188%", left: "-2%" }}>
