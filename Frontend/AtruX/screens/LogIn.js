@@ -302,7 +302,7 @@ export default function LogIn() {
             </View>
             {/* Display error message here */}
             
-            <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+            <TouchableOpacity style={styles.loginBtn} onPress={handleLoginb}>
 
               <Text
                 style={{

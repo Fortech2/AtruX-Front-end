@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -39,7 +39,10 @@ import VectorMenu from '../components/VectorMenu';
 import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
+import { WebSocket } from 'react-native-websocket'
 import NotifIconMenu from '../components/NotifIconMenu'
+
+
 const Notifications = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { t, i18n } = useTranslation();
@@ -50,6 +53,37 @@ const Notifications = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+  const [notifications, setNotifications] = useState([]);
+  const handleWebSocketMessage = (event) => {
+    const message = JSON.parse(event.data);
+    if (message.type === "notification") {
+      setNotifications((prevNotifications) => [...prevNotifications, message.content]);
+    }
+  };
+  
+  useEffect(() => {
+    const socket = new WebSocket("ws://atrux.azurewebsites.net"); // Replace with your backend URL
+    
+    socket.onopen = () => {
+      console.log("WebSocket connected");
+    };
+    
+    socket.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type === "notification") {
+        setNotifications((prevNotifications) => [...prevNotifications, message.content]);
+      }
+    };
+    
+    socket.onerror = (error) => {
+      console.error("WebSocket error:", error);
+      // Handle the error as needed
+    };
+    
+    return () => {
+      socket.close(); // Close the socket when component is unmounted
+    };
+  }, []);
   return (
     <View style={styles.background}>
       <View>
@@ -141,9 +175,12 @@ const Notifications = () => {
           </Text>
           </View>
             <ScrollView>
-              <View style={{height:600}}>
-
-              </View>
+            <View style={{ height: 600 }}>
+    {notifications.map((notification, index) => (
+      <Text key={index}>{notification}</Text>
+    ))}
+    <Text>jjjjhj</Text>
+  </View>
             </ScrollView>
           </View>
       </View>
