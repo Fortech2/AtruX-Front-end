@@ -33,6 +33,11 @@ function HomeStackScreen() {
         component={Notification}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="ProfileEditFromHome"
+        component={EditDriverProfile}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
