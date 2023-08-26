@@ -84,17 +84,18 @@ export default function Settings_Driver() {
   };
 
   const handleEditAccount = () => {
-
-    // now we will navigate to the HomeScreen
-    // but we need to navigate to the the EditDriverProfile
-    
-    navigation.navigate('Homes');
+    navigation.navigate('ProfileEditFromHome');
   };
 
-  const handleLogOut = () => {
-    // the user will be directed to the LogIn Profile
-
-    // navigation.navigate('');
+  const handleLogOut = async () => {
+    try {
+      await axios.get("https://atrux.azurewebsites.net/logout");
+      navigation.navigate('Auth');
+      console.log("Successful logout");
+    }
+    catch(error){
+      console.error("Log Out Failed", error);
+    }
   };
 
   const [modalVisible, setModalVisible] = useState(false);
