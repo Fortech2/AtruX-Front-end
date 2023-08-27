@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import axios from 'axios';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,9 +19,11 @@ import SendRoute from '../screens/SendRoute';
 import SeeUpdates from '../screens/SeeUpdates';
 import SettingsDispatcher from '../screens/SettingsDisp';
 import NotificationD from '../screens/NotificationsDisp';
+import NotificationsDispatcher from "../screens/NotificationsDispatcher";
+import PastAlarms_Disp from '../screens/PastAlarmsDisp';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-import NotificationsDispatcher from "../screens/NotificationsDispatcher";
 
 function HomeStackScreen() {
   return (
@@ -94,6 +95,11 @@ function SecurityStackScreens() {
       <Stack.Screen
         name="SettingsS"
         component={SettingsDispatcher}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PastAlarms"
+        component={PastAlarms_Disp}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

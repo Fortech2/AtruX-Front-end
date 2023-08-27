@@ -74,8 +74,8 @@ export default function SecurityD() {
     Montserrat_500Medium,
   });
 
-  const handleSeePastImages = () => {
-    navigation.navigate('PastImages')
+  const handleSeePastAlarms = () => {
+    navigation.navigate('PastAlarms')
   };
 
   const handleAlarmsHistory = () => {
@@ -147,7 +147,7 @@ export default function SecurityD() {
 
             <TouchableOpacity 
               style={styles.pastAlarmsBtn}
-              onPress={handleSeePastImages}
+              onPress={handleSeePastAlarms}
             >
               <Text style={styles.pastAlarmsText}>
                 {t("past_alarms")}

@@ -113,72 +113,7 @@ export default function SettingsDispatcher() {
         <EllipseUpperLeftCorner/>
         <EllipseSettings style={{ top: "-30%", left: "40%" }}/>
         <CircleSettings style={{ top: "-165%", left: "0%" }}/>
-      </View>
-
-      <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
-        <Linii style = {{zIndex: 1}}/>
-      </TouchableOpacity>
-
-      <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
-        <Modal
-          visible={modalVisible}
-          animationType="fade"
-          transparent={true}
-          onRequestClose={handleCloseModal}
-        >
-          <BlurView intensity={20} style={styles.blurContainer}>
-            <View style={styles.modalContainer}>
-              <View style={styles.ellipseWrapper1}>
-                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
-              </View>
-
-              <View style={styles.ellipseWrapper2}>
-                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
-              </View>
-
-              <View style={styles.vectorWrapper}>
-                <VectorMenu style={{ top: "2%", left: "5%" }} />
-              </View>
-
-              <Pressable style={styles.exitButton} onPress={handleCloseModal}>
-                <ExitIcon />
-              </Pressable>
-                
-              <Text style={styles.menuText}>{t("menu")}</Text>
-
-              <TouchableOpacity
-                style={styles.containerInputModal}
-                onPress={() => {
-                  console.log("Navigating to Settings");
-                  navigation.navigate("Settings");
-                  handleCloseModal();
-                  // Add navigation logic here
-                }}
-              >
-                <SettingsIcon style={{ top: "8%", left: "5%" }} />
-                <Text style={styles.inputTextMenu}>{t("settings")}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={styles.containerInputModal}>
-                <KeyWordsIcon style={{ top: "8%", left: "5%" }} />
-                <Text style={styles.inputTextMenu}>{t("keywords")}</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.containerInputModal}
-                onPress={() => {
-                  navigation.navigate("Notificationss");
-                  handleCloseModal();
-                  // Add navigation logic here
-                }}
-              >
-                <NotifIconMenu style={{ top: "20%", left: "5%" }} />
-                <Text style={styles.inputTextMenu}>{t("notifications")}</Text>
-              </TouchableOpacity>
-            </View>
-          </BlurView>
-        </Modal>
-      </SafeAreaView>      
+      </View>     
 
       <ScrollView> 
        <View style = {{ height: 800 }}>
@@ -286,6 +221,71 @@ export default function SettingsDispatcher() {
         </TouchableOpacity>        
        </View>
       </ScrollView>
+
+      <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
+        <Linii style = {{zIndex: 1}}/>
+      </TouchableOpacity>
+
+      <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
+        <Modal
+          visible={modalVisible}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={handleCloseModal}
+        >
+          <BlurView intensity={20} style={styles.blurContainer}>
+            <View style={styles.modalContainer}>
+              <View style={styles.ellipseWrapper1}>
+                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
+              </View>
+
+              <View style={styles.ellipseWrapper2}>
+                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
+              </View>
+
+              <View style={styles.vectorWrapper}>
+                <VectorMenu style={{ top: "2%", left: "5%" }} />
+              </View>
+
+              <Pressable style={styles.exitButton} onPress={handleCloseModal}>
+                <ExitIcon />
+              </Pressable>
+                
+              <Text style={styles.menuText}>{t("menu")}</Text>
+
+              <TouchableOpacity
+                style={styles.containerInputModal}
+                onPress={() => {
+                  console.log("Navigating to Settings");
+                  navigation.navigate("Settings");
+                  handleCloseModal();
+                  // Add navigation logic here
+                }}
+              >
+                <SettingsIcon style={{ top: "8%", left: "5%" }} />
+                <Text style={styles.inputTextMenu}>{t("settings")}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.containerInputModal}>
+                <KeyWordsIcon style={{ top: "8%", left: "5%" }} />
+                <Text style={styles.inputTextMenu}>{t("keywords")}</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.containerInputModal}
+                onPress={() => {
+                  navigation.navigate("Notificationss");
+                  handleCloseModal();
+                  // Add navigation logic here
+                }}
+              >
+                <NotifIconMenu style={{ top: "20%", left: "5%" }} />
+                <Text style={styles.inputTextMenu}>{t("notifications")}</Text>
+              </TouchableOpacity>
+            </View>
+          </BlurView>
+        </Modal>
+      </SafeAreaView> 
     </View>
   )
 }

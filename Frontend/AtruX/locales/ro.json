@@ -90,12 +90,20 @@
     "recent_alarms": "Alarme recente:",
 
     "past_alarms": "Vezi alarme salvate",
+
+    "title_past_alarms": "Alarme salvate",
+    "updates": "Noutăți",
+
     "password_mismatch":"Parola introdusa nu este aceeasi cu cea confirmata!",
     "terms_error":"Te rugam sa accepti termenii de utilizare",
     "empty_field":"Va rugam sa completati toate campurile.",
     "reset_password":"RESETEAZA PAROLA",
     "is_ok":"Email-ul a fost trimis cu succes!",
-    "data_changed":"Datele au fost salvate!",
+
     "new_notif":"Aveti o ruta noua",
     "your_route":"Ruta dumneavoastra"
+
+    "data_changed":"Datele au fost salvate!"
+
+
 }
