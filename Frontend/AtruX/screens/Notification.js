@@ -64,7 +64,7 @@ const Notifications = () => {
       console.log(userData);
       setUserData(userData); // Update the state with fetched user data
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Error fetching user data, look:', error);
     }
   };
   useEffect(() => {
