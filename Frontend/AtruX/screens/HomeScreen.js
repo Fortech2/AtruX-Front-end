@@ -28,6 +28,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next"; // for the translation
 import { BlurView } from 'expo-blur'
 import axios from "axios";
+import call from 'react-native-phone-call';
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
@@ -41,6 +43,8 @@ const HomeScreen = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [dispatcher_id, setDispatcherId] = useState(null);
+  const [phone_nr_disp, setPhoneNrDispatcher] = useState(null);
 
   const fetchUserData = async () => {
     try {
@@ -51,6 +55,11 @@ const HomeScreen = () => {
       console.error('Error fetching user data:', error);
     }
   };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   const handleOpenModal = () => {
     setModalVisible(true);
   };
@@ -75,7 +84,12 @@ const HomeScreen = () => {
   }
 
   const callDispatcher = () => {
-    // Function for "Call the dispatcher" button
+    const args = {
+      number: userData.dispatcher_phone_number,
+      prompt: true,
+    };
+    // Make a call
+    call(args).catch(console.error);
     console.log("Calling the dispatcher...");
   };
 
@@ -91,7 +105,13 @@ const HomeScreen = () => {
   };
 
   const emergencyCall = () => {
-    // Function for "Emergency call" button
+    const args2 = {
+      number: '999999999',
+      prompt: true,
+    };
+    // Make a call
+    call(args2).catch(console.error);
+
     console.log("Initiating emergency call...");
   };
 

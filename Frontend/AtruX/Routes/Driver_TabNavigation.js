@@ -35,8 +35,15 @@ function HomeStackScreen() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+
         name="YourRoutes"
         component={YourRoute}
+options={{ headerShown: false }}
+      />
+ <Stack.Screen
+        name="ProfileEditFromHome"
+        component={EditDriverProfile}
+
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
