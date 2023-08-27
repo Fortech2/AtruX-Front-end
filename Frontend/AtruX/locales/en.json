@@ -102,6 +102,11 @@
     "empty_field":"Please fill in all fields before proceeding.",
     "reset_password":"RESET PASSWORD",
     "is_ok":"Email sent successfully!",
+
+    "new_notif":"You have a new route",
+    "your_route":"Your Route"
+
     "data_changed":"Data saved successfully"
+
 
 }

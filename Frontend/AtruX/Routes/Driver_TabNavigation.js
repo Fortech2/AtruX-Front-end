@@ -12,6 +12,7 @@ import SecurityIcon from "../components/SecurityTabIcon";
 import ProfileIcon from "../components/ProfileTabIcon";
 import Notification from "../screens/Notification";
 import SettingsDriver from "../screens/SettingsDriver";
+import YourRoute from "../screens/SeeYourRoute"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -34,8 +35,15 @@ function HomeStackScreen() {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+
+        name="YourRoutes"
+        component={YourRoute}
+options={{ headerShown: false }}
+      />
+ <Stack.Screen
         name="ProfileEditFromHome"
         component={EditDriverProfile}
+
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

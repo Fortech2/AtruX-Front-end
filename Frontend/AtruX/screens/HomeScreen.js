@@ -74,7 +74,8 @@ const HomeScreen = () => {
 
   const roundRoute = () => {
     // Function for "See your route" button
-    console.log("Seeing your route...");
+    
+    navigation.navigate('YourRoutes')
   }
 
   const roundSystem = () => {
@@ -95,6 +96,7 @@ const HomeScreen = () => {
   const seeRoute = () => {
     // Function for "See your route" button
     console.log("Seeing your route...");
+    navigation.navigate('YourRoutes')
   };
 
   const securitySystem = () => {
