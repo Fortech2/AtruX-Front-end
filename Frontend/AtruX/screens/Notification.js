@@ -50,6 +50,67 @@ const Notifications = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
+  const [notifications, setNotifications] = useState([]);
+  const [userData, setUserData] = useState(null);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const userData = response.data;
+      console.log(userData);
+      setUserData(userData); // Update the state with fetched user data
+    } catch (error) {
+      console.error('Error fetching user data, look:', error);
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  
+  const [messageFromServer, setMessageFromServer] = useState('');
+  const [messageFromBackend, setMessageFromBackend] = useState('');
+  const [messageFromDisp, setMessageFromDisp] = useState('');
+  const [allMessages, setAllMessages] = useState([]);
+  useEffect(() => {
+    
+    
+    if (userData && userData.email) { // Make sure userData and email are available
+      const socket = io('wss://atrux.azurewebsites.net');
+  
+      socket.on('connect', () => {
+        console.log('Connected to WebSocket server');
+        
+        if (userData.email) {
+          socket.emit('subscribe', { driver_email: userData.email });
+          console.log(`Joining room: ${userData.email}`);
+        }
+      });
+  
+  // Listen for 'notification' events and handle them
+  socket.on('notifications', (data) => {  // Change the event name here
+    console.log('Received notifications event:', data);
+    console.log('Received notifications message:', data.message);
+    setMessageFromBackend(data.message);
+    // Process the received notification
+  });
+  socket.on('notification-sent', () => {
+     // Update the individual message
+    setAllMessages((prevMessages) => [...prevMessages, t("new route")]);
+  });
+    socket.on('from-server', message => {
+      console.log('Message rom server:', message);
+      setMessageFromServer(message);
+    });
+    
+   
+  }
+
+    
+  }, []);
+
+
+
   return (
     <View style={styles.background}>
       <View>
