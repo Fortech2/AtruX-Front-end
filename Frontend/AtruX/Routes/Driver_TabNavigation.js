@@ -12,6 +12,7 @@ import SecurityIcon from "../components/SecurityTabIcon";
 import ProfileIcon from "../components/ProfileTabIcon";
 import Notification from "../screens/Notification";
 import SettingsDriver from "../screens/SettingsDriver";
+import YourRoute from "../screens/SeeYourRoute"
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +32,11 @@ function HomeStackScreen() {
       <Stack.Screen
         name="Notificationss"
         component={Notification}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="YourRoutes"
+        component={YourRoute}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

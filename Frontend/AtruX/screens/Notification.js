@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import {
   StyleSheet,
   Text,
@@ -39,10 +39,11 @@ import VectorMenu from '../components/VectorMenu';
 import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
-import { WebSocket } from 'react-native-websocket'
+import WebSocket from 'react-native-websocket';
 import NotifIconMenu from '../components/NotifIconMenu'
-
-
+import { io } from 'socket.io-client';
+import axios from "axios";
+import More from '../components/MoreButtonNotif';
 const Notifications = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { t, i18n } = useTranslation();
@@ -54,36 +55,64 @@ const Notifications = () => {
     setModalVisible(false);
   };
   const [notifications, setNotifications] = useState([]);
-  const handleWebSocketMessage = (event) => {
-    const message = JSON.parse(event.data);
-    if (message.type === "notification") {
-      setNotifications((prevNotifications) => [...prevNotifications, message.content]);
+  const [userData, setUserData] = useState(null);
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const userData = response.data;
+      console.log(userData);
+      setUserData(userData); // Update the state with fetched user data
+    } catch (error) {
+      console.error('Error fetching user data:', error);
     }
   };
-  
   useEffect(() => {
-    const socket = new WebSocket("ws://atrux.azurewebsites.net"); // Replace with your backend URL
-    
-    socket.onopen = () => {
-      console.log("WebSocket connected");
-    };
-    
-    socket.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      if (message.type === "notification") {
-        setNotifications((prevNotifications) => [...prevNotifications, message.content]);
-      }
-    };
-    
-    socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-      // Handle the error as needed
-    };
-    
-    return () => {
-      socket.close(); // Close the socket when component is unmounted
-    };
+    fetchUserData();
   }, []);
+  
+  const [messageFromServer, setMessageFromServer] = useState('');
+  const [messageFromBackend, setMessageFromBackend] = useState('');
+  const [messageFromDisp, setMessageFromDisp] = useState('');
+  const [allMessages, setAllMessages] = useState([]);
+  useEffect(() => {
+    
+    
+    if (userData && userData.email) { // Make sure userData and email are available
+      const socket = io('wss://atrux.azurewebsites.net');
+  
+      socket.on('connect', () => {
+        console.log('Connected to WebSocket server');
+        
+        if (userData.email) {
+          socket.emit('subscribe', { driver_email: userData.email });
+          console.log(`Joining room: ${userData.email}`);
+        }
+      });
+  
+  // Listen for 'notification' events and handle them
+  socket.on('notifications', (data) => {  // Change the event name here
+    console.log('Received notifications event:', data);
+    console.log('Received notifications message:', data.message);
+    setMessageFromBackend(data.message);
+    // Process the received notification
+  });
+  socket.on('notification-sent', () => {
+     // Update the individual message
+    setAllMessages((prevMessages) => [...prevMessages, t("new route")]);
+  });
+    socket.on('from-server', message => {
+      console.log('Message rom server:', message);
+      setMessageFromServer(message);
+    });
+    
+   
+  }
+
+    
+  }, []);
+
+
   return (
     <View style={styles.background}>
       <View>
@@ -174,14 +203,34 @@ const Notifications = () => {
             Updates from dispatcher:
           </Text>
           </View>
-            <ScrollView>
-            <View style={{ height: 600 }}>
-    {notifications.map((notification, index) => (
-      <Text key={index}>{notification}</Text>
+          <ScrollView>
+  <View style={{ height: 600 }}>
+    <View>
+    <Text style={{
+      fontFamily: 'Montserrat_500Medium',
+      fontSize: 18,
+      color: '#101F41',
+      alignSelf:'flex-start',
+      left:'2%',
+      top:'50%'
+     }}>{messageFromServer}</Text>
+     </View>
+     {allMessages.map((message, index) => (
+      <View key={index} style={styles.notification}>
+        
+        <Text style={{
+          fontFamily: 'Montserrat_500Medium',
+          fontSize: 18,
+          color: '#101F41',
+          alignSelf: 'flex-start',
+          left: '2%',
+        }}>{message}</Text>
+       
+      </View>
     ))}
-    <Text>jjjjhj</Text>
   </View>
-            </ScrollView>
+</ScrollView>
+
           </View>
       </View>
      
@@ -413,7 +462,26 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     borderRadius: 40,
     elevation:10
-  }
+  },
+  notification:{
+    
+    alignSelf:'center',
+    alignItems:'center',
+    top:'5%',
+    borderBottomWidth:1,
+    width:'90%',
+    borderBottomColor:'#101F41',
+    marginBottom:10,
+    marginTop:15
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#101F41",
+    zIndex:4,
+    top:'4%'
+   
+  },
 });
 
 export default Notifications;

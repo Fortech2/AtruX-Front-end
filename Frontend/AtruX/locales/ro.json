@@ -95,5 +95,7 @@
     "empty_field":"Va rugam sa completati toate campurile.",
     "reset_password":"RESETEAZA PAROLA",
     "is_ok":"Email-ul a fost trimis cu succes!",
-    "data_changed":"Datele au fost salvate!"
+    "data_changed":"Datele au fost salvate!",
+    "new_notif":"Aveti o ruta noua",
+    "your_route":"Ruta dumneavoastra"
 }
