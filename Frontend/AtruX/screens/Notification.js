@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 import {
   StyleSheet,
   Text,
@@ -39,7 +40,14 @@ import VectorMenu from '../components/VectorMenu';
 import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
+import { WebSocket } from 'react-native-websocket'
+import WebSocket from 'react-native-websocket';
 import NotifIconMenu from '../components/NotifIconMenu'
+
+
+import { io } from 'socket.io-client';
+import axios from "axios";
+import More from '../components/MoreButtonNotif';
 const Notifications = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const { t, i18n } = useTranslation();
@@ -203,8 +211,28 @@ const Notifications = () => {
           </View>
             <ScrollView>
               <View style={{height:600}}>
+              <Text style={{
+      fontFamily: 'Montserrat_500Medium',
+      fontSize: 18,
+      color: '#101F41',
+      alignSelf:'flex-start',
+      left:'2%',
+      top:'50%'
+     }}>{messageFromServer}</Text>
+     </View>
+     {allMessages.map((message, index) => (
+      <View key={index} style={styles.notification}>
 
-              </View>
+        <Text style={{
+          fontFamily: 'Montserrat_500Medium',
+          fontSize: 18,
+          color: '#101F41',
+          alignSelf: 'flex-start',
+          left: '2%',
+        }}>{message}</Text>
+</View>
+    ))}
+            
             </ScrollView>
           </View>
       </View>
@@ -437,7 +465,26 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     borderRadius: 40,
     elevation:10
-  }
+  },
+  notification:{
+
+    alignSelf:'center',
+    alignItems:'center',
+    top:'5%',
+    borderBottomWidth:1,
+    width:'90%',
+    borderBottomColor:'#101F41',
+    marginBottom:10,
+    marginTop:15
+  },
+  line: {
+    width: "100%",
+    height: 1,
+    backgroundColor: "#101F41",
+    zIndex:4,
+    top:'4%'
+
+  },
 });
 
 export default Notifications;
