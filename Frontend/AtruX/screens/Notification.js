@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+
 import React, { useState, useEffect, useRef} from "react";
 import {
   StyleSheet,
@@ -40,7 +40,7 @@ import VectorMenu from '../components/VectorMenu';
 import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
-import { WebSocket } from 'react-native-websocket'
+
 import WebSocket from 'react-native-websocket';
 import NotifIconMenu from '../components/NotifIconMenu'
 
