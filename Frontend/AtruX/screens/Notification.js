@@ -41,7 +41,7 @@ import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
 
-import WebSocket from 'react-native-websocket';
+
 import NotifIconMenu from '../components/NotifIconMenu'
 
 
@@ -83,7 +83,7 @@ const Notifications = () => {
   useEffect(() => {
     
     
-    if (userData && userData.email) { // Make sure userData and email are available
+    if (userData && userData.email) { 
       const socket = io('wss://atrux.azurewebsites.net');
   
       socket.on('connect', () => {
@@ -94,16 +94,20 @@ const Notifications = () => {
           console.log(`Joining room: ${userData.email}`);
         }
       });
-  
-  // Listen for 'notification' events and handle them
-  socket.on('notifications', (data) => {  // Change the event name here
-    console.log('Received notifications event:', data);
-    console.log('Received notifications message:', data.message);
-    setMessageFromBackend(data.message);
-    // Process the received notification
-  });
+      socket.on('notifications', (data) => {
+        if (data && data.message) {
+          console.log('Received notifications event:', data);
+          console.log('Received notifications message:', data.message);
+          console.log('Complete data:', data);
+          setMessageFromBackend(data.message);
+          // Process the received notification
+        } else {
+          console.log('Received notifications event without data:', data);
+        }
+      });
   socket.on('notification-sent', () => {
      // Update the individual message
+     console.log('Received notifications event:');
     setAllMessages((prevMessages) => [...prevMessages, t("new route")]);
   });
     socket.on('from-server', message => {
@@ -115,7 +119,7 @@ const Notifications = () => {
   }
 
     
-  }, []);
+  }, [userData]);
 
 
 
@@ -239,7 +243,7 @@ const Notifications = () => {
      
     </View>
     // {/* </ScrollView> */}
-    // </View>
+    // </View
   );
 };
 
