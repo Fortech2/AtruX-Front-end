@@ -110,15 +110,22 @@ const Notifications = () => {
      console.log('Received notifications event:');
     setAllMessages((prevMessages) => [...prevMessages, t("new route")]);
   });
-    socket.on('from-server', message => {
+  socket.on('to-server', message => {
       console.log('Message rom server:', message);
       setMessageFromServer(message);
     });
     
+  socket.on('handle-images', () => {
+    // Update the individual message
+    console.log('Received alarm');
+   
+ });
+    socket.on('image-notification-sent', () => {
+      // Update the individual message
+      console.log('Received image as alarm');
+   });
    
   }
-
-    
   }, [userData]);
 
 
@@ -197,7 +204,7 @@ const Notifications = () => {
         <Text style={styles.Notifications}>{t("notifications")}</Text>
       </View>
         <View style={styles.container_update}>
-          <View>
+          <View style = {styles.inp}>
             
         <Text
             style={{
@@ -206,7 +213,7 @@ const Notifications = () => {
               color: "#FFFFFF",
              
               zIndex: 1,
-              top:'50%',
+              top:'15%',
               left:'4%'
             }}
           >
@@ -215,17 +222,12 @@ const Notifications = () => {
           </View>
             <ScrollView>
               <View style={{height:600}}>
-              <Text style={{
-      fontFamily: 'Montserrat_500Medium',
-      fontSize: 18,
-      color: '#101F41',
-      alignSelf:'flex-start',
-      left:'2%',
-      top:'50%'
-     }}>{messageFromServer}</Text>
      </View>
      {allMessages.map((message, index) => (
-      <View key={index} style={styles.notification}>
+      <View key={index}>
+
+      
+      <View  style={styles.notification}>
 
         <Text style={{
           fontFamily: 'Montserrat_500Medium',
@@ -233,7 +235,13 @@ const Notifications = () => {
           color: '#101F41',
           alignSelf: 'flex-start',
           left: '2%',
+          
         }}>{message}</Text>
+       
+</View>
+ <TouchableOpacity style={{top:'-81.5%', left:'87%'}}>
+ <More/>
+</TouchableOpacity>
 </View>
     ))}
             
@@ -474,12 +482,11 @@ const styles = StyleSheet.create({
 
     alignSelf:'center',
     alignItems:'center',
-    top:'5%',
+    top:'-79%',
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
-    marginBottom:10,
-    marginTop:15
+    
   },
   line: {
     width: "100%",
@@ -489,6 +496,18 @@ const styles = StyleSheet.create({
     top:'4%'
 
   },
+  inp:{
+    backgroundColor: "#101F41",
+    shadowColor: "#000",
+    
+    height:'14%',
+    width:'95%',
+    borderRadius: 40,
+    top:'5%',
+    alignSelf:'center',
+    textAlign:'center',
+    
+  }
 });
 
 export default Notifications;
