@@ -103,6 +103,8 @@
     "reset_password":"RESET PASSWORD",
     "is_ok":"Email sent successfully!",
     "data_changed":"Data saved successfully",
-    "your_route":"Your Route"
+    "your_route":"Your Route",
+    "new route":"New route was set",
+    "new alarm":"Human detected"
 
 }
