@@ -61,7 +61,12 @@ const Notifications = () => {
 
   const [notifications, setNotifications] = useState([]);
   const [userData, setUserData] = useState(null);
-
+  const handleNavigate = () => {
+    // Perform any other login-related logic here if needed
+    // For now, we will simply navigate to the Home screen (App_Driver)
+    // Tab_Navigation
+    navigation.navigate('YourRoutes');
+  };
   const fetchUserData = async () => {
     try {
       const response = await axios.get("https://atrux.azurewebsites.net/user");
@@ -80,6 +85,7 @@ const Notifications = () => {
   const [messageFromBackend, setMessageFromBackend] = useState('');
   const [messageFromDisp, setMessageFromDisp] = useState('');
   const [allMessages, setAllMessages] = useState([]);
+  const [allMessagesA, setAllMessagesA] = useState([]);
   useEffect(() => {
     
     
@@ -122,6 +128,7 @@ const Notifications = () => {
  });
     socket.on('image-notification-sent', () => {
       // Update the individual message
+      setAllMessagesA((prevMessages) => [...prevMessages, t("new alarm")]);
       console.log('Received image as alarm');
    });
    
@@ -200,6 +207,7 @@ const Notifications = () => {
       </SafeAreaView>
         <NotificationIcon2 style={{ top: "-45%", left: "6%" }} />
         <Back style={{ top: "-49%", left: "6%" }} />
+        
         <View style={styles.headerText}>
         <Text style={styles.Notifications}>{t("notifications")}</Text>
       </View>
@@ -239,7 +247,7 @@ const Notifications = () => {
         }}>{message}</Text>
        
 </View>
- <TouchableOpacity style={{top:'-81.5%', left:'87%'}}>
+ <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
  <More/>
 </TouchableOpacity>
 </View>
@@ -247,6 +255,52 @@ const Notifications = () => {
             
             </ScrollView>
           </View>
+          <View style = {styles.container_update2}>
+          <View style = {styles.inp}>
+            
+            <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Montserrat_500Medium",
+                  color: "#FFFFFF",
+                 
+                  zIndex: 1,
+                  top:'15%',
+                  left:'4%'
+                }}
+              >
+                Security:
+              </Text>
+              <ScrollView>
+              <View style={{height:600}}>
+     </View>
+     {allMessages.map((message, index) => (
+      <View key={index}>
+
+      
+      <View  style={styles.notification}>
+
+        <Text style={{
+          fontFamily: 'Montserrat_500Medium',
+          fontSize: 18,
+          color: '#101F41',
+          alignSelf: 'flex-start',
+          left: '2%',
+          
+        }}>{message}</Text>
+       
+</View>
+ <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
+ <More/>
+</TouchableOpacity>
+</View>
+    ))}
+            
+            </ScrollView>
+              </View>
+
+          </View> 
+          
       </View>
      
     </View>
@@ -474,6 +528,20 @@ const styles = StyleSheet.create({
     width:'80%',
     position:'absolute',
     top:'10%',
+    alignSelf:'center',
+    borderRadius: 40,
+    elevation:10
+  },
+  container_update2:{
+    backgroundColor: "#d9d9d9",
+    shadowColor: "#000",
+    shadowOffset: { width: 3, height: 5 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    height:'18%',
+    width:'80%',
+    position:'absolute',
+    top:'29%',
     alignSelf:'center',
     borderRadius: 40,
     elevation:10

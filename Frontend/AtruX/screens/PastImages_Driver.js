@@ -122,14 +122,7 @@ export default function PastImages_Driver() {
         </View>
       </View>
       <View>
-      {images.map((image, index) => (
-        <View key={index}>
-          <Image
-            source={{ uri: `data:image/jpeg;base64,${image.binary_data}` }}
-            style={{ width: 200, height: 200 }}
-          />
-        </View>
-      ))}
+     
       </View>
       <ScrollView style={{ flexGrow: 1 }}>
         <View style={{ height: 800 }}>
@@ -183,10 +176,14 @@ export default function PastImages_Driver() {
               </Text>
               
               {/* we need to add the image that it will be saved in the database */}
-              <Image
-                source={require('../assets/thief.jpg')}
-                style = {{ top: "25%", width: 100, height: 100 }}
-              />
+              {images.map((image, index) => (
+        <View key={index}>
+          <Image
+            source={{ uri: `data:image/jpeg;base64,${image.binary_data}` }}
+            style={{ width: 100, height: 100, top:'25%' }}
+          />
+        </View>
+      ))}
 
               <TouchableOpacity style = {styles.seeMoreContainer1}>
                 <Text style = {styles.seeMoreText}>
