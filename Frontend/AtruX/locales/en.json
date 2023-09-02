@@ -105,6 +105,7 @@
     "data_changed":"Data saved successfully",
     "your_route":"Your Route",
     "new route":"New route was set",
-    "new alarm":"Human detected"
+    "new alarm":"Human detected",
+    "image_detected":"ALARM"
 
 }
