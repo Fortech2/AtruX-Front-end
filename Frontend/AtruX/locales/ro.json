@@ -102,6 +102,7 @@
     "data_changed":"Datele au fost salvate!",
     "your_route":"Ruta dumneavoastra",
     "new route":"O noua ruta a fost trimisa",
-    "new alarm":"Persoana detectata"
+    "new alarm":"Persoana detectata",
+    "image_detected":"ALARMA"
 
 }

@@ -50,6 +50,7 @@ import axios from "axios";
 import More from '../components/MoreButtonNotif';
 const Notifications = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisibleAlarm, setModalVisibleAlarm] = useState(false);
   const { t, i18n } = useTranslation();
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -58,7 +59,12 @@ const Notifications = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
-
+  const handleOpenModalAlarm = () => {
+    setModalVisibleAlarm(true);
+  };
+  const handleCloseModalAlarm = () => {
+    setModalVisibleAlarm(false);
+  };
   const [notifications, setNotifications] = useState([]);
   const [userData, setUserData] = useState(null);
   const handleNavigate = () => {
@@ -67,6 +73,9 @@ const Notifications = () => {
     // Tab_Navigation
     navigation.navigate('YourRoutes');
   };
+  const HandleAlarm = () =>{
+    navigation.navigate("PastImages")
+  }
   const fetchUserData = async () => {
     try {
       const response = await axios.get("https://atrux.azurewebsites.net/user");
@@ -86,6 +95,20 @@ const Notifications = () => {
   const [messageFromDisp, setMessageFromDisp] = useState('');
   const [allMessages, setAllMessages] = useState([]);
   const [allMessagesA, setAllMessagesA] = useState([]);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    // Make the API request to fetch images
+    axios.get("https://atrux.azurewebsites.net/images")
+      .then(response => {
+        
+        const lastImage = response.data.image[response.data.image.length - 1];
+        setImages([lastImage]); // Set only the last image in the state
+      })
+      .catch(error => {
+        console.error('Error fetching images:', error);
+      });
+  }, []);
   useEffect(() => {
     
     
@@ -250,6 +273,7 @@ const Notifications = () => {
  <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
  <More/>
 </TouchableOpacity>
+
 </View>
     ))}
             
@@ -271,14 +295,15 @@ const Notifications = () => {
               >
                 Security:
               </Text>
+              </View>
               <ScrollView>
               <View style={{height:600}}>
-     </View>
-     {allMessages.map((message, index) => (
+   
+     {allMessagesA.map((message, index) => (
       <View key={index}>
 
       
-      <View  style={styles.notification}>
+      <View  style={styles.notification2}>
 
         <Text style={{
           fontFamily: 'Montserrat_500Medium',
@@ -290,14 +315,54 @@ const Notifications = () => {
         }}>{message}</Text>
        
 </View>
- <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
+
+ <TouchableOpacity style={{top:'16%', left:'87%'}} onPress={handleOpenModalAlarm}>
  <More/>
 </TouchableOpacity>
 </View>
     ))}
-            
+            </View>
             </ScrollView>
+            <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
+        <Modal
+          visible={modalVisibleAlarm}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={handleCloseModalAlarm}
+        >
+          <BlurView intensity={20} style={styles.blurContainer}>
+            <View style={styles.modalContainer}>
+              <View style={styles.ellipseWrapper1}>
+                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
               </View>
+
+              <View style={styles.ellipseWrapper2}>
+                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
+              </View>
+
+              <View style={styles.vectorWrapper}>
+                <VectorMenu style={{ top: "2%", left: "5%" }} />
+              </View>
+              <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
+                <ExitIcon />
+              </Pressable>
+              <Text style={styles.menuText}>{t("image_detected")}</Text>
+
+              <View>
+      {images.map((image, index) => (
+        <View key={index}>
+          <Image
+            source={{ uri: `data:image/jpeg;base64,${image.binary_data}` }}
+            style={{ width: 200, height: 200, top: '25%' }}
+          />
+        </View>
+      ))}
+    </View>
+
+            </View>
+          </BlurView>
+        </Modal>
+      </SafeAreaView>        
 
           </View> 
           
@@ -551,6 +616,16 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     alignItems:'center',
     top:'-79%',
+    borderBottomWidth:1,
+    width:'90%',
+    borderBottomColor:'#101F41',
+    
+  },
+  notification2:{
+
+    alignSelf:'center',
+    alignItems:'center',
+    top:'19%',
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
