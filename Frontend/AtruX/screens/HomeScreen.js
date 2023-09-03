@@ -43,8 +43,6 @@ const HomeScreen = () => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [dispatcher_id, setDispatcherId] = useState(null);
-  const [phone_nr_disp, setPhoneNrDispatcher] = useState(null);
 
   const fetchUserData = async () => {
     try {

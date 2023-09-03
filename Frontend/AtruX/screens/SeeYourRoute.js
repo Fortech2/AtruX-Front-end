@@ -48,11 +48,8 @@ import { useRoute } from '@react-navigation/native';
 import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import Arrow from "../components/arrow_language";
 import EllipseSettings from '../components/DownRoute'
-import CircleSettings from '../components/CircleSettings'
-import SettingsIcon from '../components/harta'
-import LineSettings from '../components/LineSettings'
-import LogOutIcon from '../components/LogOutIcon'
-import EditAccountIcon from '../components/EditAccountIcon'
+import Harta from '../components/harta'
+import SettingsIcon from '../components/SettingsIcon'
 import Modal from "react-native-modal";
 import Linii from '../components/Linii';
 import KeyWordsIcon from '../components/KeyWordsIcon';
@@ -62,14 +59,13 @@ import EllipseMenuHS1 from '../components/EllipseMenuHS1';
 import EllipseMenu2 from '../components/EllipseMenu2';
 import VectorMenu from '../components/VectorMenu';
 import { BlurView } from 'expo-blur'
-import ArrowS from '../components/Arrow'
-export default function Settings_Driver() {
+import ArrowRoute from '../components/ArrowRoute'
+
+export default function YourRoute() {
 
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [state, setState] = useState(null);
 
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
@@ -81,20 +77,6 @@ export default function Settings_Driver() {
   const handleBack = () => {
     // navigation.navigate('Homes')
     navigation.goBack()
-  };
-
-  const handleEditAccount = () => {
-
-    // now we will navigate to the HomeScreen
-    // but we need to navigate to the the EditDriverProfile
-    
-    navigation.navigate('Homes');
-  };
-
-  const handleLogOut = () => {
-    // the user will be directed to the LogIn Profile
-
-    // navigation.navigate('');
   };
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -118,7 +100,6 @@ export default function Settings_Driver() {
         setUserRoute(stopsArray);
         console.log(stopsArray);
 
-        
       })
       .catch(error => {
         console.error('Error fetching user data:', error);
@@ -127,6 +108,21 @@ export default function Settings_Driver() {
   useEffect(() => {
     console.log(stops[0]);;
   }, [stops]);
+
+  const [checkedStops, setCheckedStops] = useState([]);
+
+  const toggleCheckbox = (stopName) => {
+  // Check if the stop is already in the checkedStops array
+  if (checkedStops.includes(stopName)) {
+    // If it's already checked, uncheck it
+    setCheckedStops(checkedStops.filter((stop) => stop !== stopName));
+    console.log( ' stopID', stopName);
+  } else {
+    // If it's not checked, check it
+    setCheckedStops([...checkedStops, stopName]);
+    }
+  };
+
   return (
     <View style={{flex: 1}}>
       <View style = {styles.background}>
@@ -135,10 +131,9 @@ export default function Settings_Driver() {
        
       </View>    
 
-      
        <View style = {{ height: 800 }}>
         <View style={{top: "10%", left: "10%", position: "absolute"}}>
-          <SettingsIcon style={{left: "-5%", top: "0%"}}/>
+          <Harta style={{left: "-5%", top: "0%"}}/>
           <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'white', top:'-50%', left: '15%'}}>
               {t("your_route")}
           </Text>
@@ -156,13 +151,24 @@ export default function Settings_Driver() {
     <Text>Loading...</Text>
   ) : (
     stops.map((stop, index) => (
-      <View key={stop} style={{ flexDirection: 'row', alignItems: 'center', alignSelf:'flex-start', marginBottom:40, height:60, alignContent:'center', top:'15%', left:'10%' }}>
+      <View key={stop} style={{ flexDirection: 'row', alignItems: 'center', alignSelf:'flex-start', marginBottom:10, height:90, alignContent:'center', top:'10%', left:'25%' }}>
+        
+        <Checkbox
+          value={checkedStops.includes(stop)}
+          onValueChange={() => toggleCheckbox(stop)}
+        />
+        
         <Text style={{ fontFamily: 'Montserrat_500Medium', fontSize: 20, color: 'black' }}>
-          {index + 1}. {stop}
+          {' '}{stop} 
         </Text>
+
+        {/* <ArrowRoute style={{ marginLeft: 10 }}/> */}
+
       </View>
     ))
   )}
+
+  <Text style={{ fontFamily: 'Montserrat_500Medium', fontSize: 15, color: 'black', top: "8%", left: "7%" }}>YOU ARRIVED AT YOUR DESTINATION!</Text>
 </View>
           </View>
             </View>
@@ -558,4 +564,20 @@ const styles = StyleSheet.create({
       bottom: 0,
       zIndex: -1,     
     },
+    data: {
+      borderRadius: 40,
+      width: 284,
+      height: 57,
+      alignItems: "center",
+      padding: 1,
+      borderColor: "#101f41",
+      borderWidth: 1,
+      alignContent: "center",
+      marginTop: "5%",
+      backgroundColor: "#FFFFFF",
+      // flexDirection: 'row'
+    },
   });
+
+
+  
