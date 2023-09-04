@@ -18,8 +18,7 @@ import ListDrivers from '../screens/ListOfDrivers';
 import SendRoute from '../screens/SendRoute';
 import SeeUpdates from '../screens/SeeUpdates';
 import SettingsDispatcher from '../screens/SettingsDisp';
-import NotificationD from '../screens/NotificationsDisp';
-import NotificationsDispatcher from "../screens/NotificationsDispatcher";
+import NotificationDispatcher from '../screens/NotificationsDisp';
 import PastAlarms_Disp from '../screens/PastAlarmsDisp';
 
 const Stack = createNativeStackNavigator();
@@ -55,7 +54,7 @@ function HomeStackScreen() {
       />
       <Stack.Screen
         name="Notification"
-        component={NotificationD}
+        component={NotificationDispatcher}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -89,7 +88,7 @@ function SecurityStackScreens() {
       />
       <Stack.Screen
         name="Notifications"
-        component={NotificationD}
+        component={NotificationDispatcher}
         options={{ headerShown: false }}
       />
       <Stack.Screen
