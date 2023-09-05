@@ -40,14 +40,16 @@ import VectorMenu from '../components/VectorMenu';
 import SettingsIcon from '../components/SettingsIcon';
 import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
-
-
+import PushNotification from 'react-native-push-notification';
+import CustomSound from '../assets/mixkit-vintage-warning-alarm-990.wav';
+import initializeWebSocket from '../websocketService';
 import NotifIconMenu from '../components/NotifIconMenu'
-
+import { Audio } from 'expo-av';
 
 import { io } from 'socket.io-client';
 import axios from "axios";
 import More from '../components/MoreButtonNotif';
+
 const Notifications = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleAlarm, setModalVisibleAlarm] = useState(false);
