@@ -50,6 +50,7 @@ import { Dropdown } from "react-native-material-dropdown-v2-fixed";
 import Arrow from "../components/arrow_language";
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import Token from '../components/Token'
 export default function ForgotPassword() {
   const { t, i18n } = useTranslation();
   const changeLanguage = (language) => {
@@ -65,12 +66,6 @@ export default function ForgotPassword() {
   const hideModal = () => {
     setIsModalVisible3(false);
   };
-  const handleNavigate = () => {
-    // Perform any other login-related logic here if needed
-    // For now, we will simply navigate to the Home screen (App_Driver)
-    // Tab_Navigation
-    navigation.navigate('ResetPassword');
-  };
   const navigation = useNavigation(); // for the navigation
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
@@ -78,30 +73,49 @@ export default function ForgotPassword() {
     Montserrat_600SemiBold,
     Montserrat_500Medium,
   });
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [newPassword, setPassword] = useState("");
+  const [code, setCode] = useState('');
   const [rightIcon, setRightIcon] = useState("eye");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
   const [rightIconColor, setRightIconColor] = useState("#6D6D6D");
+  const handleNavigate = () => {
+    // Perform any other login-related logic here if needed
+    // For now, we will simply navigate to the Home screen (App_Driver)
+    // Tab_Navigation
+    navigation.navigate('Login');
+  };
   const [isChecked, setChecked] = useState(false);
+  const handlePasswordVisibility = () => {
+    if (rightIcon === "eye") {
+      setRightIcon("eye-slash");
+      setRightIconColor("#6D6D6D");
+      setPasswordVisibility(!passwordVisibility);
+    } else if (rightIcon === "eye-slash") {
+      setRightIcon("eye");
+      setRightIconColor("#6D6D6D");
+      setPasswordVisibility(!passwordVisibility);
+    }
+  };
   
   // const history = useHistory();
   const handlePasswordReset = async () => {
     try {
-      if (!email) {
+      if (!newPassword) {
         // Show an error message if the email field is empty
-        console.log("Please enter your email.");
+        console.log("Please enter your new password.");
         return;
       }
   
       // Call the backend to send the password reset email
-      const response = await axios.put('https://atrux.azurewebsites.net/password', {
-        email: email,
+      const response = await axios.post('https://atrux.azurewebsites.net/resetpassword', {
+        password: newPassword,
+        token:code
+
       });
       
       // Log success message or handle response status as needed
       console.log(response.data);
-      setErrorMessage(t("is_ok")); // Set an error message for password mismatch
+      setErrorMessage(t("Your password has been change!")); // Set an error message for password mismatch
         setIsModalVisible3(true);
         return;
     } catch (error) {
@@ -161,9 +175,24 @@ export default function ForgotPassword() {
                 width: "74%",
                 top: "-75%",
               }}
-              placeholder={t("email_recovery")}
+              placeholder={t("new_password")}
               placeholderTextColor="#6D6D6D"
-              onChangeText={(email) => setEmail(email)}
+              onChangeText={(text) => setPassword(text)}
+            />
+          </View>
+          <View style={styles.inputView}>
+            <Token style={{ left: "2%", top: "20%" }} />
+            <TextInput
+              style={{
+                fontFamily: "Montserrat_100Thin",
+                fontSize: 15,
+                color: "#474747",
+                width: "74%",
+                top: "-75%",
+              }}
+              placeholder={t("your_token")}
+              placeholderTextColor="#6D6D6D"
+              onChangeText={(text) => setCode(text)}
             />
           </View>
           <TouchableOpacity
