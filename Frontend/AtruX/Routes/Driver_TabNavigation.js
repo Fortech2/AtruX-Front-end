@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
@@ -13,6 +13,12 @@ import ProfileIcon from "../components/ProfileTabIcon";
 import Notification from "../screens/Notification";
 import SettingsDriver from "../screens/SettingsDriver";
 import YourRoute from "../screens/SeeYourRoute"
+import axios from "axios";
+import { Audio } from 'expo-av';
+import { io } from 'socket.io-client';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -66,6 +72,7 @@ function ProfileStackScreens() {
 }
 
 function SecurityStackScreens() {
+  
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -82,6 +89,7 @@ function SecurityStackScreens() {
         name="Notifications"
         component={Notification}
         options={{ headerShown: false }}
+       
       />
       <Stack.Screen
         name="SettingsSecurity"
@@ -93,6 +101,75 @@ function SecurityStackScreens() {
 }
 
 export default function TabNavigation() {
+  const [userData, setUserData] = useState(null);
+  const [socket, setSocket] = useState(null);
+  const [sound, setSound] = useState(null);
+
+  useEffect(() => {
+    const loadSoundAndFetchUserData = async () => {
+      try {
+        const { sound: loadedSound } = await Audio.Sound.createAsync(
+          require('../assets/mixkit-vintage-warning-alarm-990.wav')
+        );
+        setSound(loadedSound);
+      } catch (error) {
+        console.error('Error loading sound:', error);
+      }
+    };
+
+    loadSoundAndFetchUserData();
+  }, []);
+
+  useEffect(() => {
+    if (sound) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get("https://atrux.azurewebsites.net/user");
+          const userData = response.data;
+          setUserData(userData);
+
+          const newSocket = io('wss://atrux.azurewebsites.net');
+          newSocket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+
+            if (userData && userData.email) {
+              console.log(userData.email);
+              newSocket.emit('subscribe', { driver_email: userData.email });
+              console.log(`Joining room: ${userData.email}`);
+            }
+          });
+
+          newSocket.on('notification-sent', () => {
+            handleNotificationSent(sound);
+          });
+          newSocket.on('image-notification-sent', () => {
+            // Update the individual message
+            console.log('Received image as alarm');
+            handleNotificationSent(sound);
+         });
+          setSocket(newSocket);
+
+          // Register for push notifications here
+          registerForPushNotifications();
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+
+      fetchData();
+    }
+  }, [sound]);
+
+  const handleNotificationSent = async (sound) => {
+    console.log('Received notifications event:');
+    if (sound) {
+      await sound.replayAsync();
+    }
+  };
+
+  // Function to register for push notifications
+  
+
   return (
     <Tab.Navigator
       initialRouteName="Homes"
@@ -106,6 +183,7 @@ export default function TabNavigation() {
       <Tab.Screen
         name="Security"
         component={SecurityStackScreens}
+      
         options={{
           tabBarIcon: ({ color, size }) => (
             <SecurityIcon
