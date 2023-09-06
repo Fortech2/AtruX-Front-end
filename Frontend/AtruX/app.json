@@ -4,8 +4,8 @@
     "slug": "AtruX",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"],
-    "plugins": ["expo-localization"],
-    "projectId": "001c790d-f0d2-4b62-a625-bc224a0d7646"
+    "plugins": ["expo-localization"]
+   
   },
   "name": "AtruX"
 }
