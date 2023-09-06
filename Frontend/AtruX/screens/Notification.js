@@ -60,7 +60,8 @@ const Notifications = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
-  const handleOpenModalAlarm = () => {
+  const handleOpenModalAlarm = (imageData) => {
+    setSelectedImage(imageData);
     setModalVisibleAlarm(true);
   };
   const handleCloseModalAlarm = () => {
@@ -98,18 +99,7 @@ const Notifications = () => {
   const [allMessagesA, setAllMessagesA] = useState([]);
   const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    // Make the API request to fetch images
-    axios.get("https://atrux.azurewebsites.net/images")
-      .then(response => {
-        
-        const lastImage = response.data.image[response.data.image.length - 1];
-        setImages([lastImage]); // Set only the last image in the state
-      })
-      .catch(error => {
-        console.error('Error fetching images:', error);
-      });
-  }, []);
+  
  
 
   useEffect(() => {
@@ -127,7 +117,22 @@ const Notifications = () => {
         console.error('Error fetching notifications:', error);
       });
   }, []);
-
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [alarmNotifications, setAlarmNotifications] = useState([]);
+  const fetchAlarmNotifications = async () => {
+    try {
+      const response = await axios.get('https://atrux.azurewebsites.net/alarm_notification'); // Make a GET request to your Flask backend route
+      const notifications = response.data.alarm_notification || []; // Initialize as an empty array if no data is received
+      setAlarmNotifications(notifications);
+      
+    } catch (error) {
+      console.error('Error fetching alarm notifications:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchAlarmNotifications(); // Fetch alarm notifications when the component mounts
+  }, []);
   return (
     <View style={styles.background}>
       <View>
@@ -223,22 +228,28 @@ const Notifications = () => {
               <View style={{height:600}}>
                
               {notifications.map((date, index) => (
-  <View key={index} style={styles.notification}>
+  <View key={index}>
+   <View style={styles.notification2}>
     <Text
       style={{
         fontFamily: 'Montserrat_500Medium',
         fontSize: 18,
         color: '#101F41',
         alignSelf: 'flex-start',
-        left: '2%',
-        top:'94%'
+        left: '0%',
+        top:'4%'
       }}
     >
       {date} New Route
     </Text>
-    <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
- <More/>
-</TouchableOpacity>
+ </View>
+    
+ <TouchableOpacity
+            style={{ top: '16.3%', left: '93%' }}
+            onPress={handleNavigate}
+          >
+          <More />
+        </TouchableOpacity>
   </View>
 ))}
          
@@ -269,31 +280,24 @@ const Notifications = () => {
               <ScrollView>
               <View style={{height:600}}>
    
-     {allMessagesA.map((message, index) => (
+              {alarmNotifications.map((notification, index) => (
       <View key={index}>
-
-      
-      <View  style={styles.notification2}>
-
-        <Text style={{
-          fontFamily: 'Montserrat_500Medium',
-          fontSize: 18,
-          color: '#101F41',
-          alignSelf: 'flex-start',
-          left: '2%',
-          
-        }}>{message}</Text>
-       
-</View>
-
- <TouchableOpacity style={{top:'16%', left:'87%'}} onPress={handleOpenModalAlarm}>
- <More/>
-</TouchableOpacity>
-</View>
-    ))}
-            </View>
-            </ScrollView>
-            <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
+        <View style={styles.notification2}>
+          <Text style={{
+            fontFamily: 'Montserrat_500Medium',
+            fontSize: 18,
+            color: '#101F41',
+            alignSelf: 'flex-start',
+            left: '2%',
+          }}>{notification.date} Human Detected</Text>
+        </View>
+        <TouchableOpacity
+            style={{ top: '16%', left: '87%' }}
+            onPress={() => handleOpenModalAlarm(notification.binary_data)}
+          >
+          <More />
+        </TouchableOpacity>
+        <SafeAreaView style={{ top: "-183%", left: "8%", zIndex: 1, flex: 1 }}>
         <Modal
           visible={modalVisibleAlarm}
           animationType="fade"
@@ -317,22 +321,25 @@ const Notifications = () => {
                 <ExitIcon />
               </Pressable>
               <Text style={styles.menuText}>{t("image_detected")}</Text>
-
+              {selectedImage && (
+                <Image
+                  source={{ uri: `data:image/jpeg;base64,${selectedImage}` }} // Set the image source with base64 data
+                  style={{ width: 200, height: 200 }} // Adjust the dimensions as needed
+                />
+              )}
               <View>
-      {images.map((image, index) => (
-        <View key={index}>
-          <Image
-            source={{ uri: `data:image/jpeg;base64,${image.binary_data}` }}
-            style={{ width: 200, height: 200, top: '25%' }}
-          />
-        </View>
-      ))}
+      
     </View>
 
             </View>
           </BlurView>
         </Modal>
-      </SafeAreaView>        
+      </SafeAreaView>   
+      </View>
+    ))}
+            </View>
+            </ScrollView>
+              
 
           </View> 
           
@@ -585,7 +592,7 @@ const styles = StyleSheet.create({
 
     alignSelf:'center',
     alignItems:'center',
-    top:'-89%',
+    top:'19%',
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
