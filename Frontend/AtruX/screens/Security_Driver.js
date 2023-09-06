@@ -62,8 +62,40 @@ export default function Driver_Security() {
   const { t, i18n } = useTranslation();
 
   const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+ 
 
+  const toggleSwitch = async () => {
+    try {
+      // Calculate the new status value (1 for on, 0 for off)
+      const newStatus = isEnabled ? 0 : 1;
+
+      // Toggle the local state
+      setIsEnabled(!isEnabled);
+
+      // Send a POST request to your Flask backend with the new status
+      const response = await axios.post(
+        'https://atrux.azurewebsites.net/active',
+        { active_status: newStatus }, // Send the new status
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            // Include any additional headers if needed
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        // Handle success, e.g., display a success message
+        console.log('Status changed successfully');
+      } else {
+        // Handle errors, e.g., display an error message
+        console.error('Status change failed');
+      }
+    } catch (error) {
+      // Handle network or request errors
+      console.error('Error:', error);
+    }
+  };
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
     Montserrat_100Thin,
@@ -118,17 +150,14 @@ export default function Driver_Security() {
             </Text>
 
             <View style={styles.switchContainer}>
-              <Switch
-                trackColor={{false: "#767577", true: "#767577"}}
-                thumbColor={isEnabled ? "#101F41" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isEnabled}
-
-                // valueDimension={true}
-                style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
-                // onValueDimensionChange={(valueDimension) => {}}
-              />
+            <Switch
+        trackColor={{ false: '#767577', true: '#767577' }}
+        thumbColor={isEnabled ? '#101F41' : '#f4f3f4'}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+        style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
+      />
             </View>
         
             <View style={styles.switchContainerText1}>

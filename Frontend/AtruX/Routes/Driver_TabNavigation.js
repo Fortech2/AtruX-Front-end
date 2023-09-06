@@ -16,6 +16,9 @@ import YourRoute from "../screens/SeeYourRoute"
 import axios from "axios";
 import { Audio } from 'expo-av';
 import { io } from 'socket.io-client';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -100,13 +103,10 @@ function SecurityStackScreens() {
 export default function TabNavigation() {
   const [userData, setUserData] = useState(null);
   const [socket, setSocket] = useState(null);
-  const [allMessages, setAllMessages] = useState();
-  const [allMessagesA, setAllMessagesA] = useState();
   const [sound, setSound] = useState(null);
 
   useEffect(() => {
     const loadSoundAndFetchUserData = async () => {
-      // Load sound
       try {
         const { sound: loadedSound } = await Audio.Sound.createAsync(
           require('../assets/mixkit-vintage-warning-alarm-990.wav')
@@ -114,7 +114,6 @@ export default function TabNavigation() {
         setSound(loadedSound);
       } catch (error) {
         console.error('Error loading sound:', error);
-        // Handle the error here, e.g., show an error message to the user
       }
     };
 
@@ -123,14 +122,12 @@ export default function TabNavigation() {
 
   useEffect(() => {
     if (sound) {
-      // Fetch user data
       const fetchData = async () => {
         try {
           const response = await axios.get("https://atrux.azurewebsites.net/user");
           const userData = response.data;
           setUserData(userData);
 
-          // Initialize WebSocket and handle notifications
           const newSocket = io('wss://atrux.azurewebsites.net');
           newSocket.on('connect', () => {
             console.log('Connected to WebSocket server');
@@ -145,13 +142,17 @@ export default function TabNavigation() {
           newSocket.on('notification-sent', () => {
             handleNotificationSent(sound);
           });
-
-          // Other event handlers can be added here
-
+          newSocket.on('image-notification-sent', () => {
+            // Update the individual message
+            console.log('Received image as alarm');
+            handleNotificationSent(sound);
+         });
           setSocket(newSocket);
+
+          // Register for push notifications here
+          registerForPushNotifications();
         } catch (error) {
           console.error('Error fetching user data:', error);
-          // Handle the error here, e.g., show an error message to the user
         }
       };
 
@@ -166,6 +167,8 @@ export default function TabNavigation() {
     }
   };
 
+  // Function to register for push notifications
+  
 
   return (
     <Tab.Navigator

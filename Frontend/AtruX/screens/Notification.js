@@ -42,7 +42,6 @@ import KeyWordsIcon from '../components/KeyWordsIcon';
 import Modal from "react-native-modal";
 import PushNotification from 'react-native-push-notification';
 import CustomSound from '../assets/mixkit-vintage-warning-alarm-990.wav';
-import initializeWebSocket from '../websocketService';
 import NotifIconMenu from '../components/NotifIconMenu'
 import { Audio } from 'expo-av';
 
