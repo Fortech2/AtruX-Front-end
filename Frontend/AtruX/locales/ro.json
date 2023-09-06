@@ -103,6 +103,8 @@
     "your_route":"Ruta dumneavoastra",
     "new route":"O noua ruta a fost trimisa",
     "new alarm":"Persoana detectata",
-    "image_detected":"ALARMA"
+    "image_detected":"ALARMA",
+    "new_password":"Parola noua",
+    "your_token":"Codul tau unic"
 
 }
