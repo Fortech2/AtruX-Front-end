@@ -150,7 +150,7 @@ export default function TabNavigation() {
           setSocket(newSocket);
 
           // Register for push notifications here
-          registerForPushNotifications();
+         
         } catch (error) {
           console.error('Error fetching user data:', error);
         }

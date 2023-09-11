@@ -227,9 +227,13 @@ const Notifications = () => {
             <ScrollView>
               <View style={{height:600}}>
                
-              {notifications.map((date, index) => (
+              {notifications.map((date, index) => {
+                console.log(date); // Log the data to the console
+                return (
   <View key={index}>
    <View style={styles.notification2}>
+    <TouchableOpacity onPress={handleNavigate}>
+     
     <Text
       style={{
         fontFamily: 'Montserrat_500Medium',
@@ -237,21 +241,36 @@ const Notifications = () => {
         color: '#101F41',
         alignSelf: 'flex-start',
         left: '0%',
-        top:'4%'
+       
       }}
     >
-      {date} New Route
+      {date} New Route</Text>
+    <Text
+      style={{
+        fontFamily: 'Montserrat_500Medium',
+        fontSize: 18,
+        color: 'red',
+        alignSelf: 'flex-start',
+        left: '0%',
+       
+      }}
+    >
+      See it!
     </Text>
- </View>
-    
- <TouchableOpacity
-            style={{ top: '16.3%', left: '93%' }}
+   
+    </TouchableOpacity>
+    {/* <TouchableHighlight
+            style={{ position:'absolute'}}
             onPress={handleNavigate}
           >
           <More />
-        </TouchableOpacity>
+        </TouchableHighlight> */}
+ </View>
+    
+
   </View>
-))}
+                )
+})}
          
 
 
@@ -283,20 +302,37 @@ const Notifications = () => {
               {alarmNotifications.map((notification, index) => (
       <View key={index}>
         <View style={styles.notification2}>
+         <TouchableOpacity onPress={() => handleOpenModalAlarm(notification.binary_data)}>
           <Text style={{
             fontFamily: 'Montserrat_500Medium',
             fontSize: 18,
             color: '#101F41',
             alignSelf: 'flex-start',
             left: '2%',
-          }}>{notification.date} Human Detected</Text>
+            top:'28%'
+          }}>{notification.date} Human Detected!</Text>
+           
+           <Text
+      style={{
+        fontFamily: 'Montserrat_500Medium',
+        fontSize: 18,
+        color: 'red',
+        alignSelf: 'flex-start',
+        left: '50%',
+        top:'-5%'
+       
+      }}
+    >
+      See image!
+    </Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity
-            style={{ top: '16%', left: '87%' }}
+        {/* <TouchableOpacity
+            style={{ top: '16%', left: '87%', position:'absolute' }}
             onPress={() => handleOpenModalAlarm(notification.binary_data)}
           >
           <More />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <SafeAreaView style={{ top: "-183%", left: "8%", zIndex: 1, flex: 1 }}>
         <Modal
           visible={modalVisibleAlarm}
@@ -606,6 +642,8 @@ const styles = StyleSheet.create({
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
+    marginBottom:'10%',
+  
     
   },
   line: {
