@@ -28,6 +28,7 @@
     "expo-localization": "~14.3.0",
     "expo-modules-core": "^1.5.11",
     "expo-notifications": "~0.20.1",
+    "expo-permissions": "^9.1.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "git": "^0.1.5",
