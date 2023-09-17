@@ -10,4 +10,8 @@ include ':app'
 includeBuild(new File(["node", "--print", "require.resolve('react-native-gradle-plugin/package.json')"].execute(null, rootDir).text.trim()).getParentFile())
 
 include ':react-native-notification-sounds'
+include ':expo-modules-core'
 project(':react-native-notification-sounds').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-notification-sounds/android')
+include ':react-native-reanimated'
+include ':react-native-audio'
+project(':react-native-reanimated').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-reanimated/android')
