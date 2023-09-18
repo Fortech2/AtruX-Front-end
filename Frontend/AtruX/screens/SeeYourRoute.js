@@ -75,7 +75,6 @@ export default function YourRoute() {
   });
 
   const handleBack = () => {
-    // navigation.navigate('Homes')
     navigation.goBack()
   };
 
@@ -151,7 +150,7 @@ export default function YourRoute() {
     <Text>Loading...</Text>
   ) : (
     stops.map((stop, index) => (
-      <View key={stop} style={{ flexDirection: 'row', alignItems: 'center', alignSelf:'flex-start', marginBottom:10, height:90, alignContent:'center', top:'10%', left:'25%' }}>
+      <View key={stop} style={{ flexDirection: 'row', alignItems: 'center', alignSelf:'flex-start', marginBottom:10, height:90, alignContent:'center', top:'10%', left:'18%' }}>
         
         <Checkbox
           value={checkedStops.includes(stop)}
@@ -162,7 +161,7 @@ export default function YourRoute() {
           {' '}{stop} 
         </Text>
 
-        {/* <ArrowRoute style={{ marginLeft: 10 }}/> */}
+      
 
       </View>
     ))
