@@ -108,6 +108,10 @@
     "new alarm":"Human detected",
     "image_detected":"ALARM",
     "new_password":"New password",
-    "your_token":"Your unique code"
+    "your_token":"Your unique code",
 
+    "updates_from_dispatcher": "Updates from dispatcher:",
+    "updates_from_drivers": "Updates from drivers:",
+
+    "human_detected": "Human Detected",
 }

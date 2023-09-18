@@ -49,30 +49,39 @@ const NotificationDispatcher = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleAlarm, setModalVisibleAlarm] = useState(false);
   const { t, i18n } = useTranslation();
+
   const handleOpenModal = () => {
     setModalVisible(true);
   };
+
   const navigation = useNavigation();
+
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
   const handleOpenModalAlarm = () => {
     setModalVisibleAlarm(true);
   };
+
   const handleCloseModalAlarm = () => {
     setModalVisibleAlarm(false);
   };
+
   const [notifications, setNotifications] = useState([]);
   const [userData, setUserData] = useState(null);
+
   const handleNavigate = () => {
     // Perform any other login-related logic here if needed
     // For now, we will simply navigate to the Home screen (App_Driver)
     // Tab_Navigation
     navigation.navigate('YourRoutes');
   };
+
   const HandleAlarm = () =>{
     navigation.navigate("PastImages")
   }
+
   const fetchUserData = async () => {
     try {
       const response = await axios.get("https://atrux.azurewebsites.net/user");
@@ -93,6 +102,10 @@ const NotificationDispatcher = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [allMessagesA, setAllMessagesA] = useState([]);
   const [images, setImages] = useState([]);
+
+  const handleBack = () => {
+    navigation.navigate("Security");
+  };
 
   useEffect(() => {
     // Make the API request to fetch images
@@ -162,9 +175,10 @@ const NotificationDispatcher = () => {
       <View>
         <FormaNotification1 style={{ top: "8%", left: "68%" }} />
         <FormaNotif2 style={{ top: "-1%", left: "0%" }} />
+        
         <TouchableOpacity style = {styles.menuButton} onPress={handleOpenModal}>
-        <Linii style = {{zIndex: 1}}/>
-      </TouchableOpacity>
+          <Linii style = {{zIndex: 1}}/>
+        </TouchableOpacity>
 
       <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
         <Modal
@@ -225,149 +239,139 @@ const NotificationDispatcher = () => {
           </BlurView>
         </Modal>
       </SafeAreaView>
-        <NotificationIcon2 style={{ top: "-45%", left: "6%" }} />
-        <Back style={{ top: "-49%", left: "6%" }} />
         
-        <View style={styles.headerText}>
+      <NotificationIcon2 style={{ top: "-89.1%", left: "8%" }} />
+        
+      <View style={styles.headerText}>
         <Text style={styles.Notifications}>{t("notifications")}</Text>
       </View>
-        <View style={styles.container_update}>
-          <View style = {styles.inp}>
-            
-        <Text
+
+      <View style={styles.container_update}>
+        <View style = {styles.inp}>   
+          <Text
             style={{
               fontSize: 20,
               fontFamily: "Montserrat_500Medium",
               color: "#FFFFFF",
-             
               zIndex: 1,
               top:'15%',
               left:'4%'
             }}
           >
-            Updates from dispatcher:
+            {t("updates_from_drivers")}
           </Text>
-          </View>
-            <ScrollView>
-              <View style={{height:600}}>
-     </View>
-     {allMessages.map((message, index) => (
-      <View key={index}>
-
-      
-      <View  style={styles.notification}>
-
-        <Text style={{
-          fontFamily: 'Montserrat_500Medium',
-          fontSize: 18,
-          color: '#101F41',
-          alignSelf: 'flex-start',
-          left: '2%',
-          
-        }}>{message}</Text>
-       
-</View>
- <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
- <More/>
-</TouchableOpacity>
-
-</View>
-    ))}
-            
-            </ScrollView>
-          </View>
-          <View style = {styles.container_update2}>
-          <View style = {styles.inp}>
-            
-            <Text
-                style={{
-                  fontSize: 20,
-                  fontFamily: "Montserrat_500Medium",
-                  color: "#FFFFFF",
-                 
-                  zIndex: 1,
-                  top:'15%',
-                  left:'4%'
-                }}
-              >
-                Security:
-              </Text>
-              </View>
-              <ScrollView>
-              <View style={{height:600}}>
-   
-     {allMessagesA.map((message, index) => (
-      <View key={index}>
-
-      
-      <View  style={styles.notification2}>
-
-        <Text style={{
-          fontFamily: 'Montserrat_500Medium',
-          fontSize: 18,
-          color: '#101F41',
-          alignSelf: 'flex-start',
-          left: '2%',
-          
-        }}>{message}</Text>
-       
-</View>
-
- <TouchableOpacity style={{top:'16%', left:'87%'}} onPress={handleOpenModalAlarm}>
- <More/>
-</TouchableOpacity>
-</View>
-    ))}
-            </View>
-            </ScrollView>
-            <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
-        <Modal
-          visible={modalVisibleAlarm}
-          animationType="fade"
-          transparent={true}
-          onRequestClose={handleCloseModalAlarm}
-        >
-          <BlurView intensity={20} style={styles.blurContainer}>
-            <View style={styles.modalContainer}>
-              <View style={styles.ellipseWrapper1}>
-                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
-              </View>
-
-              <View style={styles.ellipseWrapper2}>
-                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
-              </View>
-
-              <View style={styles.vectorWrapper}>
-                <VectorMenu style={{ top: "2%", left: "5%" }} />
-              </View>
-              <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
-                <ExitIcon />
-              </Pressable>
-              <Text style={styles.menuText}>{t("image_detected")}</Text>
-
-              <View>
-      {images.map((image, index) => (
-        <View key={index}>
-          <Image
-            source={{ uri: `data:image/jpeg;base64,${image.binary_data}` }}
-            style={{ width: 200, height: 200, top: '25%' }}
-          />
         </View>
-      ))}
-    </View>
 
-            </View>
-          </BlurView>
-        </Modal>
-      </SafeAreaView>        
+        <ScrollView>
+          <View style={{height:600}}>
+            {allMessages.map((message, index) => (
+              <View key={index}>
+                <View  style={styles.notification}>
+                  <Text style={{
+                    fontFamily: 'Montserrat_500Medium',
+                    fontSize: 18,
+                    color: '#101F41',
+                    alignSelf: 'flex-start',
+                    left: '2%',
+                  }}>{message}</Text>
+                </View>
+      
+                <TouchableOpacity style={{top:'-81.5%', left:'87%'}} onPress={handleNavigate}>
+                  <More/>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View>
 
-          </View> 
-          
+      <View style = {styles.container_update2}>
+        <View style = {styles.inp}>    
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: "Montserrat_500Medium",
+              color: "#FFFFFF",
+              zIndex: 1,
+              top:'15%',
+              left:'4%'
+            }}
+          >
+            {t("security")}:
+          </Text>
+        </View>
+
+        <ScrollView>
+          <View style={{height:600}}>  
+            {allMessagesA.map((message, index) => (
+              <View key={index}>
+                <View  style={styles.notification2}>
+                  <Text style={{
+                        fontFamily: 'Montserrat_500Medium',
+                        fontSize: 18,
+                        color: '#101F41',
+                        alignSelf: 'flex-start',
+                        left: '2%',
+                        }}
+                  >
+                    {message}
+                  </Text>
+                </View>
+
+                <TouchableOpacity style={{top:'16%', left:'87%'}} onPress={handleOpenModalAlarm}>
+                  <More/>
+                </TouchableOpacity>
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+
+        <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
+          <Modal
+            visible={modalVisibleAlarm}
+            animationType="fade"
+            transparent={true}
+            onRequestClose={handleCloseModalAlarm}
+          >
+            <BlurView intensity={20} style={styles.blurContainer}>
+              <View style={styles.modalContainer}>
+                <View style={styles.ellipseWrapper1}>
+                  <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
+                </View>
+
+                <View style={styles.ellipseWrapper2}>
+                  <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
+                </View>
+
+                <View style={styles.vectorWrapper}>
+                  <VectorMenu style={{ top: "2%", left: "5%" }} />
+                </View>
+                <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
+                  <ExitIcon />
+                </Pressable>
+                <Text style={styles.menuText}>{t("image_detected")}</Text>
+
+                <View>
+                  {images.map((image, index) => (
+                    <View key={index}>
+                      <Image
+                        source={{ uri: `data:image/jpeg;base64,${image.binary_data}` }}
+                        style={{ width: 200, height: 200, top: '25%' }}
+                      />
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </BlurView>
+          </Modal>
+        </SafeAreaView>        
+      </View>     
       </View>
      
+      <TouchableOpacity style={styles.back} onPress={handleBack}>
+        <Back />
+      </TouchableOpacity>
     </View>
-    // {/* </ScrollView> */}
-    // </View
   );
 };
 
@@ -383,11 +387,11 @@ const styles = StyleSheet.create({
     
   },
   Notifications: {
-    fontSize: 35,
+    fontSize: 33,
     fontFamily: "Montserrat_500Medium",
     color: "#FFFFFF",
-    left: "120%",
-    top:'35%'
+    left: "135%",
+    top:'28%'
   },
   cele2chestiialbe: {
     flexDirection: "row",
@@ -411,7 +415,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     alignSelf: "center",
-    top:'-45%',
+    top:'-88%',
     zIndex:1,
     left:'40%'
   },
@@ -586,10 +590,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 3, height: 5 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height:'18%',
+    height:'33%',
     width:'80%',
     position:'absolute',
-    top:'10%',
+    top:'15%',
     alignSelf:'center',
     borderRadius: 40,
     elevation:10
@@ -600,10 +604,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 3, height: 5 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height:'18%',
+    height:'33%',
     width:'80%',
     position:'absolute',
-    top:'29%',
+    top:'49%',
     alignSelf:'center',
     borderRadius: 40,
     elevation:10
@@ -647,7 +651,19 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     textAlign:'center',
     
-  }
+  },
+  back: {
+    height: 40,
+    width: 40,
+    marginLeft: 5,
+    borderRadius: 10,
+    position: "absolute",
+    zIndex: 1,
+    opacity: 1,
+    top: "5%",
+    left: "4%",
+    alignItems: "center",
+  },
 });
 
 export default NotificationDispatcher;
