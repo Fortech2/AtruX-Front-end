@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
@@ -10,7 +10,7 @@ import PastImages_Driver from "../screens/PastImages_Driver";
 import HomeIcon from "../components/HomeTabIcon";
 import SecurityIcon from "../components/SecurityTabIcon";
 import ProfileIcon from "../components/ProfileTabIcon";
-import Notification from "../screens/Notification";
+import NotificationsDriver from "../screens/Notification";
 import SettingsDriver from "../screens/SettingsDriver";
 import YourRoute from "../screens/SeeYourRoute"
 import axios from "axios";
@@ -18,6 +18,8 @@ import { Audio } from 'expo-av';
 import { io } from 'socket.io-client';
 import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
+import { NativeModules } from "react-native";
+import * as Device from 'expo-device';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,7 +39,7 @@ function HomeStackScreen() {
       />
       <Stack.Screen
         name="Notificationss"
-        component={Notification}
+        component={NotificationsDriver}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -87,7 +89,7 @@ function SecurityStackScreens() {
       />
       <Stack.Screen
         name="Notifications"
-        component={Notification}
+        component={NotificationsDriver}
         options={{ headerShown: false }}
        
       />
@@ -100,10 +102,55 @@ function SecurityStackScreens() {
   );
 }
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false
+  }),
+});
+
+async function schedulePushNotification() {
+  // Your custom data goes here
+  // const customData = alarmNotifications;
+  
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: "ALARM! 🚨",
+      body: 'HUMAN DETECTED!',
+      // Add your custom data here
+      data: 'da',
+    },
+    trigger: { seconds: 2 },
+  });
+}
+
+
+// async function schedulePushImageNotification() {
+//   // Your custom data goes here
+//   // const customData = alarmNotifications;
+  
+
+//   await Notifications.scheduleNotificationAsync({
+//     content: {
+//       title: "ALARM! 🚨",
+//       body: 'NEW ROUTE!',
+//       // Add your custom data here
+//       data: 'da',
+//     },
+//     trigger: { seconds: 2 },
+//   });
+// }
+
 export default function TabNavigation() {
   const [userData, setUserData] = useState(null);
   const [socket, setSocket] = useState(null);
   const [sound, setSound] = useState(null);
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState([]);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
   useEffect(() => {
     const loadSoundAndFetchUserData = async () => {
@@ -141,6 +188,7 @@ export default function TabNavigation() {
 
           newSocket.on('notification-sent', () => {
             handleNotificationSent(sound);
+            schedulePushNotification();
           });
           newSocket.on('image-notification-sent', () => {
             // Update the individual message
@@ -149,14 +197,29 @@ export default function TabNavigation() {
          });
           setSocket(newSocket);
 
-          // Register for push notifications here
+          
+          // Register for push notifications here 
+          registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
          
+          // notificationListener.current = Notifications.addNotificationReceivedListener(() => {
+          //   setNotification(notification);
+          // });
+          // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+          //   console.log("response: ", response);
+          // });
+
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
       };
 
       fetchData();
+
+      // return () => {
+      //   Notifications.removeNotificationSubscription(notificationListener.current);
+      //   Notifications.removeNotificationSubscription(responseListener.current);
+      // };
+
     }
   }, [sound]);
 
@@ -165,6 +228,7 @@ export default function TabNavigation() {
     if (sound) {
       await sound.replayAsync();
     }
+    // schedulePushNotification();
   };
 
   // Function to register for push notifications
@@ -236,6 +300,41 @@ export default function TabNavigation() {
     </Tab.Navigator>
   );
 }
+
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    // Learn more about projectId:
+    // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+    token = (await Notifications.getExpoPushTokenAsync({ projectId: Constants.expoConfig.extra.eas.projectId })).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token;
+}
+
 const styles = StyleSheet.create({
   tabBarContainer: {
     flexDirection: "row",

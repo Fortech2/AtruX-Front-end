@@ -48,37 +48,52 @@ import { Audio } from 'expo-av';
 import { io } from 'socket.io-client';
 import axios from "axios";
 import More from '../components/MoreButtonNotif';
+import * as Notifications from 'expo-notifications';
 
-const Notifications = () => {
+const NotificationsDriver = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleAlarm, setModalVisibleAlarm] = useState(false);
   const { t, i18n } = useTranslation();
+
   const handleOpenModal = () => {
     setModalVisible(true);
   };
+
   const navigation = useNavigation();
+
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+
   const handleOpenModalAlarm = (imageData) => {
     setSelectedImage(imageData);
     setModalVisibleAlarm(true);
   };
+
   const handleCloseModalAlarm = () => {
     setModalVisibleAlarm(false);
   };
+
+  const handleBack = () => {
+    navigation.navigate("Security");
+  };
+
   const [notifications, setNotifications] = useState([]);
   const [userData, setUserData] = useState(null);
+
   const handleNavigate = () => {
     // Perform any other login-related logic here if needed
     // For now, we will simply navigate to the Home screen (App_Driver)
     // Tab_Navigation
     navigation.navigate('YourRoutes');
   };
+
   const HandleAlarm = () =>{
     navigation.navigate("PastImages")
   }
+
   const link = 'https://atrux-prod.azurewebsites.net'
+
   const fetchUserData = async () => {
     try {
       const response = await axios.get(`${link}/user`);
@@ -100,9 +115,6 @@ const Notifications = () => {
   const [allMessagesA, setAllMessagesA] = useState([]);
   const [images, setImages] = useState([]);
 
-  
- 
-
   useEffect(() => {
     // Make a GET request to fetch notifications from the backend
     axios.get(`${link}/root_notification`)
@@ -118,14 +130,15 @@ const Notifications = () => {
         console.error('Error fetching notifications:', error);
       });
   }, []);
+
   const [selectedImage, setSelectedImage] = useState(null);
   const [alarmNotifications, setAlarmNotifications] = useState([]);
+
   const fetchAlarmNotifications = async () => {
     try {
       const response = await axios.get(`${link}/alarm_notification`); // Make a GET request to your Flask backend route
       const notifications = response.data.alarm_notification || []; // Initialize as an empty array if no data is received
       setAlarmNotifications(notifications);
-      
     } catch (error) {
       console.error('Error fetching alarm notifications:', error);
     }
@@ -134,6 +147,7 @@ const Notifications = () => {
   useEffect(() => {
     fetchAlarmNotifications(); // Fetch alarm notifications when the component mounts
   }, []);
+    
   return (
     <View style={styles.background}>
       <View>
@@ -202,28 +216,28 @@ const Notifications = () => {
           </BlurView>
         </Modal>
       </SafeAreaView>
-        <NotificationIcon2 style={{ top: "-45%", left: "6%" }} />
-        <Back style={{ top: "-49%", left: "6%" }} />
-        
-        <View style={styles.headerText}>
+
+      <NotificationIcon2 style={{ top: "-89.1%", left: "8%" }} />
+  
+      <View style={styles.headerText}>
         <Text style={styles.Notifications}>{t("notifications")}</Text>
       </View>
-        <View style={styles.container_update}>
-          <View style = {styles.inp}>
-            
-        <Text
+
+      <View style={styles.container_update}>
+        <View style = {styles.inp}>    
+          <Text
             style={{
               fontSize: 20,
               fontFamily: "Montserrat_500Medium",
               color: "#FFFFFF",
-             
               zIndex: 1,
               top:'15%',
               left:'4%'
             }}
           >
-            Updates from dispatcher:
+            {t('updates_from_dispatcher')}
           </Text>
+
           </View>
             <ScrollView>
               <View style={{height:600}}>
@@ -275,28 +289,36 @@ const Notifications = () => {
          
 
 
-</View>
-   
-            
-            </ScrollView>
-          </View>
-          <View style = {styles.container_update2}>
-          <View style = {styles.inp}>
-            
-            <Text
-                style={{
-                  fontSize: 20,
-                  fontFamily: "Montserrat_500Medium",
-                  color: "#FFFFFF",
-                 
-                  zIndex: 1,
-                  top:'15%',
-                  left:'4%'
-                }}
-              >
-                Security:
-              </Text>
+        </View>
+
+
+        <ScrollView>
+          <View style={{height:600}}>
+            {notifications.map((date, index) => (
+              <View key={index}>
+                <View style={styles.notification2}>
+                  <Text
+                    style={{
+                      fontFamily: 'Montserrat_500Medium',
+                      fontSize: 18,
+                      color: '#101F41',
+                      alignSelf: 'flex-start',
+                      left: '0%',
+                      top:'4%'
+                    }}
+                  >
+                    {date} New Route
+                  </Text>
+                </View>
+    
+                <TouchableOpacity
+                  style={{ top: '16.3%', left: '93%' }}
+                  onPress={handleNavigate}
+                >
+                  <More />
+                </TouchableOpacity>
               </View>
+
               <ScrollView>
               <View style={{height:600}}>
    
@@ -347,44 +369,97 @@ const Notifications = () => {
                 <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
               </View>
 
-              <View style={styles.ellipseWrapper2}>
-                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
-              </View>
-
-              <View style={styles.vectorWrapper}>
-                <VectorMenu style={{ top: "2%", left: "5%" }} />
-              </View>
-              <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
-                <ExitIcon />
-              </Pressable>
-              <Text style={styles.menuText}>{t("image_detected")}</Text>
-              {selectedImage && (
-                <Image
-                  source={{ uri: `data:image/jpeg;base64,${selectedImage}` }} // Set the image source with base64 data
-                  style={{ width: 200, height: 200 }} // Adjust the dimensions as needed
-                />
-              )}
-              <View>
-      
-    </View>
-
-            </View>
-          </BlurView>
-        </Modal>
-      </SafeAreaView>   
+            ))}
+          </View>  
+        </ScrollView>
       </View>
-    ))}
-            </View>
-            </ScrollView>
-              
+        
+      <View style = {styles.container_update2}>
+        <View style = {styles.inp}>    
+          <Text
+            style={{
+                fontSize: 20,
+                fontFamily: "Montserrat_500Medium",
+                color: "#FFFFFF",  
+                zIndex: 1,
+                top:'15%',
+                left:'4%'
+              }}
+            >
+              {t("security")}:
+          </Text>
+        </View>
 
-          </View> 
-          
+
+        <ScrollView>
+          <View style={{height:600}}>
+            {alarmNotifications.map((notification, index) => (
+              <View key={index}>
+                <View style={styles.notification2}>
+                  <Text style={{
+                          fontFamily: 'Montserrat_500Medium',
+                          fontSize: 18,
+                          color: '#101F41',
+                          alignSelf: 'flex-start',
+                          left: '2%',
+                    }}
+                  >
+                    {notification.date} {t("human_detected")}
+                  </Text>
+                </View>
+
+                <TouchableOpacity
+                  style={{ top: '16%', left: '87%' }}
+                  onPress={() => handleOpenModalAlarm(notification.binary_data)}
+                >
+                  <More />
+                </TouchableOpacity>
+
+                <SafeAreaView style={{ top: "-183%", left: "8%", zIndex: 1, flex: 1 }}>
+                  <Modal
+                    visible={modalVisibleAlarm}
+                    animationType="fade"
+                    transparent={true}
+                    onRequestClose={handleCloseModalAlarm}
+                  >
+                    <BlurView intensity={20} style={styles.blurContainer}>
+                      <View style={styles.modalContainer}>
+                       <View style={styles.ellipseWrapper1}>
+                        <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
+                        </View>
+
+                       <View style={styles.ellipseWrapper2}>
+                          <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
+                        </View>
+
+                        <View style={styles.vectorWrapper}>
+                          <VectorMenu style={{ top: "2%", left: "5%" }} />
+                        </View>
+                        <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
+                          <ExitIcon />
+                        </Pressable>
+                        <Text style={styles.menuText}>{t("image_detected")}</Text>
+                        {selectedImage && (
+                          <Image
+                            source={{ uri: `data:image/jpeg;base64,${selectedImage}` }} // Set the image source with base64 data
+                            style={{ width: 200, height: 200 }} // Adjust the dimensions as needed
+                          />
+                       )}
+                      </View>
+                    </BlurView>
+                  </Modal>
+                </SafeAreaView>   
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+      </View> 
       </View>
-     
+
+      <TouchableOpacity style={styles.back} onPress={handleBack}>
+        <Back />
+      </TouchableOpacity>
     </View>
-    // {/* </ScrollView> */}
-    // </View
   );
 };
 
@@ -400,11 +475,11 @@ const styles = StyleSheet.create({
     
   },
   Notifications: {
-    fontSize: 35,
+    fontSize: 33,
     fontFamily: "Montserrat_500Medium",
     color: "#FFFFFF",
-    left: "120%",
-    top:'35%'
+    left: "135%",
+    top:'28%'
   },
   cele2chestiialbe: {
     flexDirection: "row",
@@ -428,7 +503,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     alignSelf: "center",
-    top:'-45%',
+    top:'-88%',
     zIndex:1,
     left:'40%'
   },
@@ -503,20 +578,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "rgba(0,0,0,0.3)",
     top: "20%",
-    // width: "70%",
-    // height: "40%",
     borderRadius: 40,
     padding: 1,
     width: 311,
     height: 347,
-    // backgroundColor: "#D9D9D9"
-    // backgroundColor: "#B6B6B6"
     backgroundColor: "#999999",
     top:'-5%',
     left:'-20%'
   },
   ellipseWrapper2: {
-    // backgroundColor: "#45b871",
     borderRightWidth: 40,
     borderRightColor: "#B6B6B6",
     width: 126,
@@ -532,7 +602,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20
   },
   vectorWrapper: {
-    // backgroundColor: "#45b871",
     width: 125,
     height: 200,
     marginTop: 10,
@@ -571,7 +640,6 @@ const styles = StyleSheet.create({
     left: "5%"
   },
   ellipseWrapper1: {
-    // backgroundColor: "#45b871",
     borderLeftWidth: 15,
     borderLeftColor: "#E9EBEE",
     width: 150,
@@ -590,7 +658,6 @@ const styles = StyleSheet.create({
     width: "12%",
     height: "10%",
     padding: 1,
-    // backgroundColor: "#F38D68",
     borderWidth: 1,
     top: "4%",
     left: "85%",
@@ -603,10 +670,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 3, height: 5 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height:'18%',
+    height:'33%',
     width:'80%',
     position:'absolute',
-    top:'10%',
+    top:'15%',
     alignSelf:'center',
     borderRadius: 40,
     elevation:10
@@ -617,35 +684,34 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 3, height: 5 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height:'18%',
+    height:'33%',
     width:'80%',
     position:'absolute',
-    top:'29%',
+    top:'49%',
     alignSelf:'center',
     borderRadius: 40,
     elevation:10
   },
   notification:{
-
     alignSelf:'center',
     alignItems:'center',
     top:'19%',
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
-    
   },
   notification2:{
-
     alignSelf:'center',
     alignItems:'center',
     top:'19%',
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
+
     marginBottom:'10%',
   
     
+
   },
   line: {
     width: "100%",
@@ -658,7 +724,6 @@ const styles = StyleSheet.create({
   inp:{
     backgroundColor: "#101F41",
     shadowColor: "#000",
-    
     height:'14%',
     width:'95%',
     borderRadius: 40,
@@ -666,7 +731,19 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     textAlign:'center',
     
+  },
+  back: {
+    height: 40,
+    width: 40,
+    marginLeft: 5,
+    borderRadius: 10,
+    position: "absolute",
+    zIndex: 1,
+    opacity: 1,
+    top: "5%",
+    left: "4%",
+    alignItems: "center",
   }
 });
 
-export default Notifications;
+export default NotificationsDriver;

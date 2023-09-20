@@ -105,6 +105,10 @@
     "new alarm":"Persoana detectata",
     "image_detected":"ALARMA",
     "new_password":"Parola noua",
-    "your_token":"Codul tau unic"
+    "your_token":"Codul tau unic",
 
+    "updates_from_dispatcher": "Noutăți de la dispecer:",
+    "updates_from_drivers": "Noutăți de la șoferi",
+
+    "human_detected": "Persoană Detectată!",
 }
