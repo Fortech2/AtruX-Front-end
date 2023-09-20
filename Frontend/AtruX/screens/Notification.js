@@ -91,7 +91,6 @@ const NotificationsDriver = () => {
   const HandleAlarm = () =>{
     navigation.navigate("PastImages")
   }
-
   const link = 'https://atrux-prod.azurewebsites.net'
 
   const fetchUserData = async () => {
@@ -147,6 +146,7 @@ const NotificationsDriver = () => {
   useEffect(() => {
     fetchAlarmNotifications(); // Fetch alarm notifications when the component mounts
   }, []);
+    
     
   return (
     <View style={styles.background}>
@@ -237,12 +237,11 @@ const NotificationsDriver = () => {
           >
             {t('updates_from_dispatcher')}
           </Text>
+        </View>
 
-          </View>
-            <ScrollView>
-              <View style={{height:600}}>
-               
-              {notifications.map((date, index) => {
+        <ScrollView>
+          <View style={{height:600}}>
+          {notifications.map((date, index) => {
                 console.log(date); // Log the data to the console
                 return (
   <View key={index}>
@@ -289,36 +288,28 @@ const NotificationsDriver = () => {
          
 
 
-        </View>
-
-
-        <ScrollView>
-          <View style={{height:600}}>
-            {notifications.map((date, index) => (
-              <View key={index}>
-                <View style={styles.notification2}>
-                  <Text
-                    style={{
-                      fontFamily: 'Montserrat_500Medium',
-                      fontSize: 18,
-                      color: '#101F41',
-                      alignSelf: 'flex-start',
-                      left: '0%',
-                      top:'4%'
-                    }}
-                  >
-                    {date} New Route
-                  </Text>
-                </View>
-    
-                <TouchableOpacity
-                  style={{ top: '16.3%', left: '93%' }}
-                  onPress={handleNavigate}
-                >
-                  <More />
-                </TouchableOpacity>
+</View>
+   
+            
+            </ScrollView>
+          </View>
+          <View style = {styles.container_update2}>
+          <View style = {styles.inp}>
+            
+            <Text
+                style={{
+                  fontSize: 20,
+                  fontFamily: "Montserrat_500Medium",
+                  color: "#FFFFFF",
+                 
+                  zIndex: 1,
+                  top:'15%',
+                  left:'4%'
+                }}
+              >
+                Security:
+              </Text>
               </View>
-
               <ScrollView>
               <View style={{height:600}}>
    
@@ -369,97 +360,44 @@ const NotificationsDriver = () => {
                 <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
               </View>
 
-            ))}
-          </View>  
-        </ScrollView>
-      </View>
-        
-      <View style = {styles.container_update2}>
-        <View style = {styles.inp}>    
-          <Text
-            style={{
-                fontSize: 20,
-                fontFamily: "Montserrat_500Medium",
-                color: "#FFFFFF",  
-                zIndex: 1,
-                top:'15%',
-                left:'4%'
-              }}
-            >
-              {t("security")}:
-          </Text>
-        </View>
-
-
-        <ScrollView>
-          <View style={{height:600}}>
-            {alarmNotifications.map((notification, index) => (
-              <View key={index}>
-                <View style={styles.notification2}>
-                  <Text style={{
-                          fontFamily: 'Montserrat_500Medium',
-                          fontSize: 18,
-                          color: '#101F41',
-                          alignSelf: 'flex-start',
-                          left: '2%',
-                    }}
-                  >
-                    {notification.date} {t("human_detected")}
-                  </Text>
-                </View>
-
-                <TouchableOpacity
-                  style={{ top: '16%', left: '87%' }}
-                  onPress={() => handleOpenModalAlarm(notification.binary_data)}
-                >
-                  <More />
-                </TouchableOpacity>
-
-                <SafeAreaView style={{ top: "-183%", left: "8%", zIndex: 1, flex: 1 }}>
-                  <Modal
-                    visible={modalVisibleAlarm}
-                    animationType="fade"
-                    transparent={true}
-                    onRequestClose={handleCloseModalAlarm}
-                  >
-                    <BlurView intensity={20} style={styles.blurContainer}>
-                      <View style={styles.modalContainer}>
-                       <View style={styles.ellipseWrapper1}>
-                        <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
-                        </View>
-
-                       <View style={styles.ellipseWrapper2}>
-                          <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
-                        </View>
-
-                        <View style={styles.vectorWrapper}>
-                          <VectorMenu style={{ top: "2%", left: "5%" }} />
-                        </View>
-                        <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
-                          <ExitIcon />
-                        </Pressable>
-                        <Text style={styles.menuText}>{t("image_detected")}</Text>
-                        {selectedImage && (
-                          <Image
-                            source={{ uri: `data:image/jpeg;base64,${selectedImage}` }} // Set the image source with base64 data
-                            style={{ width: 200, height: 200 }} // Adjust the dimensions as needed
-                          />
-                       )}
-                      </View>
-                    </BlurView>
-                  </Modal>
-                </SafeAreaView>   
+              <View style={styles.ellipseWrapper2}>
+                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
               </View>
-            ))}
-          </View>
-        </ScrollView>
-      </View> 
-      </View>
 
-      <TouchableOpacity style={styles.back} onPress={handleBack}>
-        <Back />
-      </TouchableOpacity>
+              <View style={styles.vectorWrapper}>
+                <VectorMenu style={{ top: "2%", left: "5%" }} />
+              </View>
+              <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
+                <ExitIcon />
+              </Pressable>
+              <Text style={styles.menuText}>{t("image_detected")}</Text>
+              {selectedImage && (
+                <Image
+                  source={{ uri: `data:image/jpeg;base64,${selectedImage}` }} // Set the image source with base64 data
+                  style={{ width: 200, height: 200 }} // Adjust the dimensions as needed
+                />
+              )}
+              <View>
+      
     </View>
+
+            </View>
+          </BlurView>
+        </Modal>
+      </SafeAreaView>   
+      </View>
+    ))}
+            </View>
+            </ScrollView>
+              
+
+          </View> 
+          
+      </View>
+     
+    </View>
+    // {/* </ScrollView> */}
+    // </View
   );
 };
 
@@ -707,11 +645,6 @@ const styles = StyleSheet.create({
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
-
-    marginBottom:'10%',
-  
-    
-
   },
   line: {
     width: "100%",
