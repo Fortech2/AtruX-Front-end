@@ -166,16 +166,16 @@ export default function TabNavigation() {
 
     loadSoundAndFetchUserData();
   }, []);
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     if (sound) {
       const fetchData = async () => {
         try {
-          const response = await axios.get("https://atrux.azurewebsites.net/user");
+          const response = await axios.get(`${link}/user`);
           const userData = response.data;
           setUserData(userData);
 
-          const newSocket = io('wss://atrux.azurewebsites.net');
+          const newSocket = io('wss://atrux-prod.azurewebsites.net');
           newSocket.on('connect', () => {
             console.log('Connected to WebSocket server');
 

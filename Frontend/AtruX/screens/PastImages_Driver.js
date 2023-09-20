@@ -90,7 +90,7 @@ export default function PastImages_Driver() {
   const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     // Make the API request to fetch images
-    axios.get(`${linl}/images`)
+    axios.get(`${link}/images`)
       .then(response => {
         console.log('Images data:', response.data.image); // Log the images data
         setImages(response.data.image);
