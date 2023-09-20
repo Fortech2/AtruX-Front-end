@@ -58,10 +58,10 @@ const ListOfDrivers = () => {
   };
   const [allDrivers, setAllDrivers] = useState([]);
   const [dispatcherId, setDispatcherId] = useState(null);
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     // Fetch the user data
-    axios.get('https://atrux.azurewebsites.net/user', { withCredentials: true })
+    axios.get(`${link}/user`, { withCredentials: true })
       .then(response => {
         const userData = response.data;
         if (userData.role === 'dispatcher') {

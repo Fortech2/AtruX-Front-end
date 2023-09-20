@@ -106,10 +106,11 @@ const SendRoute = () => {
       setRouteStops([]);
     }
   }, [modalVisible2]);
+  const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     // Fetch the user data
     axios
-      .get("https://atrux.azurewebsites.net/user", { withCredentials: true })
+      .get(`${link}/user`, { withCredentials: true })
       .then((response) => {
         console.log("User data:", response.data);
         const userData = response.data;
@@ -333,7 +334,7 @@ const SendRoute = () => {
 
                                     axios
                                       .post(
-                                        "https://atrux.azurewebsites.net/route",
+                                        `${link}/route`,
                                         routeData
                                       )
                                       .then((response) => {

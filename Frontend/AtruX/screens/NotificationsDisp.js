@@ -75,7 +75,7 @@ const NotificationDispatcher = () => {
   }
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const response = await axios.get(`${link}/user`);
       const userData = response.data;
       console.log(userData);
       setUserData(userData); // Update the state with fetched user data
@@ -93,10 +93,10 @@ const NotificationDispatcher = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [allMessagesA, setAllMessagesA] = useState([]);
   const [images, setImages] = useState([]);
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     // Make the API request to fetch images
-    axios.get("https://atrux.azurewebsites.net/images")
+    axios.get(`${link}/images`)
       .then(response => {
         
         const lastImage = response.data.image[response.data.image.length - 1];

@@ -171,9 +171,10 @@ export default function SignUp_Dispecerat() {
       setPasswordVisibility(!passwordVisibility);
     }
   };
+  const link = 'https://atrux-prod.azurewebsites.net'
   const signUpUser = async () => {
     try {
-      const response = await axios.post("https://atrux.azurewebsites.net/sign-up", {
+      const response = await axios.post(`${link}/sign-up`, {
         role: 'dispatcher',
         name: username,
         email: email,

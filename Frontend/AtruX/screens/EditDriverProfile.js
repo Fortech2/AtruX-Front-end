@@ -72,6 +72,7 @@ function EditDispProfile() {
   const [email, setNewEmail] = useState("");
   const [username, setNewUsername] = useState("");
   const [phone_nr, setNewPhoneNr] = useState(null);
+  const link = 'https://atrux-prod.azurewebsites.net'
 const handleSave = async () => {
  
   const requestData = {
@@ -81,7 +82,7 @@ const handleSave = async () => {
   };
   console.log('trying');
   try {
-    const response = await axios.put('https://atrux.azurewebsites.net/profile', requestData);
+    const response = await axios.put(`${link}/profile`, requestData);
     if (response.status === 200) {
       console.log('Data saved successfully');
       setErrorMessage(t("data_changed"));

@@ -86,6 +86,7 @@ export default function ForgotPassword() {
   const [isChecked, setChecked] = useState(false);
   
   // const history = useHistory();
+  const link = 'https://atrux-prod.azurewebsites.net'
   const handlePasswordReset = async () => {
     try {
       if (!email) {
@@ -95,7 +96,7 @@ export default function ForgotPassword() {
       }
   
       // Call the backend to send the password reset email
-      const response = await axios.put('https://atrux.azurewebsites.net/password', {
+      const response = await axios.put(`${link}/password`, {
         email: email,
       });
       

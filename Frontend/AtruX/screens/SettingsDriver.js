@@ -86,10 +86,10 @@ export default function Settings_Driver() {
   const handleEditAccount = () => {
     navigation.navigate('ProfileEditFromHome');
   };
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   const handleLogOut = async () => {
     try {
-      await axios.get("https://atrux.azurewebsites.net/logout");
+      await axios.get(`${link}/logout`);
       navigation.navigate('Auth');
       console.log("Successful logout");
     }

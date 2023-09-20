@@ -88,10 +88,10 @@ export default function YourRoute() {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
- 
+  const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     // Make an API call to get user data
-    axios.get('https://atrux.azurewebsites.net/user', { withCredentials: true })
+    axios.get(`${link}/user`, { withCredentials: true })
       .then(response => {
         const StopForUser = response.data.route;
         const stopsArray = StopForUser.slice(1, -1).split(',');

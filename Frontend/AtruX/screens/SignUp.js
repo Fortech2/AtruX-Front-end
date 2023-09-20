@@ -77,6 +77,7 @@ export default function SignUp() {
     setIsModalVisible3(false);
   };
   const [isModalVisible3, setIsModalVisible3] = useState(false);
+  const link = 'https://atrux-prod.azurewebsites.net'
   const handleSignUp = async () => {
     try {
       if (
@@ -114,7 +115,7 @@ export default function SignUp() {
         setIsModalVisible3(true); // Show the checkbox error message
         return;
       }
-      const response = await axios.post('https://atrux.azurewebsites.net/sign-up', userData);
+      const response = await axios.post(`${link}/sign-up`, userData);
   
       // Log the response from the backend (optional)
       console.log('Response data:', response.data);

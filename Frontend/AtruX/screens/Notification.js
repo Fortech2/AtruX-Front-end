@@ -78,9 +78,10 @@ const Notifications = () => {
   const HandleAlarm = () =>{
     navigation.navigate("PastImages")
   }
+  const link = 'https://atrux-prod.azurewebsites.net'
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const response = await axios.get(`${link}/user`);
       const userData = response.data;
       console.log(userData);
       setUserData(userData); // Update the state with fetched user data
@@ -104,7 +105,7 @@ const Notifications = () => {
 
   useEffect(() => {
     // Make a GET request to fetch notifications from the backend
-    axios.get('https://atrux.azurewebsites.net/root_notification')
+    axios.get(`${link}/root_notification`)
       .then(response => {
         const rootNotifications = response.data.root_notification_expiration || [];
   
@@ -121,7 +122,7 @@ const Notifications = () => {
   const [alarmNotifications, setAlarmNotifications] = useState([]);
   const fetchAlarmNotifications = async () => {
     try {
-      const response = await axios.get('https://atrux.azurewebsites.net/alarm_notification'); // Make a GET request to your Flask backend route
+      const response = await axios.get(`${link}/alarm_notification`); // Make a GET request to your Flask backend route
       const notifications = response.data.alarm_notification || []; // Initialize as an empty array if no data is received
       setAlarmNotifications(notifications);
       

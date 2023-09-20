@@ -63,7 +63,7 @@ export default function Driver_Security() {
 
   const [isEnabled, setIsEnabled] = useState(false);
  
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   const toggleSwitch = async () => {
     try {
       // Calculate the new status value (1 for on, 0 for off)
@@ -74,7 +74,7 @@ export default function Driver_Security() {
 
       // Send a POST request to your Flask backend with the new status
       const response = await axios.post(
-        'https://atrux.azurewebsites.net/active',
+        `${link}/active`,
         { active_status: newStatus }, // Send the new status
         {
           headers: {

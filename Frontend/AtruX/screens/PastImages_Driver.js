@@ -87,10 +87,10 @@ export default function PastImages_Driver() {
     setModalVisible(false);
   };
   const [images, setImages] = useState([]);
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   useEffect(() => {
     // Make the API request to fetch images
-    axios.get("https://atrux.azurewebsites.net/images")
+    axios.get(`${linl}/images`)
       .then(response => {
         console.log('Images data:', response.data.image); // Log the images data
         setImages(response.data.image);

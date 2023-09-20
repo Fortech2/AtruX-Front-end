@@ -96,7 +96,7 @@ export default function ForgotPassword() {
       setPasswordVisibility(!passwordVisibility);
     }
   };
-  
+  const link = 'https://atrux-prod.azurewebsites.net'
   // const history = useHistory();
   const handlePasswordReset = async () => {
     try {
@@ -107,7 +107,7 @@ export default function ForgotPassword() {
       }
   
       // Call the backend to send the password reset email
-      const response = await axios.post('https://atrux.azurewebsites.net/resetpassword', {
+      const response = await axios.post(`${link}/resetpassword`, {
         password: newPassword,
         token:code
 
