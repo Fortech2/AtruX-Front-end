@@ -410,7 +410,7 @@ export default function SignUp() {
           </View>
           <View style={styles.inputView}>
            
-              <Rpi  stule = {{top:'20%'}} />
+              <Rpi  style = {{top:'20%'}} />
            
             
             <TextInput
