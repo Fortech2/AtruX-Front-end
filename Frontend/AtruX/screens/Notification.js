@@ -92,9 +92,11 @@ const NotificationsDriver = () => {
     navigation.navigate("PastImages")
   }
 
+  const link = 'https://atrux-prod.azurewebsites.net'
+
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const response = await axios.get(`${link}/user`);
       const userData = response.data;
       console.log(userData);
       setUserData(userData); // Update the state with fetched user data
@@ -115,7 +117,7 @@ const NotificationsDriver = () => {
 
   useEffect(() => {
     // Make a GET request to fetch notifications from the backend
-    axios.get('https://atrux.azurewebsites.net/root_notification')
+    axios.get(`${link}/root_notification`)
       .then(response => {
         const rootNotifications = response.data.root_notification_expiration || [];
   
@@ -134,7 +136,7 @@ const NotificationsDriver = () => {
 
   const fetchAlarmNotifications = async () => {
     try {
-      const response = await axios.get('https://atrux.azurewebsites.net/alarm_notification'); // Make a GET request to your Flask backend route
+      const response = await axios.get(`${link}/alarm_notification`); // Make a GET request to your Flask backend route
       const notifications = response.data.alarm_notification || []; // Initialize as an empty array if no data is received
       setAlarmNotifications(notifications);
     } catch (error) {
@@ -235,7 +237,60 @@ const NotificationsDriver = () => {
           >
             {t('updates_from_dispatcher')}
           </Text>
+
+          </View>
+            <ScrollView>
+              <View style={{height:600}}>
+               
+              {notifications.map((date, index) => {
+                console.log(date); // Log the data to the console
+                return (
+  <View key={index}>
+   <View style={styles.notification2}>
+    <TouchableOpacity onPress={handleNavigate}>
+     
+    <Text
+      style={{
+        fontFamily: 'Montserrat_500Medium',
+        fontSize: 18,
+        color: '#101F41',
+        alignSelf: 'flex-start',
+        left: '0%',
+       
+      }}
+    >
+      {date} New Route</Text>
+    <Text
+      style={{
+        fontFamily: 'Montserrat_500Medium',
+        fontSize: 18,
+        color: 'red',
+        alignSelf: 'flex-start',
+        left: '0%',
+       
+      }}
+    >
+      See it!
+    </Text>
+   
+    </TouchableOpacity>
+    {/* <TouchableHighlight
+            style={{ position:'absolute'}}
+            onPress={handleNavigate}
+          >
+          <More />
+        </TouchableHighlight> */}
+ </View>
+    
+
+  </View>
+                )
+})}
+         
+
+
         </View>
+
 
         <ScrollView>
           <View style={{height:600}}>
@@ -263,6 +318,57 @@ const NotificationsDriver = () => {
                   <More />
                 </TouchableOpacity>
               </View>
+
+              <ScrollView>
+              <View style={{height:600}}>
+   
+              {alarmNotifications.map((notification, index) => (
+      <View key={index}>
+        <View style={styles.notification2}>
+         <TouchableOpacity onPress={() => handleOpenModalAlarm(notification.binary_data)}>
+          <Text style={{
+            fontFamily: 'Montserrat_500Medium',
+            fontSize: 18,
+            color: '#101F41',
+            alignSelf: 'flex-start',
+            left: '2%',
+            top:'28%'
+          }}>{notification.date} Human Detected!</Text>
+           
+           <Text
+      style={{
+        fontFamily: 'Montserrat_500Medium',
+        fontSize: 18,
+        color: 'red',
+        alignSelf: 'flex-start',
+        left: '50%',
+        top:'-5%'
+       
+      }}
+    >
+      See image!
+    </Text>
+          </TouchableOpacity>
+        </View>
+        {/* <TouchableOpacity
+            style={{ top: '16%', left: '87%', position:'absolute' }}
+            onPress={() => handleOpenModalAlarm(notification.binary_data)}
+          >
+          <More />
+        </TouchableOpacity> */}
+        <SafeAreaView style={{ top: "-183%", left: "8%", zIndex: 1, flex: 1 }}>
+        <Modal
+          visible={modalVisibleAlarm}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={handleCloseModalAlarm}
+        >
+          <BlurView intensity={20} style={styles.blurContainer}>
+            <View style={styles.modalContainer}>
+              <View style={styles.ellipseWrapper1}>
+                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
+              </View>
+
             ))}
           </View>  
         </ScrollView>
@@ -283,6 +389,7 @@ const NotificationsDriver = () => {
               {t("security")}:
           </Text>
         </View>
+
 
         <ScrollView>
           <View style={{height:600}}>
@@ -600,6 +707,11 @@ const styles = StyleSheet.create({
     borderBottomWidth:1,
     width:'90%',
     borderBottomColor:'#101F41',
+
+    marginBottom:'10%',
+  
+    
+
   },
   line: {
     width: "100%",

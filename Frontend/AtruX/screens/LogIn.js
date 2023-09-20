@@ -94,13 +94,14 @@ export default function LogIn() {
     }
   };
   const [errorMessage, setErrorMessage] = useState("");
+  const link = 'https://atrux-prod.azurewebsites.net'
   // const history = useHistory();
   const handleLogin = () => {
     axios
-      .post("https://atrux.azurewebsites.net/login", { email, password }, { withCredentials: true })
+      .post(`${link}/login`, { email, password }, { withCredentials: true })
       .then((response) => {
         axios
-        .get("https://atrux.azurewebsites.net/user", { withCredentials: true }) // Assuming you have the get_user_data endpoint
+        .get(`${link}/user`, { withCredentials: true }) // Assuming you have the get_user_data endpoint
         .then((userDataResponse) => {
           console.log("User data:", userDataResponse.data);
 

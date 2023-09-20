@@ -74,10 +74,10 @@ function DispProfileScreen() {
   useEffect(() => {
     fetchUserData();
   }, []);
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const response = await axios.get(`${link}/user`);
       setUserData(response.data);
       if (response.data && response.data.dispatcherName) {
         setNumberOfDrivers(response.data.numberOfDrivers);

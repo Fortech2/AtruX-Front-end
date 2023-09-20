@@ -64,10 +64,10 @@ function DriverProfileScreen() {
     navigation.navigate("Homes");
   };
   const [userData, setUserData] = useState(null);
-
+  const link = 'https://atrux-prod.azurewebsites.net'
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("https://atrux.azurewebsites.net/user");
+      const response = await axios.get(`${link}/user`);
       const userData = response.data;
       setUserData(userData); // Update the state with fetched user data
     } catch (error) {

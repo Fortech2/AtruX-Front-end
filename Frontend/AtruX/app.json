@@ -3,9 +3,21 @@
     "name": "AtruX",
     "slug": "AtruX",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"],
-    "plugins": ["expo-localization"]
-   
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      "expo-localization"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3ce604f4-3541-4e72-98d5-b21369e2c401"
+      }
+    },
+    "owner": "ioana.gavrila04",
+    "android": {
+      "package": "com.ioana.gavrila04.AtruX"
+    }
   },
   "name": "AtruX"
 }

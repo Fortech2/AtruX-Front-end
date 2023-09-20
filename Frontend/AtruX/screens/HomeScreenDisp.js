@@ -93,16 +93,16 @@ const handleOpenModal = () => {
   setModalVisible(true);
 };
 const [userData, setUserData] = useState(null);
-
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get("https://atrux.azurewebsites.net/user");
-      const userData = response.data;
-      setUserData(userData); // Update the state with fetched user data
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-    }
-  };
+const link = 'https://atrux-prod.azurewebsites.net'
+const fetchUserData = async () => {
+  try {
+    const response = await axios.get(`${link}/user`);
+    const userData = response.data;
+    setUserData(userData); // Update the state with fetched user data
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+};
   
   useEffect(() => {
     fetchUserData();

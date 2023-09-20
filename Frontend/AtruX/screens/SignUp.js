@@ -50,6 +50,7 @@ import { useNavigation } from "@react-navigation/native"; //
 import { Picker } from "@react-native-picker/picker";
 import { Button } from "react-native-paper";
 import DropDownPicker from "react-native-dropdown-picker";
+import Rpi from '../components/Rpi';
 import {
   Menu,
   MenuOptions,
@@ -67,6 +68,7 @@ export default function SignUp() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [companyName, setCompany] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [rbidC, setRbid] = useState('');
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
@@ -75,6 +77,7 @@ export default function SignUp() {
     setIsModalVisible3(false);
   };
   const [isModalVisible3, setIsModalVisible3] = useState(false);
+  const link = 'https://atrux-prod.azurewebsites.net'
   const handleSignUp = async () => {
     try {
       if (
@@ -82,7 +85,8 @@ export default function SignUp() {
         !email ||
         !password ||
         !phoneNumber ||
-        !companyName
+        !companyName ||
+        !rbidC
       ) {
         setErrorMessage(t("empty_field")); // Set an error message for password mismatch
         setIsModalVisible3(true);
@@ -101,6 +105,7 @@ export default function SignUp() {
         password,
         phone_number: phoneNumber,
         company: companyName,
+        rbid: rbidC,
       };
   
       // Log the data being sent in the request
@@ -110,7 +115,7 @@ export default function SignUp() {
         setIsModalVisible3(true); // Show the checkbox error message
         return;
       }
-      const response = await axios.post('https://atrux.azurewebsites.net/sign-up', userData);
+      const response = await axios.post(`${link}/sign-up`, userData);
   
       // Log the response from the backend (optional)
       console.log('Response data:', response.data);
@@ -403,7 +408,21 @@ export default function SignUp() {
   }}
 />
           </View>
-
+          <View style={styles.inputView}>
+           
+              <Rpi  stule = {{top:'20%'}} />
+           
+            
+            <TextInput
+  style={styles.inputText}
+  placeholder={t("ID System")}
+  placeholderTextColor="#6D6D6D"
+  onChangeText={(rbid) => {
+    
+    setRbid(rbid);
+  }}
+/>
+          </View>
           <View style={{ top: "-188%", left: "-2%" }}>
             <Checkbox
               style={styles.checkbox}
@@ -459,7 +478,7 @@ const styles = StyleSheet.create({
   contour: {
     top: "-202%",
     backgroundColor: "#D9D9D9",
-    height: 565,
+    height: 630,
     width: 300,
     marginLeft: 5,
     alignItems: "center",

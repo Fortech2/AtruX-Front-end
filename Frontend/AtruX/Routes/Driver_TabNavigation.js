@@ -196,6 +196,7 @@ export default function TabNavigation() {
             handleNotificationSent(sound);
          });
           setSocket(newSocket);
+
           
           // Register for push notifications here 
           registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
@@ -206,6 +207,7 @@ export default function TabNavigation() {
           // responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
           //   console.log("response: ", response);
           // });
+
         } catch (error) {
           console.error('Error fetching user data:', error);
         }
