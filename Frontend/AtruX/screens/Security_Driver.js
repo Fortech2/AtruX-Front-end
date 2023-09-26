@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
 import Svg, { G, Circle, Defs, Path } from "react-native-svg";
 import WrittenLogo from "../components/writtenLogo";
@@ -7,6 +7,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
+import ImageViewer from './ImageViewer';
 import {
   StyleSheet,
   Text,
@@ -21,7 +22,8 @@ import {
   ScrollView,
   Switch,
   SafeAreaView,
-  Pressable
+  Pressable,
+  TouchableHighlight
 } from "react-native";
 
 import {
@@ -58,24 +60,22 @@ import { BlurView } from 'expo-blur'
 
 export default function Driver_Security() {
 
-  const navigation = useNavigation();
-  const { t, i18n } = useTranslation();
-
   const [isEnabled, setIsEnabled] = useState(false);
- 
-  const link = 'https://atrux-prod.azurewebsites.net'
   const toggleSwitch = async () => {
     try {
-      // Calculate the new status value (1 for on, 0 for off)
-      const newStatus = isEnabled ? 0 : 1;
-
+      // Calculate the new status value (true for on, false for off)
+      const newStatus = !isEnabled;
+  
+      // Log the new status value to the console
+      console.log('New Status:', newStatus);
+  
       // Toggle the local state
-      setIsEnabled(!isEnabled);
-
+      setIsEnabled(newStatus);
+  
       // Send a POST request to your Flask backend with the new status
       const response = await axios.post(
         `${link}/active`,
-        { active_status: newStatus }, // Send the new status
+        { active_status: newStatus ? 1 : 0 }, // Send 1 for on, 0 for off
         {
           headers: {
             'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ export default function Driver_Security() {
           },
         }
       );
-
+  
       if (response.status === 200) {
         // Handle success, e.g., display a success message
         console.log('Status changed successfully');
@@ -96,6 +96,122 @@ export default function Driver_Security() {
       console.error('Error:', error);
     }
   };
+  
+
+  
+  const [modalVisibleAlarm, setModalVisibleAlarm] = useState(false);
+  const { t, i18n } = useTranslation();
+  const [isImageFullScreen, setIsImageFullScreen] = useState(false);
+  const [isImageViewerVisible, setIsImageViewerVisible] = useState(false);
+  const openImageViewer = (imageData) => {
+    setSelectedImage(imageData); // Set the selected image
+    setIsImageViewerVisible(true); // Open the image viewer modal
+  };
+  const closeImageViewer = () => {
+    setIsImageViewerVisible(false); // Close the image viewer modal
+  };
+  
+
+  
+ 
+  const navigation = useNavigation();
+
+  const handleCloseModal = () => {
+    setIsImageFullScreen(false);
+    setModalVisible(false);
+  };
+ 
+
+  const toggleFullScreen = () => {
+    setIsImageFullScreen(!isImageFullScreen);
+  };
+  const handleCloseModalAlarm = () => {
+    setModalVisibleAlarm(false);
+  };
+  
+  const saveImageToGallery = async () => {
+
+  };
+  const handleOpenModalAlarm = (imageData) => {
+    setSelectedImage(imageData);
+    setIsImageFullScreen(false); // Reset to false when opening the modal
+    setModalVisibleAlarm(true);
+  };
+
+  
+
+  const handleBack = () => {
+    navigation.navigate("Security");
+  };
+
+  const [notifications, setNotifications] = useState([]);
+  const [userData, setUserData] = useState(null);
+
+  const handleNavigate = () => {
+    // Perform any other login-related logic here if needed
+    // For now, we will simply navigate to the Home screen (App_Driver)
+    // Tab_Navigation
+    navigation.navigate('YourRoutes');
+  };
+
+  const HandleAlarm = () =>{
+    navigation.navigate("PastImages")
+  }
+  const link = 'https://atrux-prod.azurewebsites.net'
+
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get(`${link}/user`);
+      const userData = response.data;
+      console.log(userData);
+      setUserData(userData); // Update the state with fetched user data
+    } catch (error) {
+      console.error('Error fetching user data, look:', error);
+    }
+  };
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  
+  const [messageFromServer, setMessageFromServer] = useState('');
+  const [messageFromBackend, setMessageFromBackend] = useState('');
+  const [messageFromDisp, setMessageFromDisp] = useState('');
+  const [allMessages, setAllMessages] = useState([]);
+  const [allMessagesA, setAllMessagesA] = useState([]);
+  const [images, setImages] = useState([]);
+  
+  useEffect(() => {
+    // Make a GET request to fetch notifications from the backend
+    axios.get(`${link}/root_notification`)
+      .then(response => {
+        const rootNotifications = response.data.root_notification_expiration || [];
+  
+        console.log(rootNotifications);
+  
+        // Now you can set the notifications state
+        setNotifications(rootNotifications);
+      })
+      .catch(error => {
+        console.error('Error fetching notifications:', error);
+      });
+  }, []);
+
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [alarmNotifications, setAlarmNotifications] = useState([]);
+
+  const fetchAlarmNotifications = async () => {
+    try {
+      const response = await axios.get(`${link}/alarm_notification`); // Make a GET request to your Flask backend route
+      const notifications = response.data.alarm_notification || []; // Initialize as an empty array if no data is received
+      setAlarmNotifications(notifications);
+    } catch (error) {
+      console.error('Error fetching alarm notifications:', error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchAlarmNotifications(); // Fetch alarm notifications when the component mounts
+  }, []);
   const [montserratLoaded] = useMontserrat({
     // load any font variation in here
     Montserrat_100Thin,
@@ -121,10 +237,7 @@ export default function Driver_Security() {
     setModalVisible(true);
   };
   
-  const handleCloseModal = () => {
-    setModalVisible(false);
-  };
-
+  
   return (
     <View style={{flex: 1, backgroundColor: "#E9EBEE"}}>
       <View style = {styles.background}>
@@ -145,32 +258,29 @@ export default function Driver_Security() {
           </View>
 
           <View style={styles.contour1}>
-            <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'#101F41', top:'12%', left: '0%'}}>
+            <Text style={{fontFamily:'Montserrat_600SemiBold', fontSize:30, color:'#101F41', top:'10%', left: '0%'}}>
               {t('system_status')}
             </Text>
-
+          <Text style={{fontFamily:'Montserrat_500Medium', fontSize:15, color:'#101F41', top:'48%', left: '0%', textAlign:'center'}}>Press on the button to change the status!</Text>
             <View style={styles.switchContainer}>
-            <Switch
-        trackColor={{ false: '#767577', true: '#767577' }}
-        thumbColor={isEnabled ? '#101F41' : '#f4f3f4'}
-        ios_backgroundColor="#3e3e3e"
-        onValueChange={toggleSwitch}
-        value={isEnabled}
-        style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
-      />
-            </View>
+    <Switch
+      trackColor={{ false: '#767577', true: '#767577' }}
+      thumbColor={isEnabled ? '#101F41' : '#f4f3f4'}
+      ios_backgroundColor="#3e3e3e"
+      onValueChange={toggleSwitch}
+      value={isEnabled}
+      style={{ transform: [{ scaleX: 2 }, { scaleY: 2 }] }}
+    />
+  </View>
         
-            <View style={styles.switchContainerText1}>
-              <Text style={styles.switchText1}>
-                {t('off')}
-              </Text>
-            </View>
+  <View style={styles.switchContainerText1}>
+    <Text style={styles.switchText1}>
+      {isEnabled ? t('on') : t('off')} {/* Display "on" or "off" based on the switch state */}
+    </Text>
+  </View>
 
-            <View style={styles.switchContainerText2}>
-              <Text style={styles.switchText2}>
-                {t('on')}
-              </Text> 
-            </View>
+
+            
           </View>
 
           <View style={styles.contour2}>
@@ -203,26 +313,124 @@ export default function Driver_Security() {
                }}
               >
                 {t('alarms_history')}
+                
               </Text>
             </View> 
           
-            <View style={styles.inputView}>
-              <Text style={styles.inputText}>
-             
-              </Text>
+            <View style={{height:200}}>
+            <ScrollView>
+              <View style={{height:800, top:10}}>
+              {alarmNotifications.map((notification, index) => (
+      <View key={index}>
+        <View style={styles.notification2}>
+         <TouchableOpacity onPress={() => handleOpenModalAlarm(notification.binary_data)}>
+          <Text style={{
+            fontFamily: 'Montserrat_500Medium',
+            fontSize: 18,
+            color: '#101F41',
+            alignSelf: 'flex-start',
+            left: '2%',
+            top:'28%'
+          }}>{notification.date} Human Detected!</Text>
+           
+           <Text
+      style={{
+        fontFamily: 'Montserrat_500Medium',
+        fontSize: 18,
+        color: 'red',
+        alignSelf: 'flex-start',
+        left: '50%',
+        top:'-5%'
+       
+      }}
+    >
+      See image!
+    </Text>
+          </TouchableOpacity>
+        </View>
+        {/* <TouchableOpacity
+            style={{ top: '16%', left: '87%', position:'absolute' }}
+            onPress={() => handleOpenModalAlarm(notification.binary_data)}
+          >
+          <More />
+        </TouchableOpacity> */}
+        <SafeAreaView style={{ top: "-183%", left: "8%", zIndex: 1, flex: 1 }}>
+        <Modal
+          visible={modalVisibleAlarm}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={handleCloseModalAlarm}
+        >
+        
+          <BlurView intensity={20} style={styles.blurContainer}>
+            <View style={styles.modalContainer}>
+              <View style={styles.ellipseWrapper1}>
+                <EllipseMenuHS1 style={{ top: "0%", left: "0%" }} />
+              </View>
+
+              <View style={styles.ellipseWrapper2}>
+                <EllipseMenu2 style={{ top: "-1%", left: "0%" }} />
+              </View>
+
+              <View style={styles.vectorWrapper}>
+                <VectorMenu style={{ top: "2%", left: "5%" }} />
+              </View>
+              <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
+  <ExitIcon />
+</Pressable>
+              <Text style={styles.menuText}>{t("image_detected")}</Text>
+              <TouchableHighlight
+          onPress={() => openImageViewer(selectedImage)}
+              >
+                {selectedImage && (
+                  <Image
+                    source={{
+                      uri: `data:image/jpeg;base64,${selectedImage}`,
+                    }}
+                    style={{ width: 200, height: 200 }}
+                  />
+                  
+                )}
+              </TouchableHighlight>
+              
+                
+               {/* {isImageFullScreen && (
+                <View style={{ flex: 1 }}>
+                  <TouchableHighlight onPress={toggleFullScreen}>
+                    {selectedImage && (
+                      <Image
+                        source={{npm install react-native-share --save
+                          uri: `data:image/jpeg;base64,${selectedImage}`,
+                        }}
+                        style={{
+                          flex: 1,
+                          width: 100,
+                          height: 100,
+                        }}
+                        resizeMode="contain"
+                      />
+                    )}
+                  </TouchableHighlight>
+                </View>
+              )} */}
+            </View>
+          </BlurView>
+        </Modal>
+      </SafeAreaView>   
+      {isImageViewerVisible && (
+        <ImageViewer
+          selectedImage={selectedImage}
+          onClose={closeImageViewer} // Close the image viewer
+        />
+      )}
+      </View>
+    
+    ))}
+                </View>
+              </ScrollView>
             </View>
 
-            <View style={styles.inputView}>
-              <Text style={styles.inputText}>
-              
-              </Text>
-            </View>
-
-            <View style={styles.inputView}>
-              <Text style={styles.inputText}>
-              
-              </Text>
-            </View>
+            
 
           </View>
 
@@ -399,7 +607,7 @@ const styles = StyleSheet.create({
       marginLeft: 20,
       padding: 1,
       marginRight: 10,
-      top: "45%",
+      top: "32%",
       left: "34%",
       borderWidth: 0, // Border set to 0
       zIndex: 1,
@@ -415,8 +623,8 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       // backgroundColor: "#9055A2",
-      left: "32%",
-      top: "75%",
+      left: "45%",
+      top: "60%",
       position: "absolute",
     },
     switchText1: {
