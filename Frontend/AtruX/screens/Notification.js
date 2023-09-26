@@ -1,5 +1,7 @@
 
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef, Linking} from "react";
+import * as MediaLibrary from 'expo-media-library';
+import ImageViewer from './ImageViewer';
 import {
   StyleSheet,
   Text,
@@ -54,25 +56,46 @@ const NotificationsDriver = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisibleAlarm, setModalVisibleAlarm] = useState(false);
   const { t, i18n } = useTranslation();
-
+  const [isImageFullScreen, setIsImageFullScreen] = useState(false);
+  const [isImageViewerVisible, setIsImageViewerVisible] = useState(false);
+  const openImageViewer = (imageData) => {
+    setSelectedImage(imageData); // Set the selected image
+    setIsImageViewerVisible(true); // Open the image viewer modal
+  };
+  const closeImageViewer = () => {
+    setIsImageViewerVisible(false); // Close the image viewer modal
+  };
+  
   const handleOpenModal = () => {
     setModalVisible(true);
   };
-
+  
+ 
   const navigation = useNavigation();
 
   const handleCloseModal = () => {
+    setIsImageFullScreen(false);
     setModalVisible(false);
   };
+ 
 
-  const handleOpenModalAlarm = (imageData) => {
-    setSelectedImage(imageData);
-    setModalVisibleAlarm(true);
+  const toggleFullScreen = () => {
+    setIsImageFullScreen(!isImageFullScreen);
   };
-
   const handleCloseModalAlarm = () => {
     setModalVisibleAlarm(false);
   };
+  
+  const saveImageToGallery = async () => {
+
+  };
+  const handleOpenModalAlarm = (imageData) => {
+    setSelectedImage(imageData);
+    setIsImageFullScreen(false); // Reset to false when opening the modal
+    setModalVisibleAlarm(true);
+  };
+
+  
 
   const handleBack = () => {
     navigation.navigate("Security");
@@ -113,7 +136,7 @@ const NotificationsDriver = () => {
   const [allMessages, setAllMessages] = useState([]);
   const [allMessagesA, setAllMessagesA] = useState([]);
   const [images, setImages] = useState([]);
-
+  
   useEffect(() => {
     // Make a GET request to fetch notifications from the backend
     axios.get(`${link}/root_notification`)
@@ -354,6 +377,7 @@ const NotificationsDriver = () => {
           transparent={true}
           onRequestClose={handleCloseModalAlarm}
         >
+        
           <BlurView intensity={20} style={styles.blurContainer}>
             <View style={styles.modalContainer}>
               <View style={styles.ellipseWrapper1}>
@@ -368,24 +392,55 @@ const NotificationsDriver = () => {
                 <VectorMenu style={{ top: "2%", left: "5%" }} />
               </View>
               <Pressable style={styles.exitButton} onPress={handleCloseModalAlarm}>
-                <ExitIcon />
-              </Pressable>
+  <ExitIcon />
+</Pressable>
               <Text style={styles.menuText}>{t("image_detected")}</Text>
-              {selectedImage && (
-                <Image
-                  source={{ uri: `data:image/jpeg;base64,${selectedImage}` }} // Set the image source with base64 data
-                  style={{ width: 200, height: 200 }} // Adjust the dimensions as needed
-                />
-              )}
-              <View>
-      
-    </View>
-
+              <TouchableHighlight
+          onPress={() => openImageViewer(selectedImage)}
+              >
+                {selectedImage && (
+                  <Image
+                    source={{
+                      uri: `data:image/jpeg;base64,${selectedImage}`,
+                    }}
+                    style={{ width: 200, height: 200 }}
+                  />
+                  
+                )}
+              </TouchableHighlight>
+              
+                
+               {/* {isImageFullScreen && (
+                <View style={{ flex: 1 }}>
+                  <TouchableHighlight onPress={toggleFullScreen}>
+                    {selectedImage && (
+                      <Image
+                        source={{npm install react-native-share --save
+                          uri: `data:image/jpeg;base64,${selectedImage}`,
+                        }}
+                        style={{
+                          flex: 1,
+                          width: 100,
+                          height: 100,
+                        }}
+                        resizeMode="contain"
+                      />
+                    )}
+                  </TouchableHighlight>
+                </View>
+              )} */}
             </View>
           </BlurView>
         </Modal>
       </SafeAreaView>   
+      {isImageViewerVisible && (
+        <ImageViewer
+          selectedImage={selectedImage}
+          onClose={closeImageViewer} // Close the image viewer
+        />
+      )}
       </View>
+    
     ))}
             </View>
             </ScrollView>
