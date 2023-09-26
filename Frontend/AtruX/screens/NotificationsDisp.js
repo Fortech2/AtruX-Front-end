@@ -158,21 +158,23 @@ const NotificationDispatcher = () => {
       setMessageFromServer(message);
     });
     
-  socket.on('handle-images', () => {
-    // Update the individual message
-    console.log('Received alarm');
-   
- });
-    socket.on('image-notification-sent', () => {
-      // Update the individual message
-      setAllMessagesA((prevMessages) => [...prevMessages, t("new alarm")]);
-      console.log('Received image as alarm');
-   });
-   
+ 
+  
   }
   }, [userData]);
 
+  const [alarmNotifications, setAlarmNotifications] = useState([]);
 
+  useEffect(() => {
+    // Replace 'YOUR_BACKEND_URL' with your actual backend URL
+    axios.get(`${link}/alarm_notification`)
+      .then((response) => {
+        setAlarmNotifications(response.data.alarm_notification);
+      })
+      .catch((error) => {
+        console.error('Error fetching alarm notifications:', error);
+      });
+  }, []);
 
   return (
     <View style={styles.background}>
@@ -306,29 +308,17 @@ const NotificationDispatcher = () => {
         </View>
 
         <ScrollView>
-          <View style={{height:600}}>  
-            {allMessagesA.map((message, index) => (
-              <View key={index}>
-                <View  style={styles.notification2}>
-                  <Text style={{
-                        fontFamily: 'Montserrat_500Medium',
-                        fontSize: 18,
-                        color: '#101F41',
-                        alignSelf: 'flex-start',
-                        left: '2%',
-                        }}
-                  >
-                    {message}
-                  </Text>
-                </View>
-
-                <TouchableOpacity style={{top:'16%', left:'87%'}} onPress={handleOpenModalAlarm}>
-                  <More/>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
-        </ScrollView>
+      {alarmNotifications.map((notification, index) => (
+        <View key={index}>
+          <Text style={{ fontFamily: 'Montserrat_500Medium', fontSize: 20, color: '#101F41' }}>
+            Your driver, {notification.driver_name}, has a new alarm!
+          </Text>
+          <TouchableOpacity onPress={() => handleOpenModalAlarm}>
+            <Text style={{ color: 'blue' }}>See</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+    </ScrollView>
 
         <SafeAreaView style={{ top: "-183%", left: "38%", zIndex: 1, flex: 1 }}>
           <Modal
