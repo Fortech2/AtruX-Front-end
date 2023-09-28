@@ -111,4 +111,21 @@
     "updates_from_drivers": "Noutăți de la șoferi",
 
     "human_detected": "Persoană Detectată!",
+    
+    "ai": "Asistentul",
+    "Assistant": "tău",
+    "say": "Spune",
+    "helloAtruX": "Bună asistentul AtruX",
+    "or": "sau",
+    "pressButton": "apasă butonul",
+    "to": "pentru",
+    "start": "a porni",
+    "theAI": "AI",
+
+    "wanna_find": "Dacă vrei să găsești",
+    "keyword": "cuvinte cheie",
+    "different": "pentru diferite",
+    "functions": "funcții",
+    "access": "accesează",
+    "menuAI": "meniul"
 }
