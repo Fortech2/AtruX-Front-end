@@ -13,6 +13,7 @@ import ProfileIcon from "../components/ProfileTabIcon";
 import NotificationsDriver from "../screens/Notification";
 import SettingsDriver from "../screens/SettingsDriver";
 import YourRoute from "../screens/SeeYourRoute"
+import AIAssistant_Driver from "../screens/AIAssistantDriver"
 import axios from "axios";
 import { Audio } from 'expo-av';
 import { io } from 'socket.io-client';
@@ -50,6 +51,16 @@ function HomeStackScreen() {
       <Stack.Screen
         name="YourRoutes"
         component={YourRoute}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="YourSecuritySystem"
+        component={Driver_Security}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="YourAssistant"
+        component={AIAssistant_Driver}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

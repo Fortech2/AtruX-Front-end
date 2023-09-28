@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef, Linking} from "react";
-import * as MediaLibrary from 'expo-media-library';
+// import * as MediaLibrary from 'expo-media-library';
 import ImageViewer from './ImageViewer';
 import {
   StyleSheet,

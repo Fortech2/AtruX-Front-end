@@ -98,7 +98,7 @@ const HomeScreen = () => {
 
   const securitySystem = () => {
     // Function for "Security system" button
-    console.log("Accessing the settings...");
+    navigation.navigate('YourSecuritySystem');
   };
 
   const emergencyCall = () => {
@@ -114,7 +114,7 @@ const HomeScreen = () => {
 
   const yourAssistant = () => {
     // Function for "Your assistant" button
-    console.log("Accessing your assistant...");
+    navigation.navigate('YourAssistant');
   };
   const handleNotif = () => {
 
