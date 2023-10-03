@@ -108,28 +108,38 @@ const ListOfDrivers = () => {
             <View style={{height:1000}}>
           {drivers && (
       <View>
-        {drivers.map(driverName => (
-          <View key={driverName} style={styles.data}>
-          
-            <Text
-              style={{
-                fontFamily: 'Montserrat_500Medium',
-                fontSize: 22,
-                color: '#101F41',
-                textAlign: 'left',
-                alignSelf: 'center',
-              }}
-            >
-              {driverName}
-            </Text>
-           
-           <TouchableOpacity style={{position:'absolute', left:'86%', alignItems:'center', width:'53%', height:'100%', top:'9%'}} onPress={console.log("yep")}>
-              <MoreButton/>
-           </TouchableOpacity>
-            
-          </View>
-           
-        ))}
+        {drivers && (
+  <View>
+    {drivers.map(driver => (
+      <View key={driver.email} style={styles.data}>
+        <Text
+          style={{
+            fontFamily: 'Montserrat_500Medium',
+            fontSize: 22,
+            color: '#101F41',
+            textAlign: 'left',
+            alignSelf: 'center',
+          }}
+        >
+          {driver.name}
+        </Text>
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            left: '86%',
+            alignItems: 'center',
+            width: '53%',
+            height: '100%',
+            top: '9%',
+          }}
+          onPress={() => console.log("yep")}
+        >
+          <MoreButton />
+        </TouchableOpacity>
+      </View>
+    ))}
+  </View>
+)}
       </View>
     )}
 </View>
