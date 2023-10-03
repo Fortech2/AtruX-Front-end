@@ -345,7 +345,8 @@ const SendRoute = () => {
                                         setShowPreviousStop(false);
                                         setLastEnteredStop("");
                                         setRouteStops([]);
-                                        setPreviousStop(""); // Reset previousStop state
+                                        setPreviousStop("");
+                                        handleCloseModal2() // Reset previousStop state
                                       })
                                       .catch((error) => {
                                         console.error(

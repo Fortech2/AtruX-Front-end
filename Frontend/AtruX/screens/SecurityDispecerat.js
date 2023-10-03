@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from "expo-status-bar";
 import Svg, { G, Circle, Defs, Path } from "react-native-svg";
 import WrittenLogo from "../components/writtenLogo";
@@ -95,7 +95,19 @@ export default function SecurityD() {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+  const link = 'https://atrux-prod.azurewebsites.net';
+  const [alarmNotifications, setAlarmNotifications] = useState([]);
 
+  useEffect(() => {
+    // Replace 'YOUR_BACKEND_URL' with your actual backend URL
+    axios.get(`${link}/alarm_notification`)
+      .then((response) => {
+        setAlarmNotifications(response.data.alarm_notification);
+      })
+      .catch((error) => {
+        console.error('Error fetching alarm notifications:', error);
+      });
+  }, []);
   return (
     <View style={{flex: 1, backgroundColor: "#E9EBEE"}}>
       <View style = {styles.background}>
@@ -104,7 +116,7 @@ export default function SecurityD() {
         <EllipseSettings style={{ top: "-140%", left: "40%" }} />
       </View>
 
-      <ScrollView>
+   
         <View style={{ height: 900 }}>
            <View style={{top: "10%", left: "5%", position: "absolute"}}>
             <SecurityIcon style={{left: "-5%", top: "-25%"}}/>
@@ -126,7 +138,22 @@ export default function SecurityD() {
                 {t('recent_alarms')}
               </Text>
             </View> 
-          
+          <View>
+            <ScrollView style={{maxHeight:300, top:35}}>
+              <View style={{height:1000}}>
+              {alarmNotifications.map((notification, index) => (
+          <View key={index}>
+            <Text style={{fontFamily:'Montserrat_500Medium', fontSize:20, color:'#101F41', left: '0%'}}>Driver: {notification.driver_name}</Text>
+            <Text style={{fontFamily:'Montserrat_500Medium', fontSize:20, color:'#101F41', left: '0%'}}>Date: {notification.date}</Text>
+            <Image
+              source={{ uri: `data:image/jpeg;base64,${notification.binary_data}` }}
+              style={{ width: 200, height: 200 }}
+            />
+          </View>
+        ))}
+              </View>
+            </ScrollView>
+          </View>
           {/* <View style={styles.inputView}>
             <Text style={styles.inputText}>
               
@@ -156,7 +183,7 @@ export default function SecurityD() {
 
           </View>       
         </View>
-      </ScrollView>
+     
 
       <TouchableOpacity style={styles.notificationButton} onPress={handleNotif}>
         <NotificationIcon style={{left: "10%", top: "3%"}}/>

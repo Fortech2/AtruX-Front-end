@@ -147,7 +147,7 @@ export default function YourRoute() {
           <View>
           <View>
   {stops.length === 0 ? (
-    <Text>Loading...</Text>
+    <Text style={{top:'504%',fontFamily: "Montserrat_100Thin",fontSize: 15, left:'40%'}}>Loading...</Text>
   ) : (
     stops.map((stop, index) => (
       <View key={stop} style={{ flexDirection: 'row', alignItems: 'center', alignSelf:'flex-start', marginBottom:10, height:90, alignContent:'center', top:'10%', left:'18%' }}>

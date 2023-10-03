@@ -79,8 +79,8 @@ function DispProfileScreen() {
     try {
       const response = await axios.get(`${link}/user`);
       setUserData(response.data);
-      if (response.data && response.data.dispatcherName) {
-        setNumberOfDrivers(response.data.numberOfDrivers);
+      if (userData && userData.dispatcherName) {
+        setNumberOfDrivers(userData.numberOfDrivers);
 
         setDispatcherName(response.data.dispatcherName);
       }
@@ -109,7 +109,22 @@ function DispProfileScreen() {
           <View style={{maxHeight:900}}>
          <ProfileCircle style={{  left: "35%", top: "10%" }} />
          <ProfileContour style={{ left: "42.5%", zIndex: 1, top: "-87%" }} />
-         <Text style={{top:'-172.5%', color:'white', left:'40%', fontFamily:'Montserrat_100Thin', fontSize:20}}>Disp: {dispatcherName}</Text>
+         {userData ? (
+         <Text style={{top:'-172.5%', color:'white', left:'28%', fontFamily:'Montserrat_500Medium', fontSize:20}}>Dispecer: {userData.name}</Text>
+       
+        
+            ) : (
+              <Text
+                style={{
+                  fontFamily: "Montserrat_100Thin",
+                  fontSize: 15,
+                  color: "#101F41",
+                  top: "30%",
+                }}
+              >
+                Loading...
+              </Text>
+              )}
         <View style={styles.contour}>
         <Text
             style={{
@@ -216,7 +231,7 @@ function DispProfileScreen() {
                       left: "0%",
                     }}
                   >
-                    {numberOfDrivers}
+                    {/* {userData.number_of_drivers} */}
                   </Text>
           </View>
 
