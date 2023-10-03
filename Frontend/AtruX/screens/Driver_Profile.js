@@ -169,7 +169,7 @@ function DriverProfileScreen() {
               {/* Display additional fields specific to the dispatcher */}
             </>
           ) : (
-            <Text>Loading...</Text>
+            <Text style={{top:'44%',fontFamily: "Montserrat_100Thin",fontSize: 15}}>Loading...</Text>
             )}
           </View>          
         </View>

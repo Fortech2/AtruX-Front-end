@@ -137,23 +137,6 @@ async function schedulePushNotification() {
   });
 }
 
-
-// async function schedulePushImageNotification() {
-//   // Your custom data goes here
-//   // const customData = alarmNotifications;
-  
-
-//   await Notifications.scheduleNotificationAsync({
-//     content: {
-//       title: "ALARM! 🚨",
-//       body: 'NEW ROUTE!',
-//       // Add your custom data here
-//       data: 'da',
-//     },
-//     trigger: { seconds: 2 },
-//   });
-// }
-
 export default function TabNavigation() {
   const [userData, setUserData] = useState(null);
   const [socket, setSocket] = useState(null);
@@ -198,7 +181,7 @@ export default function TabNavigation() {
           });
 
           newSocket.on('notification-sent', () => {
-            handleNotificationSent(sound);
+            handleNotificationSent();
             schedulePushNotification();
           });
           newSocket.on('image-notification-sent', () => {

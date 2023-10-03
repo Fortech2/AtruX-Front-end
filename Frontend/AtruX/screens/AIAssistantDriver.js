@@ -37,20 +37,31 @@ import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next"; // for the translation
 import { BlurView } from 'expo-blur'
 import axios from "axios";
-
+import * as Speech from 'expo-speech';
+ // You'll need to install and configure a voice recognition library
 
 const AIAssistant_Driver = () => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
+  const [stops, setUserRoute] = useState([]);
+  const link = 'https://atrux-prod.azurewebsites.net'
+  useEffect(() => {
+    // Make an API call to get user data
+    axios.get(`${link}/user`, { withCredentials: true })
+      .then(response => {
+        const StopForUser = response.data.route;
+        const stopsArray = StopForUser.slice(1, -1).split(',');
+
+        // Set the state with the array of stops
+        setUserRoute(stopsArray);
+        console.log(stopsArray);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
 
   const [modalVisible, setModalVisible] = useState(false);
-
-  const [montserratLoaded] = useMontserrat({
-    // load any font variation in here
-    Montserrat_100Thin,
-    Montserrat_600SemiBold,
-    Montserrat_500Medium,
-  });
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -59,6 +70,28 @@ const AIAssistant_Driver = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
   };
+  const speak = () => {
+    // Join the stops array into a single string with spaces
+    const stopsToSpeak = stops.join(' ');
+
+  // Function to speak each stop in sequence with a delay
+  const speakStopAtIndex = (index) => {
+    if (index < stops.length) {
+      // Speak the stop at the current index
+      Speech.speak(stops[index]);
+
+      // Schedule the next stop to be spoken with a delay
+      setTimeout(() => {
+        speakStopAtIndex(index + 1);
+      }, 2000); // 3000 milliseconds = 3 seconds
+    }
+  };
+
+  // Start speaking with the first stop
+  speakStopAtIndex(0);
+};
+
+
 
   return (
     <View style={styles.container}>
@@ -172,10 +205,11 @@ const AIAssistant_Driver = () => {
           <Circle3Assistant style = {{top: '-455%', left: '30%'}}/>
           <SmallCircle4Assistant style = {{top: '-565%', left: '6%'}}/>
           
-          <TouchableOpacity style={styles.containerStartAI} >
-            <EllipseCenterAi style={{ top: "5%", left: "3.5%", zIndex: 1 }}/>  
-            <AssistantBigSvg style={{ top: "-100%", left: "20%", zIndex: 1 }}/>
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.containerStartAI} onPress={speak}>
+        
+  <EllipseCenterAi style={{ top: "5%", left: "3.5%", zIndex: 1 }}/>  
+  <AssistantBigSvg style={{ top: "-100%", left: "20%", zIndex: 1 }}/>
+</TouchableOpacity>
 
           <View style={styles.containerPressButton}>
             <Text style={styles.textPressButton}>
