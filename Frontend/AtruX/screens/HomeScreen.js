@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
   grey_rectangle: {
     color: '#FFFFFF',
     width: 320,
-    height: 324,
+    height: 344,
     borderRadius: 40,
     backgroundColor: '#D9D9D9',
     justifyContent: 'center',
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
-    marginTop: '-28%',
+    marginTop: '-27%',
   },
   textButoaneDreptunghiulare: {
     color: '#101F41',
@@ -400,7 +400,7 @@ roundButtons2: {
   justifyContent: 'center',
   alignItems: 'center',
   marginVertical: 10,
-  top: '15%',
+  top: '11.5%',
   right: '-35%',
   // zIndex: 1,
 },
